@@ -8,13 +8,11 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  // Reemplazar "id" con el ID real una vez creado el Hyperdrive en el dashboard
-  // de Cloudflare (Workers & Pages -> Hyperdrive), apuntando a la connection
-  // string directa de Neon. Ver README para el paso a paso.
+  // Hyperdrive "consorciodely-db", apunta a la conexión directa de Neon.
   "hyperdrive": [
     {
       "binding": "HYPERDRIVE",
-      "id": "REEMPLAZAR_CON_ID_DE_HYPERDRIVE"
+      "id": "70862d1ccfa04d4e99c0d4431fe7a828"
     }
   ],
   // Bucket de R2 para las imágenes del catálogo.
