@@ -7,6 +7,16 @@ const nextConfig: NextConfig = {
     // next/image (no corre en el runtime de Cloudflare Workers).
     unoptimized: true,
   },
+  // `sharp` es dependencia opcional de Next (la usa next/image internamente),
+  // pero no la usamos (unoptimized: true arriba). serverExternalPackages
+  // evita que el build de Next la bundlee; outputFileTracingExcludes evita
+  // que el output tracing la copie al standalone output — sin esto, el
+  // bundler de OpenNext encuentra el binario nativo (.node) copiado ahí y
+  // el build para Workers falla al no poder bundlearlo.
+  serverExternalPackages: ["sharp"],
+  outputFileTracingExcludes: {
+    "*": ["node_modules/sharp/**", "node_modules/@img/**"],
+  },
 };
 
 export default nextConfig;

@@ -2,6 +2,11 @@ allowBuilds:
   '@prisma/engines': true
   esbuild: true
   prisma: true
-  sharp: false
   unrs-resolver: false
   workerd: true
+
+# `sharp` es dependencia opcional de Next (next/image), pero no la usamos
+# (images.unoptimized: true) y su binario nativo rompe el bundle de Workers
+# al desplegar a Cloudflare — ver vendor/sharp-stub.
+overrides:
+  sharp: link:./vendor/sharp-stub
