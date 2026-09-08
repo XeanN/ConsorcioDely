@@ -9,6 +9,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # `prisma generate` (postinstall del package.json) corre automáticamente
+    # como parte de `pnpm install`, y prisma.config.ts requiere que
+    # DIRECT_URL exista para resolver — no necesita conectarse de verdad, así
+    # que un placeholder alcanza. Va a nivel de job para que esté disponible
+    # ni bien arranca `pnpm install`, no solo en un step posterior.
+    env:
+      DATABASE_URL: "postgresql://placeholder:placeholder@localhost:5432/placeholder"
+      DIRECT_URL: "postgresql://placeholder:placeholder@localhost:5432/placeholder"
     steps:
       - uses: actions/checkout@v5
 
@@ -20,14 +28,6 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-
-      # `prisma generate` solo lee el schema, no necesita conectarse a una
-      # base real — pero prisma.config.ts sí requiere que DIRECT_URL exista.
-      - name: Generate Prisma Client
-        run: pnpm exec prisma generate
-        env:
-          DATABASE_URL: "postgresql://placeholder:placeholder@localhost:5432/placeholder"
-          DIRECT_URL: "postgresql://placeholder:placeholder@localhost:5432/placeholder"
 
       - name: Next.js build
         run: pnpm run build
