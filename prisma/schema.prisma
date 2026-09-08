@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------- Catálogo ----------
+// category -> brand -> product -> variant (presentación + peso), según la
+// tabla del PDF de planeamiento (Extras/Ideas Web.pdf).
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  position  Int       @default(0)
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("categories")
+}
+
+model Brand {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+
+  @@map("brands")
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  categoryId  String
+  brandId     String
+  name        String
+  slug        String    @unique
+  description String?
+  active      Boolean   @default(true)
+  position    Int       @default(0)
+  category    Category  @relation(fields: [categoryId], references: [id])
+  brand       Brand     @relation(fields: [brandId], references: [id])
+  variants    Variant[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([categoryId])
+  @@index([brandId])
+  @@map("products")
+}
+
+// Una fila por presentación/peso (ej. "vaso 290 g", "botella amarilla 5 L").
+model Variant {
+  id           String   @id @default(cuid())
+  productId    String
+  presentation String? // "vaso", "pote", "barril", "bolsa moño"... (nullable: no todos los productos la tienen)
+  weight       String // texto libre tal como en el PDF: "200 ml", "5 Kg", "10 L"
+  sku          String?  @unique
+  active       Boolean  @default(true)
+  position     Int      @default(0)
+  mediaId      String?
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  media        Media?   @relation(fields: [mediaId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([productId])
+  @@map("variants")
+}
+
+// Imagen subida a R2 (ya comprimida/redimensionada en el navegador antes del upload).
+model Media {
+  id        String    @id @default(cuid())
+  r2Key     String    @unique
+  altText   String?
+  width     Int?
+  height    Int?
+  variants  Variant[]
+  createdAt DateTime  @default(now())
+
+  @@map("media")
+}
+
+// ---------- Contenido editable del sitio ----------
+// Cada sección de texto/imagen del sitio (hero, "quiénes somos", legales...)
+// es una fila acá, no texto fijo en el componente — así el admin edita todo
+// sin tocar código.
+model ContentBlock {
+  id        String   @id @default(cuid())
+  key       String   @unique // "home_hero_title", "quienes_somos", "legal_razon_social", ...
+  type      String // "text" | "richtext" | "image"
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+
+  @@map("content_blocks")
+}
+
+// Ejecutivas de venta para el reparto aleatorio de cotizaciones por WhatsApp.
+model SalesRep {
+  id        String   @id @default(cuid())
+  name      String
+  whatsapp  String
+  active    Boolean  @default(true)
+  position  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@map("sales_reps")
+}
+
+// Datos de contacto/legales del negocio — fila única (singleton).
+model SiteSetting {
+  id                Int      @id @default(1)
+  phone             String? // teléfono institucional
+  contactPhone      String? // nro de contacto con la empresa
+  email             String?
+  address           String? // dirección de oficina
+  legalName         String? // razón social
+  ruc               String?
+  fiscalAddress     String?
+  facebookUrl       String?
+  instagramUrl      String?
+  twitterUrl        String?
+  complaintsBookUrl String?
+  updatedAt         DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+
+  @@map("admin_users")
+}
