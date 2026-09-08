@@ -1,0 +1,57 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # `prisma generate` solo lee el schema, no necesita conectarse a una
+      # base real — pero prisma.config.ts sí requiere que DIRECT_URL exista.
+      - name: Generate Prisma Client
+        run: pnpm exec prisma generate
+        env:
+          DATABASE_URL: "postgresql://placeholder:placeholder@localhost:5432/placeholder"
+          DIRECT_URL: "postgresql://placeholder:placeholder@localhost:5432/placeholder"
+
+      - name: Next.js build
+        run: pnpm run build
+
+      # Valida que el bundle para Cloudflare Workers compile. En Windows
+      # local esto falla (ver commits) — corre limpio en Linux.
+      - name: Cloudflare Workers build
+        run: pnpm exec opennextjs-cloudflare build
+
+      - name: Check Cloudflare deploy secrets
+        id: check
+        run: echo "ready=${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}" >> "$GITHUB_OUTPUT"
+
+      # Deploy real: solo en push a main, y solo cuando ya están configurados
+      # los secrets de Cloudflare (Settings -> Secrets and variables ->
+      # Actions) y wrangler.jsonc tiene el ID real del Hyperdrive/R2 (ver
+      # README, sección "Deploy a Cloudflare").
+      - name: Deploy to Cloudflare Workers
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && steps.check.outputs.ready == 'true'
+        run: pnpm exec opennextjs-cloudflare deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Deploy skipped (secrets not configured yet)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && steps.check.outputs.ready != 'true'
+        run: echo "::warning::Deploy omitido — faltan CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID en los secrets del repo. El build sí se validó correctamente."
