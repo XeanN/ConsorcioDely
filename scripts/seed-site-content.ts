@@ -30,7 +30,7 @@ const CONTENT_BLOCKS = [
 const SITE_SETTING = {
   phone: "970 835 166",
   contactPhone: "970 792 078",
-  email: null,
+  email: "ventas@dely.pe",
   address: "Av. La Cultura 701, Mercado Productores, Pasaje Productores, Puesto 40",
   legalName: "Consorcio Dely S.A.C.",
   ruc: "20601228492",
@@ -41,13 +41,10 @@ const SITE_SETTING = {
   complaintsBookUrl: null, // pendiente, por consultar
 };
 
-// Números de prueba -- reemplazar por los reales de las ejecutivas cuando
-// se tengan.
-const SALES_REPS = [
-  { name: "Ejecutiva de prueba 1", whatsapp: "999999999" },
-  { name: "Ejecutiva de prueba 2", whatsapp: "988888888" },
-  { name: "Ejecutiva de prueba 3", whatsapp: "977777777" },
-];
+// Reemplazar/agregar acá según se vayan teniendo los números reales de
+// cada ejecutiva. Los que no estén en esta lista se desactivan (no se
+// borran) para no romper reportes/pedidos históricos.
+const SALES_REPS = [{ name: "Ventas", whatsapp: "942423758" }];
 
 async function main() {
   const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
@@ -69,14 +66,23 @@ async function main() {
 
   let salesRepsCreated = 0;
   for (const [index, rep] of SALES_REPS.entries()) {
-    const exists = await db.salesRep.findFirst({ where: { whatsapp: rep.whatsapp } });
-    if (exists) continue;
-    await db.salesRep.create({ data: { ...rep, position: index } });
+    const existing = await db.salesRep.findFirst({ where: { whatsapp: rep.whatsapp } });
+    if (existing) {
+      await db.salesRep.update({ where: { id: existing.id }, data: { ...rep, active: true } });
+      continue;
+    }
+    await db.salesRep.create({ data: { ...rep, position: index, active: true } });
     salesRepsCreated++;
   }
 
+  const keepNumbers = SALES_REPS.map((r) => r.whatsapp);
+  const { count: deactivated } = await db.salesRep.updateMany({
+    where: { whatsapp: { notIn: keepNumbers }, active: true },
+    data: { active: false },
+  });
+
   console.log(
-    `Listo: ${CONTENT_BLOCKS.length} bloques de contenido, configuración del sitio, ${salesRepsCreated} ejecutivas nuevas.`
+    `Listo: ${CONTENT_BLOCKS.length} bloques de contenido, configuración del sitio, ${salesRepsCreated} ejecutivas nuevas, ${deactivated} desactivadas.`
   );
   await db.$disconnect();
 }

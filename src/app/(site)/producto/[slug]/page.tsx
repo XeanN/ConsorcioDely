@@ -156,7 +156,7 @@ export default async function ProductPage({
               href={quoteLink}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-block rounded-md bg-green-600 px-6 py-3 text-sm font-medium text-white hover:bg-green-700"
+              className="mt-6 inline-block rounded-md bg-brand-green px-6 py-3 text-sm font-medium text-white hover:brightness-95"
             >
               Cotizar por WhatsApp
             </a>

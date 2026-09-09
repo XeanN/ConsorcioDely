@@ -60,11 +60,24 @@ export default async function ContactPage() {
           href={quoteLink}
           target="_blank"
           rel="noreferrer"
-          className="mt-8 inline-block rounded-md bg-green-600 px-6 py-3 text-sm font-medium text-white hover:bg-green-700"
+          className="mt-8 inline-block rounded-md bg-brand-green px-6 py-3 text-sm font-medium text-white hover:brightness-95"
         >
           Escríbenos por WhatsApp
         </a>
       )}
+
+      <div className="mt-10 overflow-hidden rounded-lg border border-neutral-200">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d243.8778297525742!2d-76.94758141830853!3d-12.040404057467939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c7a1afa52c43%3A0xa769ca338d61b2ba!2sProducts%20and%20Services%20Irivarren%20SAC!5e0!3m2!1ses-419!2spe!4v1788964901310!5m2!1ses-419!2spe"
+          width="100%"
+          height="400"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="strict-origin-when-cross-origin"
+          title="Ubicación de Consorcio Dely"
+        />
+      </div>
     </div>
   );
 }
