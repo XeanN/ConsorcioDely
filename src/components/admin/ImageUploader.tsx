@@ -73,14 +73,16 @@ export function ImageUploader({ onUploaded }: Props) {
 
   return (
     <div className="space-y-2">
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        disabled={uploading}
-        className="text-sm text-neutral-700"
-      />
-      {uploading && <p className="text-sm text-neutral-500">Subiendo...</p>}
+      <label className="flex cursor-pointer items-center justify-center gap-2 rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 px-4 py-6 text-sm font-medium text-neutral-600 transition-colors hover:border-neutral-400 hover:bg-neutral-100 has-disabled:cursor-not-allowed has-disabled:opacity-60">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          disabled={uploading}
+          className="hidden"
+        />
+        {uploading ? "Subiendo..." : "📷 Haz clic para subir una foto"}
+      </label>
       {error && <p className="text-sm text-red-600">{error}</p>}
       {preview && !uploading && (
         // eslint-disable-next-line @next/next/no-img-element
