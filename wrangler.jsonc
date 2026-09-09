@@ -20,5 +20,10 @@
       "binding": "MEDIA_BUCKET",
       "bucket_name": "consorciodely-media"
     }
-  ]
+  ],
+  // URL pública del bucket (R2 -> Public Access -> dominio *.r2.dev). No es
+  // secreta, solo una URL de lectura — puede ir en texto plano acá.
+  "vars": {
+    "MEDIA_PUBLIC_BASE_URL": "https://pub-60c7934288ac452ba86f88d86190298e.r2.dev"
+  }
 }

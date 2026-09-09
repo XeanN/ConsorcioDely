@@ -1,4 +1,5 @@
 import { logout } from "@/lib/actions/auth";
+import { UploadTest } from "@/components/admin/UploadTest";
 
 export default function AdminDashboardPage() {
   return (
@@ -18,6 +19,10 @@ export default function AdminDashboardPage() {
         Sesión iniciada. El catálogo (categorías, marcas, productos) se
         construye en la siguiente fase.
       </p>
+
+      <div className="mt-6">
+        <UploadTest />
+      </div>
     </div>
   );
 }
