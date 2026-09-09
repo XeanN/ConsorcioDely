@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import { Sidebar } from "@/components/admin/Sidebar";
 import { getSession } from "@/lib/session";
 
 export default async function ProtectedAdminLayout({
@@ -12,5 +13,10 @@ export default async function ProtectedAdminLayout({
     redirect("/admin/login");
   }
 
-  return <div className="min-h-screen bg-neutral-50">{children}</div>;
+  return (
+    <div className="flex min-h-screen bg-neutral-50">
+      <Sidebar />
+      <main className="flex-1">{children}</main>
+    </div>
+  );
 }
