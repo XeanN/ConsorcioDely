@@ -17,6 +17,15 @@ const nextConfig: NextConfig = {
   outputFileTracingExcludes: {
     "*": ["node_modules/sharp/**", "node_modules/@img/**"],
   },
+  // `pg` hace `require("pg-cloudflare")` (su implementación de sockets TCP
+  // para el runtime de Workers, la que de verdad necesitamos en producción
+  // con Hyperdrive) dentro de una rama que el file tracing de Next no sigue
+  // con confianza, así que no copia el paquete al output standalone y el
+  // bundler de OpenNext falla con "Could not resolve pg-cloudflare" aunque
+  // el paquete sí existe en node_modules. Se fuerza su inclusión.
+  outputFileTracingIncludes: {
+    "*": ["node_modules/pg-cloudflare/dist/**"],
+  },
 };
 
 export default nextConfig;
