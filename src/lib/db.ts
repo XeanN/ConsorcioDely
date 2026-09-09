@@ -1,5 +1,14 @@
 import { PrismaNeon } from "@prisma/adapter-neon";
-import { PrismaClient } from "@prisma/client";
+// Import por ruta relativa directa a edge.js (no el paquete "@prisma/client"
+// ni su entrypoint por defecto): ese entrypoint decide entre la versión
+// Node.js y la versión Workers vía "exports condicionales" del package.json,
+// y esa resolución puede terminar eligiendo la ruta de Node igual (el
+// query engine intenta compilar WASM en tiempo de ejecución — algo que
+// Workers bloquea con "Wasm code generation disallowed by embedder").
+// edge.js es la variante generada específicamente para runtime="workerd"
+// (ver prisma/schema.prisma) que carga el WASM como import estático, sin
+// ambigüedad de resolución posible al importarla por ruta de archivo.
+import { PrismaClient } from "../generated/prisma-client-workerd/edge";
 
 // Driver HTTP/WebSocket de Neon (@neondatabase/serverless) en vez del
 // driver `pg` estándar: `pg` necesita `pg-cloudflare` para hablar TCP en el

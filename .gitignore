@@ -49,3 +49,6 @@ cloudflare-env.d.ts
 
 # harness-local state (not project code)
 /.claude/
+
+# prisma client generado (postinstall lo recrea, ver prisma/schema.prisma)
+/src/generated/
