@@ -1,45 +1,27 @@
-import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaNeon } from "@prisma/adapter-neon";
 import { PrismaClient } from "@prisma/client";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
 
-function createClient(connectionString: string) {
-  const adapter = new PrismaPg({ connectionString });
+// Driver HTTP/WebSocket de Neon (@neondatabase/serverless) en vez del
+// driver `pg` estándar: `pg` necesita `pg-cloudflare` para hablar TCP en el
+// runtime de Workers, y ese require rompe el bundle de OpenNext (ver
+// commits anteriores) — el driver de Neon evita el problema de raíz porque
+// no usa sockets TCP, funciona igual en `next dev` (Node 22, WebSocket
+// nativo) y en Workers en producción. Los scripts (seed, etc.) siguen
+// usando `pg` directo — corren en Node puro, nunca se bundlean para Workers.
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+
+function createClient(): PrismaClient {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error("DATABASE_URL no está configurado");
+  }
+  const adapter = new PrismaNeon({ connectionString });
   return new PrismaClient({ adapter });
 }
 
-const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
-
-// Fuera de una request de Next.js (scripts, seed, `next build`): conexión
-// directa a Neon vía DATABASE_URL, cacheada en globalThis como singleton.
-function getLocalDb() {
+export async function getDb(): Promise<PrismaClient> {
   if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = createClient(process.env.DATABASE_URL!);
+    globalForPrisma.prisma = createClient();
   }
   return globalForPrisma.prisma;
-}
-
-/**
- * Cliente de Prisma para usar dentro de Server Components / Route Handlers /
- * Server Actions. En Cloudflare Workers (producción, y en local con
- * `initOpenNextCloudflareForDev`) usa el binding de Hyperdrive; si no hay
- * contexto de Cloudflare disponible cae a la conexión directa de Neon.
- *
- * Se crea un cliente nuevo por request en vez de reusar un singleton global
- * porque los isolates de Workers no garantizan poder reusar una conexión TCP
- * de forma segura entre requests — Hyperdrive ya hace el pooling real del
- * lado de Cloudflare.
- */
-export async function getDb(): Promise<PrismaClient> {
-  try {
-    const { env } = await getCloudflareContext({ async: true });
-    const hyperdrive = (
-      env as unknown as { HYPERDRIVE?: { connectionString: string } }
-    ).HYPERDRIVE;
-    if (hyperdrive) {
-      return createClient(hyperdrive.connectionString);
-    }
-  } catch {
-    // getCloudflareContext no disponible fuera del runtime de Workers.
-  }
-  return getLocalDb();
 }

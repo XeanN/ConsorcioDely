@@ -8,13 +8,12 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  // Hyperdrive "consorciodely-db", apunta a la conexión directa de Neon.
-  "hyperdrive": [
-    {
-      "binding": "HYPERDRIVE",
-      "id": "70862d1ccfa04d4e99c0d4431fe7a828"
-    }
-  ],
+  // Nota: el Hyperdrive "consorciodely-db" (id 70862d1ccfa04d4e99c0d4431fe7a828)
+  // se creó pensando en el driver `pg`, pero `pg` requiere `pg-cloudflare`
+  // para hablar TCP en Workers y eso rompe el bundle de OpenNext (ver
+  // historial de commits). Se cambió a @neondatabase/serverless (HTTP/WS,
+  // sin necesidad de Hyperdrive) — el recurso queda creado en Cloudflare
+  // pero sin usarse; no cuesta nada dejarlo así.
   // Bucket de R2 para las imágenes del catálogo.
   "r2_buckets": [
     {

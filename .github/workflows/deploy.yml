@@ -52,11 +52,6 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Wrangler necesita esto para resolver el binding "HYPERDRIVE" al
-          # correr `opennextjs-cloudflare deploy` (usa getPlatformProxy
-          # internamente) — no reemplaza la config real del Hyperdrive en
-          # Cloudflare, solo permite que el comando resuelva el binding.
-          CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE: ${{ secrets.NEON_DIRECT_URL }}
 
       - name: Deploy skipped (secrets not configured yet)
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && steps.check.outputs.ready != 'true'
