@@ -24,6 +24,9 @@
   // URL pública del bucket (R2 -> Public Access -> dominio *.r2.dev). No es
   // secreta, solo una URL de lectura — puede ir en texto plano acá.
   "vars": {
-    "MEDIA_PUBLIC_BASE_URL": "https://pub-60c7934288ac452ba86f88d86190298e.r2.dev"
+    "MEDIA_PUBLIC_BASE_URL": "https://pub-60c7934288ac452ba86f88d86190298e.r2.dev",
+    // Se usa para URLs absolutas (sitemap, JSON-LD, canonical). Cambiar
+    // acá cuando se conecte el dominio propio (Fase 7) — un solo lugar.
+    "SITE_URL": "https://consorciodely-web.angel-xp-pb.workers.dev"
   }
 }

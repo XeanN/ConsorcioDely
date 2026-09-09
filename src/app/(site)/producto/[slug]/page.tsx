@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
@@ -23,13 +25,9 @@ type VariantRow = {
   r2Key: string | null;
 };
 
-export default async function ProductPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-
+// cache(): React memoiza esto por request, así generateMetadata y la
+// página no duplican la misma consulta a la base.
+const getProduct = cache(async (slug: string) => {
   const [product] = (await sql()`
     SELECT p.id, p.name, p.description, c.name as "categoryName", b.name as "brandName", m."r2Key" as "r2Key"
     FROM products p
@@ -39,6 +37,41 @@ export default async function ProductPage({
     WHERE p.slug = ${slug} AND p.active = true
     LIMIT 1
   `) as ProductDetail[];
+  return product ?? null;
+});
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProduct(slug);
+  if (!product) return {};
+
+  const title = `${product.name} — Consorcio Dely`;
+  const description =
+    product.description ?? `${product.name} (${product.brandName}) — ${product.categoryName}.`;
+  const imageUrl = product.r2Key ? publicUrlFor(product.r2Key) : undefined;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: imageUrl ? [imageUrl] : undefined,
+    },
+  };
+}
+
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const product = await getProduct(slug);
 
   if (!product) {
     notFound();
@@ -62,8 +95,23 @@ export default async function ProductPage({
       ? publicUrlFor(variants.find((v) => v.r2Key)!.r2Key!)
       : null;
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description ?? undefined,
+    image: imageUrl ?? undefined,
+    brand: { "@type": "Brand", name: product.brandName },
+    category: product.categoryName,
+  };
+
   return (
     <div className="mx-auto max-w-4xl px-6 py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+
       <Link href="/catalogo" className="text-sm text-neutral-500 hover:underline">
         ← Catálogo
       </Link>

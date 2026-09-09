@@ -18,6 +18,11 @@ jobs:
     env:
       DATABASE_URL: "postgresql://placeholder:placeholder@localhost:5432/placeholder"
       DIRECT_URL: "postgresql://placeholder:placeholder@localhost:5432/placeholder"
+      # Coincide con wrangler.jsonc — por si algo se evalúa en build time
+      # (sitemap/robots ya son force-dynamic, pero esto es la red de
+      # seguridad si algo más lo necesita más adelante).
+      SITE_URL: "https://consorciodely-web.angel-xp-pb.workers.dev"
+      MEDIA_PUBLIC_BASE_URL: "https://pub-60c7934288ac452ba86f88d86190298e.r2.dev"
     steps:
       - uses: actions/checkout@v5
 

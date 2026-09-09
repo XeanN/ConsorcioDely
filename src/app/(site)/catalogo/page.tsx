@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ProductCard } from "@/components/site/ProductCard";
@@ -5,6 +6,11 @@ import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Catálogo — Consorcio Dely",
+  description: "Aceites, conservas, mermeladas y más — todo nuestro catálogo de abarrotes.",
+};
 
 type CategoryRow = { id: string; name: string; slug: string };
 type ProductRow = {

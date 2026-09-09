@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
+
 import { sql } from "@/lib/db";
 import { getRandomQuoteLink } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Contacto — Consorcio Dely",
+  description: "Teléfonos, dirección y WhatsApp para cotizar con Consorcio Dely.",
+};
 
 type SiteSettingRow = {
   phone: string | null;

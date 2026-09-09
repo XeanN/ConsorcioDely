@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { ProductCard } from "@/components/site/ProductCard";
 import { sql } from "@/lib/db";
@@ -15,16 +17,35 @@ type ProductRow = {
   r2Key: string | null;
 };
 
+const getCategory = cache(async (slug: string) => {
+  const [category] = (await sql()`
+    SELECT id, name, slug FROM categories WHERE slug = ${slug} LIMIT 1
+  `) as CategoryRow[];
+  return category ?? null;
+});
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ categoria: string }>;
+}): Promise<Metadata> {
+  const { categoria } = await params;
+  const category = await getCategory(categoria);
+  if (!category) return {};
+
+  return {
+    title: `${category.name} — Consorcio Dely`,
+    description: `Productos de la categoría ${category.name} en Consorcio Dely.`,
+  };
+}
+
 export default async function CategoryPage({
   params,
 }: {
   params: Promise<{ categoria: string }>;
 }) {
   const { categoria } = await params;
-
-  const [category] = (await sql()`
-    SELECT id, name, slug FROM categories WHERE slug = ${categoria} LIMIT 1
-  `) as CategoryRow[];
+  const category = await getCategory(categoria);
 
   if (!category) {
     notFound();
