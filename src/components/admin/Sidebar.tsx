@@ -5,6 +5,7 @@ import { logout } from "@/lib/actions/auth";
 const links = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/productos", label: "Productos" },
+  { href: "/admin/ejecutivas", label: "Ejecutivas" },
 ];
 
 export function Sidebar() {
