@@ -36,6 +36,7 @@ model Product {
   id          String    @id @default(cuid())
   categoryId  String
   brandId     String
+  mediaId     String? // foto principal del producto
   name        String
   slug        String    @unique
   description String?
@@ -43,6 +44,7 @@ model Product {
   position    Int       @default(0)
   category    Category  @relation(fields: [categoryId], references: [id])
   brand       Brand     @relation(fields: [brandId], references: [id])
+  media       Media?    @relation(fields: [mediaId], references: [id])
   variants    Variant[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -78,6 +80,7 @@ model Media {
   altText   String?
   width     Int?
   height    Int?
+  products  Product[]
   variants  Variant[]
   createdAt DateTime  @default(now())
 

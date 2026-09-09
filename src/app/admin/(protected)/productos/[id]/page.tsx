@@ -14,6 +14,7 @@ type ProductDetail = {
   brandId: string;
   description: string | null;
   active: boolean;
+  r2Key: string | null;
 };
 
 export default async function EditProductPage({
@@ -24,8 +25,10 @@ export default async function EditProductPage({
   const { id } = await params;
 
   const [product] = (await sql()`
-    SELECT id, "categoryId", "brandId", name, description, active
-    FROM products WHERE id = ${id} LIMIT 1
+    SELECT p.id, p."categoryId", p."brandId", p.name, p.description, p.active, m."r2Key" as "r2Key"
+    FROM products p
+    LEFT JOIN media m ON m.id = p."mediaId"
+    WHERE p.id = ${id} LIMIT 1
   `) as ProductDetail[];
 
   if (!product) {
@@ -68,7 +71,10 @@ export default async function EditProductPage({
           action={updateProduct.bind(null, id)}
           categories={categories}
           brands={brands}
-          defaultValues={product}
+          defaultValues={{
+            ...product,
+            imageUrl: product.r2Key ? publicUrlFor(product.r2Key) : null,
+          }}
         />
       </div>
 

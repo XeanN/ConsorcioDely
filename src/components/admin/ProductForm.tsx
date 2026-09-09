@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
+import { ImageUploader, type UploadedImage } from "@/components/admin/ImageUploader";
 import type { ProductFormState } from "@/lib/actions/products";
 
 const initialState: ProductFormState = {};
@@ -23,12 +24,33 @@ export function ProductForm({
     brandId: string;
     description: string | null;
     active: boolean;
+    imageUrl: string | null;
   };
 }) {
   const [state, formAction, pending] = useActionState(action, initialState);
+  const [uploadedImage, setUploadedImage] = useState<UploadedImage | null>(null);
 
   return (
     <form action={formAction} className="max-w-lg space-y-4">
+      <div className="space-y-1">
+        <label className="text-sm font-medium text-neutral-700">Foto principal</label>
+        <input type="hidden" name="mediaId" value={uploadedImage?.id ?? ""} />
+        {!uploadedImage && defaultValues?.imageUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={defaultValues.imageUrl}
+            alt=""
+            className="mb-2 h-24 w-24 rounded-md object-cover"
+          />
+        )}
+        <ImageUploader onUploaded={setUploadedImage} />
+        <p className="text-xs text-neutral-400">
+          {defaultValues?.imageUrl
+            ? "Sube una imagen nueva solo si quieres reemplazar la actual."
+            : ""}
+        </p>
+      </div>
+
       <div className="space-y-1">
         <label htmlFor="name" className="text-sm font-medium text-neutral-700">
           Nombre

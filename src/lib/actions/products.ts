@@ -17,6 +17,7 @@ const productSchema = z.object({
   brandId: z.string().trim().min(1, "Elige una marca"),
   description: z.string().trim().optional(),
   active: z.boolean(),
+  mediaId: z.string().trim().optional(),
 });
 
 function parseProductForm(formData: FormData) {
@@ -26,6 +27,7 @@ function parseProductForm(formData: FormData) {
     brandId: formData.get("brandId"),
     description: formData.get("description") ?? "",
     active: formData.get("active") === "on",
+    mediaId: formData.get("mediaId") ?? "",
   });
 }
 
@@ -52,11 +54,12 @@ export async function createProduct(
   try {
     await sql()`
       INSERT INTO products
-        (id, "categoryId", "brandId", name, slug, description, active, position, "createdAt", "updatedAt")
+        (id, "categoryId", "brandId", "mediaId", name, slug, description, active, position, "createdAt", "updatedAt")
       VALUES (
         ${id},
         ${parsed.data.categoryId},
         ${parsed.data.brandId},
+        ${parsed.data.mediaId || null},
         ${parsed.data.name},
         ${slug},
         ${parsed.data.description || null},
@@ -99,6 +102,7 @@ export async function updateProduct(
       SET
         "categoryId" = ${parsed.data.categoryId},
         "brandId" = ${parsed.data.brandId},
+        "mediaId" = COALESCE(${parsed.data.mediaId || null}, "mediaId"),
         name = ${parsed.data.name},
         slug = ${slug},
         description = ${parsed.data.description || null},
