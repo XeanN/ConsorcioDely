@@ -17,14 +17,6 @@ const nextConfig: NextConfig = {
   outputFileTracingExcludes: {
     "*": ["node_modules/sharp/**", "node_modules/@img/**"],
   },
-  // El cliente de Prisma para Workers (src/generated/prisma-client-workerd)
-  // carga su motor de queries como un módulo .wasm importado de forma
-  // estática — webpack necesita este flag explícito para tratar ese import
-  // como WebAssembly real en vez de intentar parsearlo como JS.
-  webpack: (config) => {
-    config.experiments = { ...config.experiments, asyncWebAssembly: true };
-    return config;
-  },
 };
 
 export default nextConfig;

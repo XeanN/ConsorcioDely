@@ -1,36 +1,22 @@
-import { PrismaNeon } from "@prisma/adapter-neon";
-// Import por ruta relativa directa a edge.js (no el paquete "@prisma/client"
-// ni su entrypoint por defecto): ese entrypoint decide entre la versión
-// Node.js y la versión Workers vía "exports condicionales" del package.json,
-// y esa resolución puede terminar eligiendo la ruta de Node igual (el
-// query engine intenta compilar WASM en tiempo de ejecución — algo que
-// Workers bloquea con "Wasm code generation disallowed by embedder").
-// edge.js es la variante generada específicamente para runtime="workerd"
-// (ver prisma/schema.prisma) que carga el WASM como import estático, sin
-// ambigüedad de resolución posible al importarla por ruta de archivo.
-import { PrismaClient } from "../generated/prisma-client-workerd/edge";
+import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
 
-// Driver HTTP/WebSocket de Neon (@neondatabase/serverless) en vez del
-// driver `pg` estándar: `pg` necesita `pg-cloudflare` para hablar TCP en el
-// runtime de Workers, y ese require rompe el bundle de OpenNext (ver
-// commits anteriores) — el driver de Neon evita el problema de raíz porque
-// no usa sockets TCP, funciona igual en `next dev` (Node 22, WebSocket
-// nativo) y en Workers en producción. Los scripts (seed, etc.) siguen
-// usando `pg` directo — corren en Node puro, nunca se bundlean para Workers.
-const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+// SQL crudo vía el driver HTTP/WebSocket de Neon, sin pasar por el motor de
+// queries de Prisma. Ese motor necesita cargar un módulo WebAssembly, y ni
+// Turbopack ni webpack producen un bundle que respete las restricciones de
+// Cloudflare Workers para WASM (varios intentos documentados en el
+// historial de commits, cada uno con un error distinto) — Neon expone SQL
+// directo, sin motor que cargar, evitando el problema de raíz. Los scripts
+// (seed, etc.) siguen usando Prisma con el driver `pg`; corren en Node
+// puro y nunca se bundlean para Workers.
+let cached: NeonQueryFunction<false, false> | undefined;
 
-function createClient(): PrismaClient {
-  const connectionString = process.env.DATABASE_URL;
-  if (!connectionString) {
-    throw new Error("DATABASE_URL no está configurado");
+export function sql(): NeonQueryFunction<false, false> {
+  if (!cached) {
+    const connectionString = process.env.DATABASE_URL;
+    if (!connectionString) {
+      throw new Error("DATABASE_URL no está configurado");
+    }
+    cached = neon(connectionString);
   }
-  const adapter = new PrismaNeon({ connectionString });
-  return new PrismaClient({ adapter });
-}
-
-export async function getDb(): Promise<PrismaClient> {
-  if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = createClient();
-  }
-  return globalForPrisma.prisma;
+  return cached;
 }

@@ -4,8 +4,10 @@ import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-import { getDb } from "@/lib/db";
+import { sql } from "@/lib/db";
 import { createSession, destroySession } from "@/lib/session";
+
+type AdminUserRow = { id: string; passwordHash: string };
 
 export type LoginFormState = { error?: string };
 
@@ -26,8 +28,10 @@ export async function login(
     return { error: parsed.error.issues[0]?.message ?? "Datos inválidos" };
   }
 
-  const db = await getDb();
-  const user = await db.adminUser.findUnique({ where: { email: parsed.data.email } });
+  const rows = (await sql()`
+    SELECT id, "passwordHash" FROM admin_users WHERE email = ${parsed.data.email} LIMIT 1
+  `) as AdminUserRow[];
+  const user = rows[0];
   const validCredentials =
     user != null && (await bcrypt.compare(parsed.data.password, user.passwordHash));
 

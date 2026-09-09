@@ -2,20 +2,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Cliente separado para el runtime de Cloudflare Workers (usado por
-// src/lib/db.ts, la app real). Next.js resuelve `@prisma/client` como si
-// el destino fuera Node.js durante `next build` (antes de que OpenNext
-// sepa que el target final es Workers), así que sin esto la app queda con
-// el motor de queries que compila WASM en tiempo de ejecución — algo que
-// Workers bloquea ("Wasm code generation disallowed by embedder"). Los
-// scripts (seed, etc.) siguen usando el cliente default de arriba, corren
-// en Node puro y no tienen este problema.
-generator client_workerd {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma-client-workerd"
-  runtime  = "workerd"
-}
-
 datasource db {
   provider = "postgresql"
 }
