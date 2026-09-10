@@ -5,8 +5,9 @@ import { sql } from "@/lib/db";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Legales — Consorcio Dely",
+  title: "Legales",
   description: "Razón social, RUC y certificaciones de Consorcio Dely S.A.C.",
+  alternates: { canonical: "/legal" },
 };
 
 type SiteSettingRow = {

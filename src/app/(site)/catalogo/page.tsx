@@ -8,8 +8,9 @@ import { publicUrlFor } from "@/lib/media";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Catálogo — Consorcio Dely",
+  title: "Catálogo",
   description: "Aceites, conservas, mermeladas y más — todo nuestro catálogo de abarrotes.",
+  alternates: { canonical: "/catalogo" },
 };
 
 type CategoryRow = { id: string; name: string; slug: string };

@@ -22,6 +22,7 @@ export function ProductCard({
           <img
             src={imageUrl}
             alt={name}
+            loading="lazy"
             className="h-full w-full object-cover transition-transform group-hover:scale-105"
           />
         ) : (

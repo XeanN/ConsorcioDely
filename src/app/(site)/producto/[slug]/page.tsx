@@ -14,6 +14,7 @@ type ProductDetail = {
   name: string;
   description: string | null;
   categoryName: string;
+  categorySlug: string;
   brandName: string;
   r2Key: string | null;
 };
@@ -29,7 +30,7 @@ type VariantRow = {
 // página no duplican la misma consulta a la base.
 const getProduct = cache(async (slug: string) => {
   const [product] = (await sql()`
-    SELECT p.id, p.name, p.description, c.name as "categoryName", b.name as "brandName", m."r2Key" as "r2Key"
+    SELECT p.id, p.name, p.description, c.name as "categoryName", c.slug as "categorySlug", b.name as "brandName", m."r2Key" as "r2Key"
     FROM products p
     JOIN categories c ON c.id = p."categoryId"
     JOIN brands b ON b.id = p."brandId"
@@ -49,16 +50,16 @@ export async function generateMetadata({
   const product = await getProduct(slug);
   if (!product) return {};
 
-  const title = `${product.name} — Consorcio Dely`;
   const description =
     product.description ?? `${product.name} (${product.brandName}) — ${product.categoryName}.`;
   const imageUrl = product.r2Key ? publicUrlFor(product.r2Key) : undefined;
 
   return {
-    title,
+    title: product.name,
     description,
+    alternates: { canonical: `/producto/${slug}` },
     openGraph: {
-      title,
+      title: product.name,
       description,
       images: imageUrl ? [imageUrl] : undefined,
     },
@@ -105,16 +106,44 @@ export default async function ProductPage({
     category: product.categoryName,
   };
 
+  const baseUrl = process.env.SITE_URL ?? "https://consorciodely-web.angel-xp-pb.workers.dev";
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Catálogo", item: `${baseUrl}/catalogo` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: product.categoryName,
+        item: `${baseUrl}/catalogo/${product.categorySlug}`,
+      },
+      { "@type": "ListItem", position: 3, name: product.name, item: `${baseUrl}/producto/${slug}` },
+    ],
+  };
+
   return (
     <div className="mx-auto max-w-4xl px-6 py-10">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
 
-      <Link href="/catalogo" className="text-sm text-neutral-500 hover:underline">
-        ← Catálogo
-      </Link>
+      <nav aria-label="Ruta de navegación" className="flex flex-wrap gap-1 text-sm text-neutral-500">
+        <Link href="/catalogo" className="hover:underline">
+          Catálogo
+        </Link>
+        <span>/</span>
+        <Link href={`/catalogo/${product.categorySlug}`} className="hover:underline">
+          {product.categoryName}
+        </Link>
+        <span>/</span>
+        <span className="text-neutral-700">{product.name}</span>
+      </nav>
 
       <div className="mt-4 grid gap-8 sm:grid-cols-2">
         <div className="aspect-square w-full overflow-hidden rounded-lg bg-neutral-100">

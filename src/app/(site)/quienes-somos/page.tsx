@@ -5,9 +5,10 @@ import { sql } from "@/lib/db";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Quiénes somos — Consorcio Dely",
+  title: "Quiénes somos",
   description:
     "Empresa peruana dedicada a la fabricación, envasado y comercialización de abarrotes a nivel nacional.",
+  alternates: { canonical: "/quienes-somos" },
 };
 
 type ContentBlockRow = { key: string; value: string };

@@ -34,8 +34,9 @@ export async function generateMetadata({
   if (!category) return {};
 
   return {
-    title: `${category.name} — Consorcio Dely`,
+    title: category.name,
     description: `Productos de la categoría ${category.name} en Consorcio Dely.`,
+    alternates: { canonical: `/catalogo/${category.slug}` },
   };
 }
 
