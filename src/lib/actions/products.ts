@@ -11,6 +11,12 @@ import { slugify } from "@/lib/slug";
 
 export type ProductFormState = { error?: string };
 
+const nutritionRowSchema = z.object({
+  label: z.string().trim(),
+  value: z.string().trim(),
+  dailyValue: z.string().trim().optional(),
+});
+
 const productSchema = z.object({
   name: z.string().trim().min(2, "El nombre es muy corto"),
   categoryId: z.string().trim().min(1, "Elige una categoría"),
@@ -18,9 +24,19 @@ const productSchema = z.object({
   description: z.string().trim().optional(),
   active: z.boolean(),
   mediaId: z.string().trim().optional(),
+  nutritionServingSize: z.string().trim().optional(),
+  nutritionServingsPerContainer: z.string().trim().optional(),
+  nutritionFacts: z.array(nutritionRowSchema).optional(),
 });
 
 function parseProductForm(formData: FormData) {
+  let nutritionFacts: unknown = [];
+  try {
+    nutritionFacts = JSON.parse(String(formData.get("nutritionFacts") ?? "[]"));
+  } catch {
+    nutritionFacts = [];
+  }
+
   return productSchema.safeParse({
     name: formData.get("name"),
     categoryId: formData.get("categoryId"),
@@ -28,7 +44,15 @@ function parseProductForm(formData: FormData) {
     description: formData.get("description") ?? "",
     active: formData.get("active") === "on",
     mediaId: formData.get("mediaId") ?? "",
+    nutritionServingSize: formData.get("nutritionServingSize") ?? "",
+    nutritionServingsPerContainer: formData.get("nutritionServingsPerContainer") ?? "",
+    nutritionFacts,
   });
+}
+
+function nutritionFactsJson(rows: z.infer<typeof nutritionRowSchema>[] | undefined) {
+  const cleaned = (rows ?? []).filter((r) => r.label && r.value);
+  return cleaned.length > 0 ? JSON.stringify(cleaned) : null;
 }
 
 function isUniqueViolation(err: unknown): boolean {
@@ -54,7 +78,9 @@ export async function createProduct(
   try {
     await sql()`
       INSERT INTO products
-        (id, "categoryId", "brandId", "mediaId", name, slug, description, active, position, "createdAt", "updatedAt")
+        (id, "categoryId", "brandId", "mediaId", name, slug, description, active, position,
+         "nutritionServingSize", "nutritionServingsPerContainer", "nutritionFacts",
+         "createdAt", "updatedAt")
       VALUES (
         ${id},
         ${parsed.data.categoryId},
@@ -65,6 +91,9 @@ export async function createProduct(
         ${parsed.data.description || null},
         ${parsed.data.active},
         (SELECT COUNT(*)::int FROM products),
+        ${parsed.data.nutritionServingSize || null},
+        ${parsed.data.nutritionServingsPerContainer || null},
+        ${nutritionFactsJson(parsed.data.nutritionFacts)},
         now(),
         now()
       )
@@ -107,6 +136,9 @@ export async function updateProduct(
         slug = ${slug},
         description = ${parsed.data.description || null},
         active = ${parsed.data.active},
+        "nutritionServingSize" = ${parsed.data.nutritionServingSize || null},
+        "nutritionServingsPerContainer" = ${parsed.data.nutritionServingsPerContainer || null},
+        "nutritionFacts" = ${nutritionFactsJson(parsed.data.nutritionFacts)},
         "updatedAt" = now()
       WHERE id = ${id}
     `;

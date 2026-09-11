@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
+import type { NutritionRow } from "@/components/admin/NutritionFactsEditor";
 import { ProductForm, type SelectOption } from "@/components/admin/ProductForm";
 import { VariantManager, type VariantRow } from "@/components/admin/VariantManager";
 import { updateProduct } from "@/lib/actions/products";
@@ -15,6 +16,9 @@ type ProductDetail = {
   description: string | null;
   active: boolean;
   r2Key: string | null;
+  nutritionServingSize: string | null;
+  nutritionServingsPerContainer: string | null;
+  nutritionFacts: NutritionRow[] | null;
 };
 
 export default async function EditProductPage({
@@ -25,7 +29,8 @@ export default async function EditProductPage({
   const { id } = await params;
 
   const [product] = (await sql()`
-    SELECT p.id, p."categoryId", p."brandId", p.name, p.description, p.active, m."r2Key" as "r2Key"
+    SELECT p.id, p."categoryId", p."brandId", p.name, p.description, p.active, m."r2Key" as "r2Key",
+      p."nutritionServingSize", p."nutritionServingsPerContainer", p."nutritionFacts"
     FROM products p
     LEFT JOIN media m ON m.id = p."mediaId"
     WHERE p.id = ${id} LIMIT 1

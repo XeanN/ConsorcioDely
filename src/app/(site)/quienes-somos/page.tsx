@@ -12,11 +12,16 @@ export const metadata: Metadata = {
 };
 
 type ContentBlockRow = { key: string; value: string };
+type SiteSettingRow = { email: string | null };
 
 export default async function AboutPage() {
   const rows = (await sql()`
     SELECT key, value FROM content_blocks WHERE key IN ('quienes_somos', 'responsabilidad_social')
   `) as ContentBlockRow[];
+
+  const [settings] = (await sql()`
+    SELECT email FROM site_settings WHERE id = 1 LIMIT 1
+  `) as SiteSettingRow[];
 
   const quienesSomos = rows.find((r) => r.key === "quienes_somos")?.value;
   const responsabilidadSocial = rows.find((r) => r.key === "responsabilidad_social")?.value;
@@ -38,6 +43,22 @@ export default async function AboutPage() {
           </p>
         </>
       )}
+
+      <div className="mt-10 rounded-xl bg-brand-red p-6 text-white">
+        <h2 className="text-lg font-bold">Trabaja con nosotros</h2>
+        <p className="mt-2 text-sm text-white/90">
+          Nuestro equipo es tan valioso como cada persona que lo conforma. Si quieres ser parte de
+          Consorcio Dely, escríbenos.
+        </p>
+        {settings?.email && (
+          <a
+            href={`mailto:${settings.email}?subject=Postulaci%C3%B3n`}
+            className="mt-3 inline-block text-sm font-semibold underline underline-offset-2"
+          >
+            Postula haciendo clic aquí →
+          </a>
+        )}
+      </div>
     </div>
   );
 }

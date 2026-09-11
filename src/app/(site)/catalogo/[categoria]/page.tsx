@@ -60,12 +60,38 @@ export default async function CategoryPage({
     ORDER BY p.position ASC
   `) as ProductRow[];
 
+  const allCategories = (await sql()`
+    SELECT id, name, slug FROM categories ORDER BY position ASC
+  `) as CategoryRow[];
+
   return (
     <div className="mx-auto max-w-5xl px-6 py-10">
       <Link href="/catalogo" className="text-sm text-neutral-500 hover:underline">
         ← Todo el catálogo
       </Link>
       <h1 className="mt-2 text-2xl font-semibold text-neutral-900">{category.name}</h1>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Link
+          href="/catalogo"
+          className="rounded-full border border-neutral-300 px-4 py-1.5 text-xs font-medium text-neutral-600 hover:border-brand-red hover:text-brand-red"
+        >
+          Todas
+        </Link>
+        {allCategories.map((c) => (
+          <Link
+            key={c.id}
+            href={`/catalogo/${c.slug}`}
+            className={
+              c.slug === category.slug
+                ? "rounded-full bg-brand-red px-4 py-1.5 text-xs font-semibold text-white"
+                : "rounded-full border border-neutral-300 px-4 py-1.5 text-xs font-medium text-neutral-600 hover:border-brand-red hover:text-brand-red"
+            }
+          >
+            {c.name}
+          </Link>
+        ))}
+      </div>
 
       {products.length === 0 ? (
         <p className="mt-8 text-sm text-neutral-500">Todavía no hay productos en esta categoría.</p>

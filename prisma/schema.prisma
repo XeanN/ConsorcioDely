@@ -42,6 +42,12 @@ model Product {
   description String?
   active      Boolean   @default(true)
   position    Int       @default(0)
+  // Tabla nutricional (opcional). nutritionFacts es un arreglo de filas
+  // [{ label, value, dailyValue? }] -- flexible porque cada producto puede
+  // tener nutrientes distintos, en vez de una columna fija por nutriente.
+  nutritionServingSize            String?
+  nutritionServingsPerContainer   String?
+  nutritionFacts                  Json?
   category    Category  @relation(fields: [categoryId], references: [id])
   brand       Brand     @relation(fields: [brandId], references: [id])
   media       Media?    @relation(fields: [mediaId], references: [id])

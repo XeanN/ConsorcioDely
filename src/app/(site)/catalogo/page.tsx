@@ -41,11 +41,14 @@ export default async function CatalogPage() {
       <h1 className="text-2xl font-semibold text-neutral-900">Catálogo</h1>
 
       <div className="mt-4 flex flex-wrap gap-2">
+        <span className="rounded-full bg-brand-red px-4 py-1.5 text-xs font-semibold text-white">
+          Todas
+        </span>
         {categories.map((c) => (
           <Link
             key={c.id}
             href={`/catalogo/${c.slug}`}
-            className="rounded-full border border-neutral-300 px-3 py-1 text-xs font-medium text-neutral-600 hover:border-neutral-500 hover:text-neutral-900"
+            className="rounded-full border border-neutral-300 px-4 py-1.5 text-xs font-medium text-neutral-600 hover:border-brand-red hover:text-brand-red"
           >
             {c.name}
           </Link>

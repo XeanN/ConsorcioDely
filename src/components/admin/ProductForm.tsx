@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 
 import { ImageUploader, type UploadedImage } from "@/components/admin/ImageUploader";
+import { NutritionFactsEditor, type NutritionRow } from "@/components/admin/NutritionFactsEditor";
 import type { ProductFormState } from "@/lib/actions/products";
 
 const initialState: ProductFormState = {};
@@ -25,6 +26,9 @@ export function ProductForm({
     description: string | null;
     active: boolean;
     imageUrl: string | null;
+    nutritionServingSize?: string | null;
+    nutritionServingsPerContainer?: string | null;
+    nutritionFacts?: NutritionRow[] | null;
   };
 }) {
   const [state, formAction, pending] = useActionState(action, initialState);
@@ -133,6 +137,12 @@ export function ProductForm({
         />
         Visible en el sitio
       </label>
+
+      <NutritionFactsEditor
+        defaultServingSize={defaultValues?.nutritionServingSize ?? undefined}
+        defaultServingsPerContainer={defaultValues?.nutritionServingsPerContainer ?? undefined}
+        defaultRows={defaultValues?.nutritionFacts ?? undefined}
+      />
 
       {state.error && <p className="text-sm text-red-600">{state.error}</p>}
 

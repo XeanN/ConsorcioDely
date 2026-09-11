@@ -9,6 +9,8 @@ import { getRandomQuoteLink } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
+type NutritionRow = { label: string; value: string; dailyValue?: string };
+
 type ProductDetail = {
   id: string;
   name: string;
@@ -17,12 +19,16 @@ type ProductDetail = {
   categorySlug: string;
   brandName: string;
   r2Key: string | null;
+  nutritionServingSize: string | null;
+  nutritionServingsPerContainer: string | null;
+  nutritionFacts: NutritionRow[] | null;
 };
 
 type VariantRow = {
   id: string;
   presentation: string | null;
   weight: string;
+  sku: string | null;
   r2Key: string | null;
 };
 
@@ -30,7 +36,8 @@ type VariantRow = {
 // página no duplican la misma consulta a la base.
 const getProduct = cache(async (slug: string) => {
   const [product] = (await sql()`
-    SELECT p.id, p.name, p.description, c.name as "categoryName", c.slug as "categorySlug", b.name as "brandName", m."r2Key" as "r2Key"
+    SELECT p.id, p.name, p.description, c.name as "categoryName", c.slug as "categorySlug", b.name as "brandName", m."r2Key" as "r2Key",
+      p."nutritionServingSize", p."nutritionServingsPerContainer", p."nutritionFacts"
     FROM products p
     JOIN categories c ON c.id = p."categoryId"
     JOIN brands b ON b.id = p."brandId"
@@ -79,7 +86,7 @@ export default async function ProductPage({
   }
 
   const variants = (await sql()`
-    SELECT v.id, v.presentation, v.weight, m."r2Key" as "r2Key"
+    SELECT v.id, v.presentation, v.weight, v.sku, m."r2Key" as "r2Key"
     FROM variants v
     LEFT JOIN media m ON m.id = v."mediaId"
     WHERE v."productId" = ${product.id} AND v.active = true
@@ -174,10 +181,36 @@ export default async function ProductPage({
                   <li key={v.id}>
                     {v.presentation ? `${v.presentation} — ` : ""}
                     {v.weight}
+                    {v.sku && <span className="text-neutral-400"> · SKU {v.sku}</span>}
                   </li>
                 ))}
               </ul>
             </div>
+          )}
+
+          {product.nutritionFacts && product.nutritionFacts.length > 0 && (
+            <details className="mt-6 rounded-md border border-neutral-200">
+              <summary className="cursor-pointer select-none px-4 py-3 text-sm font-medium text-brand-green">
+                Tabla nutricional
+              </summary>
+              <div className="border-t border-neutral-200 px-4 py-3 text-sm text-neutral-600">
+                {product.nutritionServingSize && <p>Porción: {product.nutritionServingSize}</p>}
+                {product.nutritionServingsPerContainer && (
+                  <p>Porciones por envase: {product.nutritionServingsPerContainer}</p>
+                )}
+                <table className="mt-2 w-full text-left text-sm">
+                  <tbody className="divide-y divide-neutral-100">
+                    {product.nutritionFacts.map((row, i) => (
+                      <tr key={i}>
+                        <td className="py-1 pr-3 text-neutral-700">{row.label}</td>
+                        <td className="py-1 pr-3">{row.value}</td>
+                        {row.dailyValue && <td className="py-1 text-neutral-400">{row.dailyValue}</td>}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </details>
           )}
 
           {quoteLink && (
