@@ -66,6 +66,7 @@ model Variant {
   productId    String
   presentation String? // "vaso", "pote", "barril", "bolsa moño"... (nullable: no todos los productos la tienen)
   weight       String // texto libre tal como en el PDF: "200 ml", "5 Kg", "10 L"
+  packSize     String? // texto libre, ej. "Caja x 24 Unidades"
   sku          String?  @unique
   active       Boolean  @default(true)
   position     Int      @default(0)

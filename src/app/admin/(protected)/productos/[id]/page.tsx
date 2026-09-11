@@ -44,7 +44,7 @@ export default async function EditProductPage({
   const brands = (await sql()`SELECT id, name FROM brands ORDER BY name ASC`) as SelectOption[];
 
   const variantRows = (await sql()`
-    SELECT v.id, v.presentation, v.weight, v.sku, v.active, m."r2Key" as "r2Key"
+    SELECT v.id, v.presentation, v.weight, v."packSize", v.sku, v.active, m."r2Key" as "r2Key"
     FROM variants v
     LEFT JOIN media m ON m.id = v."mediaId"
     WHERE v."productId" = ${id}
@@ -53,6 +53,7 @@ export default async function EditProductPage({
     id: string;
     presentation: string | null;
     weight: string;
+    packSize: string | null;
     sku: string | null;
     active: boolean;
     r2Key: string | null;
@@ -62,6 +63,7 @@ export default async function EditProductPage({
     id: v.id,
     presentation: v.presentation,
     weight: v.weight,
+    packSize: v.packSize,
     sku: v.sku,
     active: v.active,
     imageUrl: v.r2Key ? publicUrlFor(v.r2Key) : null,

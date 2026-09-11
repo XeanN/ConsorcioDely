@@ -13,6 +13,7 @@ const variantSchema = z.object({
   productId: z.string().trim().min(1),
   presentation: z.string().trim().optional(),
   weight: z.string().trim().min(1, "El peso/presentación es obligatorio"),
+  packSize: z.string().trim().optional(),
   sku: z.string().trim().optional(),
   mediaId: z.string().trim().optional(),
 });
@@ -26,6 +27,7 @@ export async function createVariant(
     productId: formData.get("productId"),
     presentation: formData.get("presentation") ?? "",
     weight: formData.get("weight"),
+    packSize: formData.get("packSize") ?? "",
     sku: formData.get("sku") ?? "",
     mediaId: formData.get("mediaId") ?? "",
   });
@@ -35,12 +37,13 @@ export async function createVariant(
 
   await sql()`
     INSERT INTO variants
-      (id, "productId", presentation, weight, sku, active, position, "mediaId", "createdAt", "updatedAt")
+      (id, "productId", presentation, weight, "packSize", sku, active, position, "mediaId", "createdAt", "updatedAt")
     VALUES (
       ${newId()},
       ${parsed.data.productId},
       ${parsed.data.presentation || null},
       ${parsed.data.weight},
+      ${parsed.data.packSize || null},
       ${parsed.data.sku || null},
       true,
       (SELECT COUNT(*)::int FROM variants WHERE "productId" = ${parsed.data.productId}),

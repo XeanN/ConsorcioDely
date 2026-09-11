@@ -14,6 +14,7 @@ export type VariantRow = {
   id: string;
   presentation: string | null;
   weight: string;
+  packSize: string | null;
   sku: string | null;
   active: boolean;
   imageUrl: string | null;
@@ -50,6 +51,7 @@ export function VariantManager({
             <div className="flex-1 text-sm text-neutral-900">
               {v.presentation ? `${v.presentation} — ` : ""}
               {v.weight}
+              {v.packSize && <span className="text-neutral-400"> · {v.packSize}</span>}
               {v.sku && <span className="text-neutral-400"> · SKU {v.sku}</span>}
               {!v.active && <span className="text-neutral-400"> · oculta</span>}
             </div>
@@ -79,7 +81,10 @@ export function VariantManager({
           <input name="presentation" placeholder="Presentación (ej. botella amarilla)" className={inputClass} />
           <input name="weight" placeholder="Peso (ej. 5 L)" required className={inputClass} />
         </div>
-        <input name="sku" placeholder="SKU (opcional)" className={inputClass} />
+        <div className="grid grid-cols-2 gap-3">
+          <input name="packSize" placeholder="Presentación por caja (ej. Caja x 24 Unidades)" className={inputClass} />
+          <input name="sku" placeholder="SKU (opcional)" className={inputClass} />
+        </div>
         <ImageUploader onUploaded={setUploadedImage} />
 
         {state.error && <p className="text-sm text-red-600">{state.error}</p>}

@@ -28,6 +28,7 @@ type VariantRow = {
   id: string;
   presentation: string | null;
   weight: string;
+  packSize: string | null;
   sku: string | null;
   r2Key: string | null;
 };
@@ -86,7 +87,7 @@ export default async function ProductPage({
   }
 
   const variants = (await sql()`
-    SELECT v.id, v.presentation, v.weight, v.sku, m."r2Key" as "r2Key"
+    SELECT v.id, v.presentation, v.weight, v."packSize", v.sku, m."r2Key" as "r2Key"
     FROM variants v
     LEFT JOIN media m ON m.id = v."mediaId"
     WHERE v."productId" = ${product.id} AND v.active = true
@@ -181,6 +182,7 @@ export default async function ProductPage({
                   <li key={v.id}>
                     {v.presentation ? `${v.presentation} — ` : ""}
                     {v.weight}
+                    {v.packSize && <span className="text-neutral-400"> · {v.packSize}</span>}
                     {v.sku && <span className="text-neutral-400"> · SKU {v.sku}</span>}
                   </li>
                 ))}

@@ -16,7 +16,10 @@ export function ProductCard({
       href={href}
       className="group block overflow-hidden rounded-lg border border-neutral-200 bg-white transition-shadow hover:shadow-md"
     >
-      <div className="aspect-square w-full bg-neutral-100">
+      <div className="relative aspect-square w-full bg-neutral-100">
+        <span className="absolute left-2 top-2 z-10 rounded-full bg-brand-green px-2 py-0.5 text-[10px] font-bold tracking-wide text-white">
+          PRODUCTO PERUANO
+        </span>
         {imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -32,8 +35,10 @@ export function ProductCard({
         )}
       </div>
       <div className="p-3">
-        <p className="text-xs text-neutral-400">{categoryName}</p>
-        <p className="text-sm font-medium text-neutral-900">{name}</p>
+        <span className="inline-block rounded-full bg-brand-red/10 px-2 py-0.5 text-[11px] font-medium text-brand-red">
+          {categoryName}
+        </span>
+        <p className="mt-1.5 text-sm font-medium text-neutral-900">{name}</p>
       </div>
     </Link>
   );
