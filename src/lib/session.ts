@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 
-const COOKIE_NAME = "session";
+export const SESSION_COOKIE_NAME = "session";
+const COOKIE_NAME = SESSION_COOKIE_NAME;
 const MAX_AGE_SECONDS = 60 * 60 * 24 * 7; // 7 días
 
 type SessionPayload = { userId: string; exp: number };
@@ -46,7 +47,9 @@ async function sign(payload: SessionPayload): Promise<string> {
   return `${payloadB64}.${sigB64}`;
 }
 
-async function verify(token: string): Promise<SessionPayload | null> {
+// Exportada para uso en middleware.ts, que recibe el token vía
+// NextRequest.cookies en vez de next/headers (no disponible en ese contexto).
+export async function verifySessionToken(token: string): Promise<SessionPayload | null> {
   const [payloadB64, sigB64] = token.split(".");
   if (!payloadB64 || !sigB64) return null;
 
@@ -86,5 +89,5 @@ export async function getSession(): Promise<SessionPayload | null> {
   const store = await cookies();
   const token = store.get(COOKIE_NAME)?.value;
   if (!token) return null;
-  return verify(token);
+  return verifySessionToken(token);
 }
