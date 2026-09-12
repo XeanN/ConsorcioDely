@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
     // antes de subirse a R2, así que no dependemos del optimizador de
     // next/image (no corre en el runtime de Cloudflare Workers).
     unoptimized: true,
+    // Dominios remotos permitidos para next/image
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "*.r2.dev" },
+      { protocol: "https", hostname: "*.cloudflare.com" },
+    ],
   },
   // `sharp` es dependencia opcional de Next (la usa next/image internamente),
   // pero no la usamos (unoptimized: true arriba). serverExternalPackages
