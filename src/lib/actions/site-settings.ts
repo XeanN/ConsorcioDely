@@ -18,6 +18,8 @@ const socialLinksSchema = z.object({
   facebookUrl: urlField,
   instagramUrl: urlField,
   twitterUrl: urlField,
+  tiktokUrl: urlField,
+  youtubeUrl: urlField,
 });
 
 export async function updateSocialLinks(
@@ -30,18 +32,30 @@ export async function updateSocialLinks(
     facebookUrl: formData.get("facebookUrl") ?? "",
     instagramUrl: formData.get("instagramUrl") ?? "",
     twitterUrl: formData.get("twitterUrl") ?? "",
+    tiktokUrl: formData.get("tiktokUrl") ?? "",
+    youtubeUrl: formData.get("youtubeUrl") ?? "",
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Datos inválidos" };
   }
 
   await sql()`
-    INSERT INTO site_settings (id, "facebookUrl", "instagramUrl", "twitterUrl", "updatedAt")
-    VALUES (1, ${parsed.data.facebookUrl || null}, ${parsed.data.instagramUrl || null}, ${parsed.data.twitterUrl || null}, now())
+    INSERT INTO site_settings (id, "facebookUrl", "instagramUrl", "twitterUrl", "tiktokUrl", "youtubeUrl", "updatedAt")
+    VALUES (
+      1,
+      ${parsed.data.facebookUrl || null},
+      ${parsed.data.instagramUrl || null},
+      ${parsed.data.twitterUrl || null},
+      ${parsed.data.tiktokUrl || null},
+      ${parsed.data.youtubeUrl || null},
+      now()
+    )
     ON CONFLICT (id) DO UPDATE SET
       "facebookUrl" = EXCLUDED."facebookUrl",
       "instagramUrl" = EXCLUDED."instagramUrl",
       "twitterUrl" = EXCLUDED."twitterUrl",
+      "tiktokUrl" = EXCLUDED."tiktokUrl",
+      "youtubeUrl" = EXCLUDED."youtubeUrl",
       "updatedAt" = now()
   `;
 

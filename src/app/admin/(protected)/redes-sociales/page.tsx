@@ -6,11 +6,14 @@ type SiteSettingRow = {
   facebookUrl: string | null;
   instagramUrl: string | null;
   twitterUrl: string | null;
+  tiktokUrl: string | null;
+  youtubeUrl: string | null;
 };
 
 export default async function SocialLinksPage() {
   const [settings] = (await sql()`
-    SELECT "facebookUrl", "instagramUrl", "twitterUrl" FROM site_settings WHERE id = 1 LIMIT 1
+    SELECT "facebookUrl", "instagramUrl", "twitterUrl", "tiktokUrl", "youtubeUrl"
+    FROM site_settings WHERE id = 1 LIMIT 1
   `) as SiteSettingRow[];
 
   return (
@@ -26,6 +29,8 @@ export default async function SocialLinksPage() {
             facebookUrl: settings?.facebookUrl ?? null,
             instagramUrl: settings?.instagramUrl ?? null,
             twitterUrl: settings?.twitterUrl ?? null,
+            tiktokUrl: settings?.tiktokUrl ?? null,
+            youtubeUrl: settings?.youtubeUrl ?? null,
           }}
         />
       </div>

@@ -133,6 +133,8 @@ model SiteSetting {
   facebookUrl       String?
   instagramUrl      String?
   twitterUrl        String?
+  tiktokUrl         String?
+  youtubeUrl        String?
   complaintsBookUrl String?
   updatedAt         DateTime @updatedAt
 

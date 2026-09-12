@@ -11,15 +11,23 @@ type SiteSettingRow = {
   facebookUrl: string | null;
   instagramUrl: string | null;
   twitterUrl: string | null;
+  tiktokUrl: string | null;
+  youtubeUrl: string | null;
 };
 
 export async function Footer() {
   const [settings] = (await sql()`
-    SELECT "legalName", ruc, "fiscalAddress", phone, email, "facebookUrl", "instagramUrl", "twitterUrl"
+    SELECT "legalName", ruc, "fiscalAddress", phone, email,
+      "facebookUrl", "instagramUrl", "twitterUrl", "tiktokUrl", "youtubeUrl"
     FROM site_settings WHERE id = 1 LIMIT 1
   `) as SiteSettingRow[];
 
-  const hasSocial = settings?.facebookUrl || settings?.instagramUrl || settings?.twitterUrl;
+  const hasSocial =
+    settings?.facebookUrl ||
+    settings?.instagramUrl ||
+    settings?.twitterUrl ||
+    settings?.tiktokUrl ||
+    settings?.youtubeUrl;
 
   const currentYear = new Date().getFullYear();
 
@@ -85,6 +93,32 @@ export async function Footer() {
                     >
                       <svg className="h-4 w-4 fill-white" viewBox="0 0 24 24">
                         <path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-6.9L4.4 22H1.3l8.2-9.3L1 2h7.1l4.9 6.3L18.9 2Zm-1.2 18h1.9L6.4 3.9H4.4L17.7 20Z" />
+                      </svg>
+                    </a>
+                  )}
+                  {settings?.tiktokUrl && (
+                    <a
+                      href={settings.tiktokUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="TikTok"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-brand-red"
+                    >
+                      <svg className="h-4 w-4 fill-white" viewBox="0 0 24 24">
+                        <path d="M16.5 2h3.2c.2 1.6 1.1 3 2.5 3.9 1 .6 2.1.9 3.3.9v3.3c-1.7 0-3.3-.5-4.7-1.4v7.3c0 3.7-3 6.7-6.7 6.7S7.4 19.7 7.4 16s3-6.7 6.7-6.7c.3 0 .6 0 .9.1v3.4a3.4 3.4 0 1 0 2.4 3.2V2Z" />
+                      </svg>
+                    </a>
+                  )}
+                  {settings?.youtubeUrl && (
+                    <a
+                      href={settings.youtubeUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="YouTube"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-brand-red"
+                    >
+                      <svg className="h-4 w-4 fill-white" viewBox="0 0 24 24">
+                        <path d="M23.5 7.2s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.4-1C16.9 3.6 12 3.6 12 3.6h0s-4.9 0-8.2.3c-.5.1-1.5.1-2.4 1-.7.7-.9 2.3-.9 2.3S.2 9.1.2 11v1.9c0 1.9.3 3.8.3 3.8s.2 1.6.9 2.3c.9.9 2.1.9 2.6 1 1.9.2 8 .3 8 .3s4.9 0 8.2-.3c.5-.1 1.5-.1 2.4-1 .7-.7.9-2.3.9-2.3s.3-1.9.3-3.8V11c0-1.9-.3-3.8-.3-3.8ZM9.7 15.3V8.6l6.5 3.4-6.5 3.3Z" />
                       </svg>
                     </a>
                   )}

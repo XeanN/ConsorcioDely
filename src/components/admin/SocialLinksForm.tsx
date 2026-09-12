@@ -11,7 +11,13 @@ const inputClass =
 export function SocialLinksForm({
   defaultValues,
 }: {
-  defaultValues: { facebookUrl: string | null; instagramUrl: string | null; twitterUrl: string | null };
+  defaultValues: {
+    facebookUrl: string | null;
+    instagramUrl: string | null;
+    twitterUrl: string | null;
+    tiktokUrl: string | null;
+    youtubeUrl: string | null;
+  };
 }) {
   const [state, formAction, pending] = useActionState(updateSocialLinks, initialState);
 
@@ -55,6 +61,34 @@ export function SocialLinksForm({
           type="url"
           placeholder="https://x.com/consorciodely"
           defaultValue={defaultValues.twitterUrl ?? ""}
+          className={inputClass}
+        />
+      </div>
+
+      <div className="space-y-1">
+        <label htmlFor="tiktokUrl" className="text-sm font-medium text-neutral-700">
+          TikTok
+        </label>
+        <input
+          id="tiktokUrl"
+          name="tiktokUrl"
+          type="url"
+          placeholder="https://tiktok.com/@consorciodely"
+          defaultValue={defaultValues.tiktokUrl ?? ""}
+          className={inputClass}
+        />
+      </div>
+
+      <div className="space-y-1">
+        <label htmlFor="youtubeUrl" className="text-sm font-medium text-neutral-700">
+          YouTube
+        </label>
+        <input
+          id="youtubeUrl"
+          name="youtubeUrl"
+          type="url"
+          placeholder="https://youtube.com/@consorciodely"
+          defaultValue={defaultValues.youtubeUrl ?? ""}
           className={inputClass}
         />
       </div>
