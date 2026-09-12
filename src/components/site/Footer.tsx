@@ -8,12 +8,18 @@ type SiteSettingRow = {
   fiscalAddress: string | null;
   phone: string | null;
   email: string | null;
+  facebookUrl: string | null;
+  instagramUrl: string | null;
+  twitterUrl: string | null;
 };
 
 export async function Footer() {
   const [settings] = (await sql()`
-    SELECT "legalName", ruc, "fiscalAddress", phone, email FROM site_settings WHERE id = 1 LIMIT 1
+    SELECT "legalName", ruc, "fiscalAddress", phone, email, "facebookUrl", "instagramUrl", "twitterUrl"
+    FROM site_settings WHERE id = 1 LIMIT 1
   `) as SiteSettingRow[];
+
+  const hasSocial = settings?.facebookUrl || settings?.instagramUrl || settings?.twitterUrl;
 
   const currentYear = new Date().getFullYear();
 
@@ -39,33 +45,51 @@ export async function Footer() {
                 Fabricamos, envasamos y distribuimos abarrotes a nivel nacional.
                 Tu aliado estratégico para hacer crecer tu negocio.
               </p>
-              {/* Social placeholder */}
-              <div className="mt-5 flex items-center gap-3">
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Facebook"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-brand-red"
-                >
-                  <svg className="h-4 w-4 fill-white" viewBox="0 0 24 24">
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-                  </svg>
-                </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Instagram"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-brand-red"
-                >
-                  <svg className="h-4 w-4 fill-white" viewBox="0 0 24 24">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="white" strokeWidth="2"/>
-                    <circle cx="12" cy="12" r="4" fill="none" stroke="white" strokeWidth="2"/>
-                    <circle cx="17.5" cy="6.5" r="1" fill="white"/>
-                  </svg>
-                </a>
-              </div>
+              {hasSocial && (
+                <div className="mt-5 flex items-center gap-3">
+                  {settings?.facebookUrl && (
+                    <a
+                      href={settings.facebookUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Facebook"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-brand-red"
+                    >
+                      <svg className="h-4 w-4 fill-white" viewBox="0 0 24 24">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                      </svg>
+                    </a>
+                  )}
+                  {settings?.instagramUrl && (
+                    <a
+                      href={settings.instagramUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Instagram"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-brand-red"
+                    >
+                      <svg className="h-4 w-4 fill-white" viewBox="0 0 24 24">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="white" strokeWidth="2"/>
+                        <circle cx="12" cy="12" r="4" fill="none" stroke="white" strokeWidth="2"/>
+                        <circle cx="17.5" cy="6.5" r="1" fill="white"/>
+                      </svg>
+                    </a>
+                  )}
+                  {settings?.twitterUrl && (
+                    <a
+                      href={settings.twitterUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="X (Twitter)"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-brand-red"
+                    >
+                      <svg className="h-4 w-4 fill-white" viewBox="0 0 24 24">
+                        <path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-6.9L4.4 22H1.3l8.2-9.3L1 2h7.1l4.9 6.3L18.9 2Zm-1.2 18h1.9L6.4 3.9H4.4L17.7 20Z" />
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Col 2 – Links */}

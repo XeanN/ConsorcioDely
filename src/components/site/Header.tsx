@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 const links = [
   { href: "/", label: "Inicio" },
@@ -11,6 +14,8 @@ const links = [
 const INVOICE_LOOKUP_URL = "http://209.45.53.224:9090/Delyconsorcio";
 
 export function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header
       className="sticky top-0 z-50 w-full"
@@ -24,7 +29,7 @@ export function Header() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         {/* Logo */}
-        <Link href="/" className="shrink-0">
+        <Link href="/" className="shrink-0" onClick={() => setMenuOpen(false)}>
           <Image
             src="/dely.pe.png"
             alt="Consorcio Dely"
@@ -65,18 +70,46 @@ export function Header() {
             Consultar Factura
           </a>
 
-          {/* Mobile hamburger – placeholder */}
+          {/* Mobile hamburger */}
           <button
-            aria-label="Abrir menú"
+            type="button"
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
             className="flex h-9 w-9 items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-700 transition hover:border-brand-red hover:text-brand-red md:hidden"
           >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            {menuOpen ? (
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
           </button>
         </div>
       </div>
+
+      {/* Mobile menu panel */}
+      {menuOpen && (
+        <nav className="border-t border-neutral-200 bg-white px-4 py-3 md:hidden">
+          <ul className="flex flex-col gap-1">
+            {links.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-lg px-3 py-2.5 text-sm font-semibold text-neutral-700 transition-colors hover:bg-brand-red-ultra hover:text-brand-red"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }
-
