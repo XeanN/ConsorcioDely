@@ -1,6 +1,5 @@
 ﻿import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 
 import { ContactForm } from "@/components/site/ContactForm";
 import { sql } from "@/lib/db";
@@ -157,7 +156,7 @@ export default async function ContactPage() {
                       Emitimos Factura Electrónica, boletas y guías de remisión oficiales para todos tus pedidos empresariales.
                     </p>
                     <div className="mt-3 flex flex-wrap gap-2 text-[11px] font-bold text-neutral-600">
-                      <span className="rounded-md bg-neutral-100 px-2.5 py-1">RUC: {settings?.ruc || "20608518663"}</span>
+                      <span className="rounded-md bg-neutral-100 px-2.5 py-1">RUC: {settings?.ruc || "20601228492"}</span>
                       <span className="rounded-md bg-neutral-100 px-2.5 py-1">Lima y Provincias</span>
                     </div>
                   </div>
@@ -170,7 +169,6 @@ export default async function ContactPage() {
               <ContactForm
                 phone={settings?.phone ?? null}
                 email={settings?.email ?? null}
-                defaultQuoteLink={quoteLink}
               />
             </div>
           </div>

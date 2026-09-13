@@ -1,5 +1,4 @@
 ﻿import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
@@ -122,10 +121,44 @@ export default async function ProductPage({
       ? publicUrlFor(variants.find((v) => v.r2Key)!.r2Key!)
       : PLACEHOLDER_IMG;
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description ?? undefined,
+    image: product.r2Key ? publicUrlFor(product.r2Key) : undefined,
+    brand: { "@type": "Brand", name: product.brandName },
+    category: product.categoryName,
+  };
+
+  const baseUrl = process.env.SITE_URL ?? "https://consorciodely-web.angel-xp-pb.workers.dev";
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Catálogo", item: `${baseUrl}/catalogo` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: product.categoryName,
+        item: `${baseUrl}/catalogo/${product.categorySlug}`,
+      },
+      { "@type": "ListItem", position: 3, name: product.name, item: `${baseUrl}/producto/${slug}` },
+    ],
+  };
+
   return (
     <div className="bg-neutral-50/50 py-8 sm:py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        
+
         {/* Breadcrumb */}
         <nav aria-label="Ruta de navegación" className="mb-6 flex flex-wrap items-center gap-1.5 text-xs text-neutral-400">
           <Link href="/" className="hover:text-brand-red transition">Inicio</Link>

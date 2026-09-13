@@ -169,7 +169,7 @@ function ProductCardItem({ product }: { product: Product }) {
           src={product.imageUrl || PLACEHOLDER}
           alt={product.name}
           loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/50 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-neutral-900 shadow">

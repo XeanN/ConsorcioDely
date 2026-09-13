@@ -58,6 +58,7 @@ export function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openKey, setOpenKey] = useState<string | null>(null);
+  const [prevPathname, setPrevPathname] = useState(pathname);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scheduleClose = () => {
@@ -67,10 +68,14 @@ export function Header() {
     if (timerRef.current) clearTimeout(timerRef.current);
   };
 
-  useEffect(() => {
+  // Cierra los menús al navegar. Se ajusta durante el render (patrón
+  // recomendado por React para "resetear estado cuando cambia una prop")
+  // en vez de un useEffect, que dispararía un set-state-in-effect lint error.
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setMobileOpen(false);
     setOpenKey(null);
-  }, [pathname]);
+  }
 
   useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
 

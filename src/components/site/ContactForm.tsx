@@ -5,11 +5,9 @@ import { useState } from "react";
 export function ContactForm({
   phone,
   email,
-  defaultQuoteLink,
 }: {
   phone: string | null;
   email: string | null;
-  defaultQuoteLink: string | null;
 }) {
   const [name, setName] = useState("");
   const [business, setBusiness] = useState("");
