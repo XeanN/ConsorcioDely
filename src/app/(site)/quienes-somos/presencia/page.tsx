@@ -14,7 +14,7 @@ export default async function PresenciaPage() {
   return (
     <div>
       <div className="relative h-64 overflow-hidden sm:h-80" style={{ background: "linear-gradient(135deg,#1a0000,#e4231b)" }}>
-        <Image src="https://images.unsplash.com/photo-1508974239320-0a029497e820?w=1200&q=80" alt="" fill className="object-cover opacity-25" sizes="100vw" />
+        <Image src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=1200&q=80" alt="" fill className="object-cover opacity-25" sizes="100vw" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-white">
           <p className="text-xs font-bold uppercase tracking-widest text-white/60">Quienes somos</p>
           <h1 className="mt-2 text-4xl font-black uppercase sm:text-5xl" style={{ fontFamily: "var(--font-display)" }}>Presencia Nacional</h1>
@@ -49,7 +49,7 @@ export default async function PresenciaPage() {
           </div>
 
           <div className="relative h-80 overflow-hidden rounded-2xl lg:h-auto lg:min-h-[480px]">
-            <Image src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=900&q=80" alt="Distribucion nacional" fill className="object-cover object-center" sizes="(max-width:1024px) 100vw, 50vw" />
+            <Image src="https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=900&q=80" alt="Distribucion nacional" fill className="object-cover object-center" sizes="(max-width:1024px) 100vw, 50vw" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6">
               <p className="font-black text-white" style={{ fontFamily: "var(--font-display)" }}>Flota propia de distribucion</p>

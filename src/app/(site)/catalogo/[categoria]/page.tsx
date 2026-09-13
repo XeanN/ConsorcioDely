@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 
 import { CategoryProductGrid } from "@/components/site/CategoryProductGrid";
+import { categoryImageFor } from "@/lib/category-images";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
 
@@ -21,18 +22,6 @@ type ProductRow = {
   r2Key: string | null;
 };
 
-const CATEGORY_IMAGES: Record<string, string> = {
-  vegetal: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=1200&q=80",
-  "conserva-de-atun": "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=1200&q=80",
-  mermelada: "https://images.unsplash.com/photo-1588329261990-72541f5f4ad5?w=1200&q=80",
-  avena: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80",
-  paneton: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&q=80",
-  "chocolate-de-taza": "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?w=1200&q=80",
-  detergente: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=1200&q=80",
-  pae: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80",
-};
-
-const PLACEHOLDER_IMG = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80";
 
 const getCategory = cache(async (slug: string) => {
   const [category] = (await sql()`
@@ -93,7 +82,7 @@ export default async function CategoryPage({
     imageUrl: p.r2Key ? publicUrlFor(p.r2Key) : null,
   }));
 
-  const bgImg = CATEGORY_IMAGES[category.slug] || PLACEHOLDER_IMG;
+  const bgImg = categoryImageFor(category.slug);
 
   return (
     <div>

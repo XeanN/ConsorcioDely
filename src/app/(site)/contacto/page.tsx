@@ -34,7 +34,7 @@ export default async function ContactPage() {
       {/* ══ HERO BANNER ══ */}
       <section className="relative overflow-hidden py-16 sm:py-20" style={{ background: "linear-gradient(135deg, #1a0000 0%, #6b0000 50%, #e4231b 100%)" }}>
         <Image
-          src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=1600&q=80"
+          src="https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=1600&q=80"
           alt=""
           fill
           priority

@@ -15,7 +15,7 @@ export default async function HistoriaPage() {
   return (
     <div>
       <div className="relative h-64 overflow-hidden sm:h-80" style={{ background: "linear-gradient(135deg,#1a0000,#b01a14)" }}>
-        <Image src="https://images.unsplash.com/photo-1565793979734-8cb12b33a6a1?w=1200&q=80" alt="" fill className="object-cover opacity-40" sizes="100vw" />
+        <Image src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=1200&q=80" alt="" fill className="object-cover opacity-40" sizes="100vw" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-white">
           <p className="text-xs font-bold uppercase tracking-widest text-white/60">Quienes somos</p>
           <h1 className="mt-2 text-4xl font-black uppercase sm:text-5xl" style={{ fontFamily: "var(--font-display)" }}>Nuestra Historia</h1>

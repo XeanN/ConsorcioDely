@@ -46,10 +46,10 @@ export default async function EquipoPage() {
               <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80" alt="Equipo Dely" fill className="object-cover object-top" sizes="(max-width:1024px) 100vw, 50vw" />
             </div>
             <div className="relative h-32 overflow-hidden rounded-xl">
-              <Image src="https://images.unsplash.com/photo-1588329261990-72541f5f4ad5?w=500&q=80" alt="" fill className="object-cover" sizes="25vw" />
+              <Image src="https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=500&q=80" alt="" fill className="object-cover" sizes="25vw" />
             </div>
             <div className="relative h-32 overflow-hidden rounded-xl">
-              <Image src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=500&q=80" alt="" fill className="object-cover" sizes="25vw" />
+              <Image src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&q=80" alt="" fill className="object-cover" sizes="25vw" />
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@ export default async function EquipoPage() {
               )}
             </div>
             <div className="relative hidden h-48 lg:block lg:h-auto">
-              <Image src="https://images.unsplash.com/photo-1565793979734-8cb12b33a6a1?w=600&q=80" alt="" fill className="object-cover opacity-60" sizes="50vw" />
+              <Image src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=600&q=80" alt="" fill className="object-cover opacity-60" sizes="50vw" />
             </div>
           </div>
         </div>

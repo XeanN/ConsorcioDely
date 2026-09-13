@@ -1,6 +1,7 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 
+import { categoryImageFor } from "@/lib/category-images";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
 import { getRandomQuoteLink } from "@/lib/whatsapp";
@@ -15,14 +16,14 @@ type SiteSettingRow = { address: string | null };
 const IMGS = {
   hero:     "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80",
   split1:   "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=80",
-  factory:  "https://images.unsplash.com/photo-1565793979734-8cb12b33a6a1?w=1600&q=80",
+  factory:  "https://images.unsplash.com/photo-1553413077-190dd305871c?w=1600&q=80",
   mosaic1:  "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600&q=80",
-  mosaic2:  "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=600&q=80",
-  mosaic3:  "https://images.unsplash.com/photo-1588329261990-72541f5f4ad5?w=600&q=80",
-  mosaic4:  "https://images.unsplash.com/photo-1612817288484-6f916006741a?w=600&q=80",
-  mosaic5:  "https://images.unsplash.com/photo-1580522154071-c6ca47a859ad?w=600&q=80",
+  mosaic2:  "https://images.unsplash.com/photo-1602253057119-44d745d9b860?w=600&q=80",
+  mosaic3:  "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=600&q=80",
+  mosaic4:  "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&q=80",
+  mosaic5:  "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&q=80",
   team:     "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80",
-  delivery: "https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=900&q=80",
+  delivery: "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=900&q=80",
 };
 
 export default async function HomePage() {
@@ -203,11 +204,11 @@ export default async function HomePage() {
               <h2 className="section-title centered mt-2 text-3xl font-black text-neutral-900 sm:text-4xl">Nuestras Categorias</h2>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:gap-4">
-              {categories.map((c, i) => (
+              {categories.map((c) => (
                 <Link key={c.id} href={`/catalogo/${c.slug}`} className="group relative overflow-hidden rounded-2xl border border-neutral-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                   <div className="relative h-28 overflow-hidden bg-neutral-100">
                     <Image
-                      src={[IMGS.mosaic1, IMGS.mosaic2, IMGS.mosaic3, IMGS.mosaic4, IMGS.mosaic5][i % 5]}
+                      src={categoryImageFor(c.slug)}
                       alt={c.name}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
