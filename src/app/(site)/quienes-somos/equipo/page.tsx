@@ -13,7 +13,7 @@ export default async function EquipoPage() {
 
   return (
     <div>
-      <div className="relative h-64 overflow-hidden sm:h-80" style={{ background: "#0f0f0f" }}>
+      <div className="relative h-64 overflow-hidden sm:h-80" style={{ background: "var(--brand-dark)" }}>
         <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80" alt="" fill className="object-cover opacity-50" sizes="100vw" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-white">

@@ -14,7 +14,7 @@ export default async function PropositoPage() {
 
   return (
     <div>
-      <div className="relative h-64 overflow-hidden sm:h-80" style={{ background: "#0f0f0f" }}>
+      <div className="relative h-64 overflow-hidden sm:h-80" style={{ background: "var(--brand-dark)" }}>
         <Image src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80" alt="" fill className="object-cover opacity-30" sizes="100vw" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-white">
           <p className="text-xs font-bold uppercase tracking-widest text-white/50">Quienes somos</p>

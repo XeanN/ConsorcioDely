@@ -243,7 +243,7 @@ export default async function HomePage() {
       {/* SPLIT B dark */}
       <section className="overflow-hidden">
         <div className="grid lg:grid-cols-2">
-          <div className="flex items-center bg-neutral-900 px-8 py-14 lg:px-16">
+          <div className="flex items-center bg-brand-dark px-8 py-14 lg:px-16">
             <div className="max-w-lg">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-red-light">Distribucion</span>
               <h2 className="section-title mt-2 text-3xl font-black text-white sm:text-4xl">Llegamos a todo el Peru</h2>

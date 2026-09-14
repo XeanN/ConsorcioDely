@@ -117,7 +117,7 @@ export default async function AboutPage() {
       </section>
 
       {/* NUESTRO PROPOSITO – dark bg */}
-      <section id="proposito-section" className="py-20" style={{ background: "#0f0f0f" }}>
+      <section id="proposito-section" className="py-20" style={{ background: "var(--brand-dark)" }}>
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>

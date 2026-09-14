@@ -37,7 +37,7 @@ export async function Footer() {
       <div style={{ height: "5px", background: "linear-gradient(90deg, var(--brand-red-dark), var(--brand-red), var(--brand-red-light))" }} />
 
       {/* Main footer body */}
-      <div style={{ background: "#0f0f0f" }} className="text-white">
+      <div style={{ background: "var(--brand-dark)" }} className="text-white">
         <div className="mx-auto max-w-6xl px-6 py-14">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
 
