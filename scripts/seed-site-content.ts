@@ -44,7 +44,13 @@ const SITE_SETTING = {
 // Reemplazar/agregar acá según se vayan teniendo los números reales de
 // cada ejecutiva. Los que no estén en esta lista se desactivan (no se
 // borran) para no romper reportes/pedidos históricos.
-const SALES_REPS = [{ name: "Ventas", whatsapp: "942423758" }];
+const SALES_REPS = [
+  { name: "Gaby", whatsapp: "942423758" },
+  { name: "Anita", whatsapp: "998081245" },
+  { name: "Graciela", whatsapp: "998081244" },
+  { name: "Ruth", whatsapp: "943431764" },
+  { name: "Sales new", whatsapp: "957689893" },
+];
 
 async function main() {
   const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
