@@ -1,7 +1,7 @@
-import { getRandomQuoteLink } from "@/lib/whatsapp";
+import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
 
 export async function FloatingWhatsApp() {
-  const link = await getRandomQuoteLink("Hola, quisiera más información sobre sus productos");
+  const link = await getRandomQuoteLink(buildQuoteMessage());
   if (!link) return null;
 
   return (

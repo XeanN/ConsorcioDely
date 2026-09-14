@@ -4,7 +4,7 @@ import Link from "next/link";
 import { categoryImageFor } from "@/lib/category-images";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
-import { getRandomQuoteLink } from "@/lib/whatsapp";
+import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -48,7 +48,7 @@ export default async function HomePage() {
     SELECT address FROM site_settings WHERE id = 1 LIMIT 1
   `) as SiteSettingRow[];
 
-  const quoteLink = await getRandomQuoteLink("Hola, quisiera cotizar productos de Consorcio Dely");
+  const quoteLink = await getRandomQuoteLink(buildQuoteMessage());
   const heroTitle = hero?.value ?? "Crecemos Juntos";
   const heroBg = heroImage ? publicUrlFor(heroImage.r2Key) : IMGS.hero;
 

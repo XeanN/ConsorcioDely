@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { ContactForm } from "@/components/site/ContactForm";
 import { sql } from "@/lib/db";
-import { getRandomQuoteLink } from "@/lib/whatsapp";
+import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +27,7 @@ export default async function ContactPage() {
     SELECT phone, "contactPhone", email, address, "legalName", ruc FROM site_settings WHERE id = 1 LIMIT 1
   `) as SiteSettingRow[];
 
-  const quoteLink = await getRandomQuoteLink("Hola Consorcio Dely, quisiera cotizar productos al por mayor");
+  const quoteLink = await getRandomQuoteLink(buildQuoteMessage());
 
   return (
     <div>

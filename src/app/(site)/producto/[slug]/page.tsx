@@ -5,7 +5,7 @@ import { cache } from "react";
 
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
-import { getRandomQuoteLink } from "@/lib/whatsapp";
+import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -111,9 +111,7 @@ export default async function ProductPage({
     LIMIT 4
   `) as RelatedProduct[];
 
-  const quoteLink = await getRandomQuoteLink(
-    `Hola Consorcio Dely, quisiera cotizar el producto: ${product.name} (${product.brandName}) al por mayor.`
-  );
+  const quoteLink = await getRandomQuoteLink(buildQuoteMessage(product.name));
 
   const mainImageUrl = product.r2Key
     ? publicUrlFor(product.r2Key)
