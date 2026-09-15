@@ -10,10 +10,10 @@
   --brand-red-light: #ff5a52;
   --brand-red-ultra: #fff1f0;
   --brand-green:     #39b54a;
-  /* Negro con tinte rojo para secciones oscuras estructurales (footer,
-     paneles de contraste) — reemplaza el negro neutro para no competir con
-     el verde, que queda reservado solo para WhatsApp. */
-  --brand-dark:      #1a0505;
+  /* Rojo oscuro (no negro) para secciones oscuras estructurales (footer,
+     paneles de contraste) — el negro queda solo para texto, y el verde
+     reservado para WhatsApp, según feedback del cliente. */
+  --brand-dark:      #4a0f0f;
 
   /* Neutros */
   --neutral-50:  #fafafa;

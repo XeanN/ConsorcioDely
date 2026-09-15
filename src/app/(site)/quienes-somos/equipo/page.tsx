@@ -17,7 +17,7 @@ export default async function EquipoPage() {
         <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80" alt="" fill className="object-cover opacity-50" sizes="100vw" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-white">
-          <p className="text-xs font-bold uppercase tracking-widest text-white/50">Quienes somos</p>
+          <p className="text-xs font-bold uppercase tracking-widest text-white/50">Quiénes somos</p>
           <h1 className="mt-2 text-4xl font-black uppercase sm:text-5xl" style={{ fontFamily: "var(--font-display)" }}>Nuestro Equipo</h1>
           <p className="mt-2 text-sm text-white/60">Las personas que hacen posible Consorcio Dely</p>
         </div>
@@ -28,11 +28,11 @@ export default async function EquipoPage() {
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Nuestros colaboradores</span>
             <h2 className="section-title mt-2 text-2xl font-black text-neutral-900 sm:text-3xl">Personas que hacen la diferencia</h2>
-            <p className="mt-5 leading-relaxed text-neutral-600">Detras de cada producto hay mas de 200 personas apasionadas. Desde el area de produccion hasta la distribucion, cada colaborador es parte esencial de nuestra cadena de valor.</p>
-            <p className="mt-4 leading-relaxed text-neutral-600">Fomentamos un ambiente de trabajo inclusivo, seguro y motivador donde cada persona puede crecer profesionalmente mientras contribuye al crecimiento del Peru.</p>
+            <p className="mt-5 leading-relaxed text-neutral-600">Detrás de cada producto hay más de 200 personas apasionadas. Desde el área de producción hasta la distribución, cada colaborador es parte esencial de nuestra cadena de valor.</p>
+            <p className="mt-4 leading-relaxed text-neutral-600">Fomentamos un ambiente de trabajo inclusivo, seguro y motivador donde cada persona puede crecer profesionalmente mientras contribuye al crecimiento del Perú.</p>
 
             <div className="mt-8 grid grid-cols-2 gap-4">
-              {[{ n:"200+", t:"Colaboradores" }, { n:"20+", t:"Anos juntos" }, { n:"5", t:"Areas de trabajo" }, { n:"100%", t:"Comprometidos" }].map(s => (
+              {[{ n:"200+", t:"Colaboradores" }, { n:"20+", t:"Años juntos" }, { n:"5", t:"Áreas de trabajo" }, { n:"100%", t:"Comprometidos" }].map(s => (
                 <div key={s.t} className="rounded-xl bg-neutral-50 p-4">
                   <p className="text-2xl font-black text-brand-red" style={{ fontFamily: "var(--font-display)" }}>{s.n}</p>
                   <p className="mt-0.5 text-xs text-neutral-500">{s.t}</p>
@@ -69,8 +69,8 @@ export default async function EquipoPage() {
                 ))}
               </ul>
               {s?.email && (
-                <a href={`mailto:${s.email}?subject=Postulacion`} className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-bold text-brand-red transition-all hover:-translate-y-0.5 hover:shadow-lg">
-                  Postula aqui
+                <a href={`mailto:${s.email}?subject=Postulación`} className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-bold text-brand-red transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                  Postula aquí
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </a>
               )}
@@ -82,7 +82,7 @@ export default async function EquipoPage() {
         </div>
 
         <div className="mt-10 flex flex-wrap gap-3">
-          <Link href="/quienes-somos" className="btn-outline">Ver todo Quienes somos</Link>
+          <Link href="/quienes-somos" className="btn-outline">Ver todo Quiénes somos</Link>
           <Link href="/contacto" className="btn-primary">Contactar</Link>
         </div>
       </div>

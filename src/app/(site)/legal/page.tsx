@@ -54,7 +54,7 @@ export default async function LegalPage() {
             <div className="rounded-2xl border border-neutral-100 bg-neutral-50/50 p-4">
               <span className="text-xs font-bold text-neutral-400">RUC</span>
               <p className="mt-1 text-sm font-bold text-neutral-800">
-                {settings?.ruc || "20608518663"}
+                {settings?.ruc || "20601228492"}
               </p>
             </div>
 
