@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export type NutritionRow = { label: string; value: string; dailyValue?: string };
+export type NutritionRow = { label: string; value: string; per100g?: string; dailyValue?: string };
 
 const inputClass =
   "w-full rounded-md border border-neutral-300 bg-white px-2 py-1.5 text-sm text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-neutral-500";
@@ -27,7 +27,7 @@ export function NutritionFactsEditor({
   }
 
   function addRow() {
-    setRows((prev) => [...prev, { label: "", value: "", dailyValue: "" }]);
+    setRows((prev) => [...prev, { label: "", value: "", per100g: "", dailyValue: "" }]);
   }
 
   function removeRow(index: number) {
@@ -62,14 +62,15 @@ export function NutritionFactsEditor({
       </div>
 
       <div className="space-y-2">
-        <div className="grid grid-cols-[1fr_1fr_1fr_auto] gap-2 text-xs text-neutral-500">
+        <div className="grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-2 text-xs text-neutral-500">
           <span>Nutriente</span>
-          <span>Cantidad</span>
+          <span>Por 100 g (opcional)</span>
+          <span>Por porción</span>
           <span>%VD</span>
           <span />
         </div>
         {rows.map((row, i) => (
-          <div key={i} className="grid grid-cols-[1fr_1fr_1fr_auto] gap-2">
+          <div key={i} className="grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-2">
             <input
               placeholder="Calorías"
               value={row.label}
@@ -77,7 +78,13 @@ export function NutritionFactsEditor({
               className={inputClass}
             />
             <input
-              placeholder="126 kcal"
+              placeholder="266.77 kcal"
+              value={row.per100g ?? ""}
+              onChange={(e) => updateRow(i, { per100g: e.target.value })}
+              className={inputClass}
+            />
+            <input
+              placeholder="29.34 kcal"
               value={row.value}
               onChange={(e) => updateRow(i, { value: e.target.value })}
               className={inputClass}

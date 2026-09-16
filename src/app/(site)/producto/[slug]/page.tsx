@@ -9,7 +9,7 @@ import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
-type NutritionRow = { label: string; value: string; dailyValue?: string };
+type NutritionRow = { label: string; value: string; per100g?: string; dailyValue?: string };
 
 type ProductDetail = {
   id: string;
@@ -295,24 +295,33 @@ export default async function ProductPage({
                       {product.nutritionServingsPerContainer && (
                         <p className="text-neutral-500">Porciones por envase: {product.nutritionServingsPerContainer}</p>
                       )}
-                      <table className="mt-3 w-full text-left">
-                        <thead>
-                          <tr className="border-b border-neutral-200 text-[10px] uppercase tracking-wider text-neutral-400">
-                            <th className="py-1">Nutriente</th>
-                            <th className="py-1">Cantidad</th>
-                            <th className="py-1 text-right">% VD</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-neutral-100">
-                          {product.nutritionFacts.map((row, i) => (
-                            <tr key={i}>
-                              <td className="py-1.5 font-medium text-neutral-800">{row.label}</td>
-                              <td className="py-1.5 text-neutral-600">{row.value}</td>
-                              <td className="py-1.5 text-right text-neutral-400">{row.dailyValue || "—"}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                      {(() => {
+                        const hasPer100g = product.nutritionFacts!.some((row) => row.per100g);
+                        return (
+                          <table className="mt-3 w-full text-left">
+                            <thead>
+                              <tr className="border-b border-neutral-200 text-[10px] uppercase tracking-wider text-neutral-400">
+                                <th className="py-1">Nutriente</th>
+                                {hasPer100g && <th className="py-1 text-right">Por 100 g</th>}
+                                <th className="py-1 text-right">Por porción</th>
+                                <th className="py-1 text-right">% VD</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-neutral-100">
+                              {product.nutritionFacts!.map((row, i) => (
+                                <tr key={i}>
+                                  <td className="py-1.5 font-medium text-neutral-800">{row.label}</td>
+                                  {hasPer100g && (
+                                    <td className="py-1.5 text-right text-neutral-500">{row.per100g || "—"}</td>
+                                  )}
+                                  <td className="py-1.5 text-right text-neutral-600">{row.value}</td>
+                                  <td className="py-1.5 text-right text-neutral-400">{row.dailyValue || "—"}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        );
+                      })()}
                     </div>
                   </details>
                 </div>

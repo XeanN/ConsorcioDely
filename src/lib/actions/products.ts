@@ -14,6 +14,7 @@ export type ProductFormState = { error?: string };
 const nutritionRowSchema = z.object({
   label: z.string().trim(),
   value: z.string().trim(),
+  per100g: z.string().trim().optional(),
   dailyValue: z.string().trim().optional(),
 });
 

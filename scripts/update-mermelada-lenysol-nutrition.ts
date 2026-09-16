@@ -3,23 +3,24 @@ import { neon } from "@neondatabase/serverless";
 
 // Tabla nutricional real de Mermelada Lenysol, dada por el cliente. Misma
 // composición (por 11 g / 1 cdta.) para los 3 tamaños; solo cambian las
-// porciones aproximadas por envase. Se usa la columna "Porción" (no la de
-// "100 g") como valor, igual que se hizo con Aceite Vegetal Lenysol.
+// porciones aproximadas por envase. A diferencia de Aceite Vegetal
+// Lenysol, esta tabla trae AMBAS columnas (por 100 g y por porción), asi
+// que se guardan las dos (per100g + value) en vez de solo la de porción.
 // Se corre una sola vez: `pnpm exec tsx scripts/update-mermelada-lenysol-nutrition.ts`.
 // Idempotente (UPDATE por slug).
 
 const sql = neon(process.env.DATABASE_URL!);
 
 const NUTRITION_FACTS = [
-  { label: "Energía", value: "29.34 kcal", dailyValue: "1%" },
-  { label: "Grasa total", value: "0.01 g", dailyValue: "0%" },
-  { label: "Grasa Saturada", value: "0.00 g", dailyValue: "0%" },
-  { label: "Grasa Trans", value: "0.00 g", dailyValue: "0%" },
-  { label: "Carbohidratos totales", value: "7.25 g", dailyValue: "3%" },
-  { label: "Fibra dietética total", value: "0.31 g", dailyValue: "0%" },
-  { label: "Azúcares totales", value: "6.54 g", dailyValue: "7%" },
-  { label: "Proteínas", value: "0.07 g", dailyValue: "0%" },
-  { label: "Sodio", value: "2.00 mg", dailyValue: "0%" },
+  { label: "Energía", per100g: "266.77 kcal", value: "29.34 kcal", dailyValue: "1%" },
+  { label: "Grasa total", per100g: "0.09 g", value: "0.01 g", dailyValue: "0%" },
+  { label: "Grasa Saturada", per100g: "0.00 g", value: "0.00 g", dailyValue: "0%" },
+  { label: "Grasa Trans", per100g: "0.00 g", value: "0.00 g", dailyValue: "0%" },
+  { label: "Carbohidratos totales", per100g: "65.87 g", value: "7.25 g", dailyValue: "3%" },
+  { label: "Fibra dietética total", per100g: "2.86 g", value: "0.31 g", dailyValue: "0%" },
+  { label: "Azúcares totales", per100g: "59.45 g", value: "6.54 g", dailyValue: "7%" },
+  { label: "Proteínas", per100g: "0.62 g", value: "0.07 g", dailyValue: "0%" },
+  { label: "Sodio", per100g: "18.14 mg", value: "2.00 mg", dailyValue: "0%" },
 ];
 
 const SERVING_SIZE = "11 g (1 cdta.)";
