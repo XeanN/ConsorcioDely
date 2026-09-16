@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import { BrandWall, type BrandItem } from "@/components/site/BrandWall";
 import { CategoryCarousel } from "@/components/site/CategoryCarousel";
-import { categoryImageFor } from "@/lib/category-images";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
 import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
