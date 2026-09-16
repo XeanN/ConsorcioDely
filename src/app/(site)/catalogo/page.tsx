@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CatalogFilter } from "@/components/site/CatalogFilter";
@@ -21,13 +21,18 @@ type ProductRow = {
   categoryId: string;
   categoryName: string;
   categorySlug: string;
+  brandName: string;
   r2Key: string | null;
 };
 
 export default async function CatalogPage() {
   const categories = (await sql()`
-    SELECT id, name, slug FROM categories ORDER BY position ASC
-  `) as CategoryRow[];
+    SELECT c.id, c.name, c.slug, count(p.id)::int as count
+    FROM categories c
+    LEFT JOIN products p ON p."categoryId" = c.id AND p.active = true
+    GROUP BY c.id, c.name, c.slug, c.position
+    ORDER BY c.position ASC
+  `) as (CategoryRow & { count: number })[];
 
   const products = (await sql()`
     SELECT
@@ -35,9 +40,11 @@ export default async function CatalogPage() {
       p."categoryId",
       c.name as "categoryName",
       c.slug as "categorySlug",
+      b.name as "brandName",
       m."r2Key" as "r2Key"
     FROM products p
     JOIN categories c ON c.id = p."categoryId"
+    JOIN brands b ON b.id = p."brandId"
     LEFT JOIN media m ON m.id = p."mediaId"
     WHERE p.active = true
     ORDER BY c.position ASC, p.position ASC
@@ -96,7 +103,12 @@ export default async function CatalogPage() {
 
       {/* Filter and products container */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
-        <CatalogFilter products={mapped} categories={categories} />
+        <CatalogFilter
+          products={mapped}
+          categories={categories}
+          currentCategorySlug={null}
+          totalProductCount={mapped.length}
+        />
       </div>
     </div>
   );
