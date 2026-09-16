@@ -40,6 +40,8 @@ model Product {
   name        String
   slug        String    @unique
   description String?
+  sku         String?   @unique
+  packSize    String? // texto libre, ej. "Caja x 24 Unidades"
   active      Boolean   @default(true)
   position    Int       @default(0)
   // Tabla nutricional (opcional). nutritionFacts es un arreglo de filas

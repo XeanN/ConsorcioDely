@@ -24,6 +24,8 @@ export function ProductForm({
     categoryId: string;
     brandId: string;
     description: string | null;
+    sku?: string | null;
+    packSize?: string | null;
     active: boolean;
     imageUrl: string | null;
     nutritionServingSize?: string | null;
@@ -112,6 +114,34 @@ export function ProductForm({
               </option>
             ))}
           </select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-1">
+          <label htmlFor="sku" className="text-sm font-medium text-neutral-700">
+            SKU
+          </label>
+          <input
+            id="sku"
+            name="sku"
+            type="text"
+            defaultValue={defaultValues?.sku ?? ""}
+            className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-neutral-500"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="packSize" className="text-sm font-medium text-neutral-700">
+            Presentación por caja
+          </label>
+          <input
+            id="packSize"
+            name="packSize"
+            type="text"
+            placeholder="Ej. Caja x 24 Unidades"
+            defaultValue={defaultValues?.packSize ?? ""}
+            className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-neutral-500"
+          />
         </div>
       </div>
 

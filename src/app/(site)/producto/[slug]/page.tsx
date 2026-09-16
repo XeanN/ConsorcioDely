@@ -19,6 +19,8 @@ type ProductDetail = {
   categoryName: string;
   categorySlug: string;
   brandName: string;
+  sku: string | null;
+  packSize: string | null;
   r2Key: string | null;
   nutritionServingSize: string | null;
   nutritionServingsPerContainer: string | null;
@@ -46,6 +48,7 @@ const PLACEHOLDER_IMG = "https://images.unsplash.com/photo-1542838132-92c5330049
 const getProduct = cache(async (slug: string) => {
   const [product] = (await sql()`
     SELECT p.id, p.name, p.description, p."categoryId", c.name as "categoryName", c.slug as "categorySlug", b.name as "brandName", m."r2Key" as "r2Key",
+      p.sku, p."packSize",
       p."nutritionServingSize", p."nutritionServingsPerContainer", p."nutritionFacts"
     FROM products p
     JOIN categories c ON c.id = p."categoryId"
@@ -229,9 +232,23 @@ export default async function ProductPage({
               </h1>
 
               {/* Descripción */}
-              <p className="mt-4 text-sm leading-relaxed text-neutral-600">
+              <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-neutral-600">
                 {product.description || "Elaborado bajo estrictos controles de calidad e higiene, ideal para abastecer bodegas, restaurantes, panaderías y comercios minoristas con el mejor rendimiento y sabor."}
               </p>
+
+              {/* SKU / presentación por caja */}
+              {(product.sku || product.packSize) && (
+                <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-neutral-500">
+                  {product.packSize && (
+                    <span className="rounded-full bg-neutral-100 px-3 py-1 font-semibold text-neutral-700">
+                      {product.packSize}
+                    </span>
+                  )}
+                  {product.sku && (
+                    <span className="rounded-full bg-neutral-100 px-3 py-1">SKU: {product.sku}</span>
+                  )}
+                </div>
+              )}
 
               {/* Presentaciones */}
               {variants.length > 0 && (

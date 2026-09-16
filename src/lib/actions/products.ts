@@ -22,6 +22,8 @@ const productSchema = z.object({
   categoryId: z.string().trim().min(1, "Elige una categoría"),
   brandId: z.string().trim().min(1, "Elige una marca"),
   description: z.string().trim().optional(),
+  sku: z.string().trim().optional(),
+  packSize: z.string().trim().optional(),
   active: z.boolean(),
   mediaId: z.string().trim().optional(),
   nutritionServingSize: z.string().trim().optional(),
@@ -42,6 +44,8 @@ function parseProductForm(formData: FormData) {
     categoryId: formData.get("categoryId"),
     brandId: formData.get("brandId"),
     description: formData.get("description") ?? "",
+    sku: formData.get("sku") ?? "",
+    packSize: formData.get("packSize") ?? "",
     active: formData.get("active") === "on",
     mediaId: formData.get("mediaId") ?? "",
     nutritionServingSize: formData.get("nutritionServingSize") ?? "",
@@ -78,7 +82,7 @@ export async function createProduct(
   try {
     await sql()`
       INSERT INTO products
-        (id, "categoryId", "brandId", "mediaId", name, slug, description, active, position,
+        (id, "categoryId", "brandId", "mediaId", name, slug, description, sku, "packSize", active, position,
          "nutritionServingSize", "nutritionServingsPerContainer", "nutritionFacts",
          "createdAt", "updatedAt")
       VALUES (
@@ -89,6 +93,8 @@ export async function createProduct(
         ${parsed.data.name},
         ${slug},
         ${parsed.data.description || null},
+        ${parsed.data.sku || null},
+        ${parsed.data.packSize || null},
         ${parsed.data.active},
         (SELECT COUNT(*)::int FROM products),
         ${parsed.data.nutritionServingSize || null},
@@ -100,7 +106,7 @@ export async function createProduct(
     `;
   } catch (err) {
     if (isUniqueViolation(err)) {
-      return { error: "Ya existe un producto con ese nombre" };
+      return { error: "Ya existe un producto con ese nombre o SKU" };
     }
     throw err;
   }
@@ -135,6 +141,8 @@ export async function updateProduct(
         name = ${parsed.data.name},
         slug = ${slug},
         description = ${parsed.data.description || null},
+        sku = ${parsed.data.sku || null},
+        "packSize" = ${parsed.data.packSize || null},
         active = ${parsed.data.active},
         "nutritionServingSize" = ${parsed.data.nutritionServingSize || null},
         "nutritionServingsPerContainer" = ${parsed.data.nutritionServingsPerContainer || null},
@@ -144,7 +152,7 @@ export async function updateProduct(
     `;
   } catch (err) {
     if (isUniqueViolation(err)) {
-      return { error: "Ya existe un producto con ese nombre" };
+      return { error: "Ya existe un producto con ese nombre o SKU" };
     }
     throw err;
   }

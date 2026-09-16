@@ -14,6 +14,8 @@ type ProductDetail = {
   categoryId: string;
   brandId: string;
   description: string | null;
+  sku: string | null;
+  packSize: string | null;
   active: boolean;
   r2Key: string | null;
   nutritionServingSize: string | null;
@@ -29,7 +31,7 @@ export default async function EditProductPage({
   const { id } = await params;
 
   const [product] = (await sql()`
-    SELECT p.id, p."categoryId", p."brandId", p.name, p.description, p.active, m."r2Key" as "r2Key",
+    SELECT p.id, p."categoryId", p."brandId", p.name, p.description, p.sku, p."packSize", p.active, m."r2Key" as "r2Key",
       p."nutritionServingSize", p."nutritionServingsPerContainer", p."nutritionFacts"
     FROM products p
     LEFT JOIN media m ON m.id = p."mediaId"
