@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -18,15 +18,42 @@ const NAV = [
     label: "Catálogo",
     children: [
       {
-        group: "Categorías",
+        group: "Abarrotes y Despensa",
         links: [
           { href: "/catalogo", label: "Ver todo el catálogo" },
-          { href: "/catalogo/vegetal", label: "Aceites Vegetales" },
-          { href: "/catalogo/conserva-de-atun", label: "Conservas de Atún" },
+          { href: "/catalogo/vegetal", label: "Aceite Vegetal" },
+          { href: "/catalogo/conserva-de-pescado", label: "Conserva de Pescado" },
+          { href: "/catalogo/conserva-de-atun", label: "Conserva de Atún" },
+          { href: "/catalogo/fideos", label: "Fideos" },
+          { href: "/catalogo/harina", label: "Harinas" },
+          { href: "/catalogo/salsas", label: "Salsas y Aderezos" },
+          { href: "/catalogo/azucar-rubia", label: "Azúcar Rubia" },
+        ],
+      },
+      {
+        group: "Desayunos y Dulces",
+        links: [
           { href: "/catalogo/mermelada", label: "Mermeladas" },
-          { href: "/catalogo/avena", label: "Avena y Cereales" },
-          { href: "/catalogo/paneton", label: "Panetón y Dulces" },
+          { href: "/catalogo/avena-cereal", label: "Avena y Cereales" },
+          { href: "/catalogo/chocolates", label: "Chocolates" },
           { href: "/catalogo/chocolate-de-taza", label: "Chocolate de Taza" },
+          { href: "/catalogo/cafe", label: "Café" },
+          { href: "/catalogo/galletas", label: "Galletas" },
+          { href: "/catalogo/paneton", label: "Panetón" },
+          { href: "/catalogo/leche-evaporada", label: "Leche Evaporada" },
+        ],
+      },
+      {
+        group: "Limpieza y Cuidado",
+        links: [
+          { href: "/catalogo/detergente", label: "Detergentes" },
+          { href: "/catalogo/lava-vajilla", label: "Lava Vajilla" },
+          { href: "/catalogo/jabon-de-ropa", label: "Jabón de Ropa" },
+          { href: "/catalogo/lejia", label: "Lejías" },
+          { href: "/catalogo/suavizante", label: "Suavizantes" },
+          { href: "/catalogo/aromatizante", label: "Aromatizantes" },
+          { href: "/catalogo/pilas", label: "Pilas y Baterías" },
+          { href: "/catalogo/toallas-higienicas", label: "Toallas Higiénicas" },
         ],
       },
     ],
@@ -58,7 +85,6 @@ export function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openKey, setOpenKey] = useState<string | null>(null);
-  const [prevPathname, setPrevPathname] = useState(pathname);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scheduleClose = () => {
@@ -68,14 +94,10 @@ export function Header() {
     if (timerRef.current) clearTimeout(timerRef.current);
   };
 
-  // Cierra los menús al navegar. Se ajusta durante el render (patrón
-  // recomendado por React para "resetear estado cuando cambia una prop")
-  // en vez de un useEffect, que dispararía un set-state-in-effect lint error.
-  if (pathname !== prevPathname) {
-    setPrevPathname(pathname);
+  useEffect(() => {
     setMobileOpen(false);
     setOpenKey(null);
-  }
+  }, [pathname]);
 
   useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
 
@@ -89,22 +111,31 @@ export function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center md:flex">
+        <nav className="hidden items-center md:flex gap-1">
           {NAV.map((item) => {
-            const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            const isActive =
+              item.href === "/"
+                ? pathname === "/"
+                : item.href.startsWith("/#")
+                  ? false
+                  : pathname.startsWith(item.href);
 
             if (!item.children) {
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`relative px-4 py-2 text-sm font-medium transition-colors ${isActive ? "text-brand-red font-bold" : "text-neutral-600 hover:text-neutral-900"}`}
+                  className={`relative px-3.5 py-2 text-sm font-medium transition-colors ${
+                    isActive ? "text-brand-red font-bold" : "text-neutral-600 hover:text-neutral-900"
+                  }`}
                 >
                   {item.label}
-                  {isActive && <span className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full bg-brand-red" />}
+                  {isActive && <span className="absolute bottom-0 left-3.5 right-3.5 h-0.5 rounded-full bg-brand-red" />}
                 </Link>
               );
             }
+
+            const isMultiColumn = item.children.length > 1;
 
             return (
               <div
@@ -115,45 +146,128 @@ export function Header() {
               >
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-colors ${isActive || openKey === item.href ? "text-brand-red font-bold" : "text-neutral-600 hover:text-neutral-900"}`}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium transition-colors ${
+                    isActive || openKey === item.href ? "text-brand-red font-bold" : "text-neutral-600 hover:text-neutral-900"
+                  }`}
                 >
                   {item.label}
                   <svg
-                    className={`h-3 w-3 transition-transform duration-200 ${openKey === item.href ? "rotate-180 text-brand-red" : "text-neutral-400"}`}
+                    className={`h-3 w-3 transition-transform duration-200 ${
+                      openKey === item.href ? "rotate-180 text-brand-red" : "text-neutral-400"
+                    }`}
                     fill="none" viewBox="0 0 10 6"
                   >
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M1 1l4 4 4-4" />
                   </svg>
-                  {isActive && <span className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full bg-brand-red" />}
+                  {isActive && <span className="absolute bottom-0 left-3.5 right-3.5 h-0.5 rounded-full bg-brand-red" />}
                 </Link>
 
                 {openKey === item.href && (
                   <div
-                    className="absolute left-0 top-full pt-1.5"
+                    className={`absolute pt-2 ${
+                      isMultiColumn ? "left-1/2 -translate-x-1/2" : "left-0"
+                    }`}
                     onMouseEnter={cancelClose}
                     onMouseLeave={scheduleClose}
+                    style={{ zIndex: 100 }}
                   >
-                    <div className="min-w-[220px] overflow-hidden rounded-2xl border border-black/[.08] bg-white p-1.5 shadow-xl shadow-black/10">
-                      {item.children.map((grp) => (
-                        <div key={grp.group} className="py-1">
-                          <p className="px-3 pb-1 pt-1 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
-                            {grp.group}
-                          </p>
-                          {grp.links.map((link) => {
-                            const linkActive = link.href === pathname;
-                            return (
-                              <Link
-                                key={link.href}
-                                href={link.href}
-                                className={`flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold transition-colors ${linkActive ? "bg-brand-red-ultra text-brand-red" : "text-neutral-700 hover:bg-neutral-50 hover:text-brand-red"}`}
-                              >
-                                <span>{link.label}</span>
-                                {linkActive && <span className="h-1.5 w-1.5 rounded-full bg-brand-red" />}
-                              </Link>
-                            );
-                          })}
+                    <div
+                      className={`overflow-hidden rounded-2xl border border-black/[.08] bg-white shadow-2xl shadow-black/15 ${
+                        isMultiColumn ? "w-[720px] p-5" : "min-w-[230px] p-2"
+                      }`}
+                    >
+                      {isMultiColumn ? (
+                        <div>
+                          {/* Top Header of Mega Menu */}
+                          <div className="flex items-center justify-between border-b border-neutral-100 pb-3 mb-4">
+                            <div>
+                              <p className="text-xs font-black uppercase tracking-wider text-brand-red">
+                                Catálogo Consorcio Dely
+                              </p>
+                              <p className="text-xs text-neutral-400">
+                                Más de 40 categorías y productos de primera necesidad
+                              </p>
+                            </div>
+                            <Link
+                              href="/catalogo"
+                              className="text-xs font-bold text-neutral-700 hover:text-brand-red flex items-center gap-1 transition"
+                            >
+                              <span>Ver todo</span>
+                              <span>→</span>
+                            </Link>
+                          </div>
+
+                          {/* Columns */}
+                          <div className="grid grid-cols-3 gap-6">
+                            {item.children.map((grp) => (
+                              <div key={grp.group}>
+                                <p className="pb-2 text-[11px] font-black uppercase tracking-wider text-neutral-900 border-b border-neutral-100/80 mb-2">
+                                  {grp.group}
+                                </p>
+                                <ul className="space-y-0.5">
+                                  {grp.links.map((link) => {
+                                    const linkActive = link.href === pathname;
+                                    return (
+                                      <li key={link.href}>
+                                        <Link
+                                          href={link.href}
+                                          className={`block rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                                            linkActive
+                                              ? "bg-brand-red-ultra text-brand-red font-bold"
+                                              : "text-neutral-600 hover:bg-neutral-50 hover:text-brand-red"
+                                          }`}
+                                        >
+                                          {link.label}
+                                        </Link>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Bottom Strip */}
+                          <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between bg-neutral-50/70 -mx-5 -mb-5 px-5 py-3 rounded-b-2xl">
+                            <span className="text-xs text-neutral-500">
+                              ¿Buscas una cotización por mayor?
+                            </span>
+                            <Link
+                              href="/contacto"
+                              className="text-xs font-bold text-brand-red hover:underline"
+                            >
+                              Contactar asesoría comercial →
+                            </Link>
+                          </div>
                         </div>
-                      ))}
+                      ) : (
+                        <div>
+                          {item.children.map((grp) => (
+                            <div key={grp.group} className="py-1">
+                              <p className="px-3 pb-1 pt-1 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+                                {grp.group}
+                              </p>
+                              {grp.links.map((link) => {
+                                const linkActive = link.href === pathname;
+                                return (
+                                  <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className={`flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold transition-colors ${
+                                      linkActive
+                                        ? "bg-brand-red-ultra text-brand-red"
+                                        : "text-neutral-700 hover:bg-neutral-50 hover:text-brand-red"
+                                    }`}
+                                  >
+                                    <span>{link.label}</span>
+                                    {linkActive && <span className="h-1.5 w-1.5 rounded-full bg-brand-red" />}
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -197,32 +311,46 @@ export function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="border-t border-neutral-100 bg-white md:hidden">
-          <div className="mx-auto max-w-6xl space-y-0.5 px-4 py-3">
+        <div className="border-t border-neutral-100 bg-white md:hidden max-h-[80vh] overflow-y-auto">
+          <div className="mx-auto max-w-6xl space-y-1 px-4 py-3">
             {NAV.map((item) => (
               <div key={item.href}>
                 <Link
                   href={item.href}
-                  className={`block rounded-lg px-3 py-2.5 text-sm font-medium ${pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href)) ? "bg-brand-red-ultra text-brand-red font-bold" : "text-neutral-700 hover:bg-neutral-50"}`}
+                  className={`block rounded-lg px-3 py-2.5 text-sm font-medium ${
+                    pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))
+                      ? "bg-brand-red-ultra text-brand-red font-bold"
+                      : "text-neutral-700 hover:bg-neutral-50"
+                  }`}
                 >
                   {item.label}
                 </Link>
+
                 {item.children && (
-                  <div className="ml-3 mt-0.5 space-y-0.5 border-l border-neutral-100 pl-3">
-                    {item.children[0].links.slice(1).map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className={`block rounded-md px-3 py-2 text-xs ${pathname === link.href ? "text-brand-red font-bold" : "text-neutral-500 hover:text-neutral-700"}`}
-                      >
-                        {link.label}
-                      </Link>
+                  <div className="ml-3 mt-1 space-y-3 border-l-2 border-neutral-100 pl-3 pb-2">
+                    {item.children.map((grp) => (
+                      <div key={grp.group} className="space-y-0.5">
+                        <p className="text-[10px] font-black uppercase tracking-wider text-neutral-400 px-3 pt-1">
+                          {grp.group}
+                        </p>
+                        {grp.links.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className={`block rounded-md px-3 py-1.5 text-xs ${
+                              pathname === link.href ? "text-brand-red font-bold bg-brand-red/5" : "text-neutral-600 hover:text-neutral-900"
+                            }`}
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
                     ))}
                   </div>
                 )}
               </div>
             ))}
-            <div className="pt-2">
+            <div className="pt-3">
               <a href={INVOICE_URL} target="_blank" rel="noreferrer" className="block rounded-full bg-brand-red px-4 py-2.5 text-center text-sm font-bold text-white">
                 Consultar Factura
               </a>

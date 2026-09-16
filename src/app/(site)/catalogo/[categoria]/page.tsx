@@ -1,17 +1,17 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
-import { CategoryProductGrid } from "@/components/site/CategoryProductGrid";
+import { CatalogFilter } from "@/components/site/CatalogFilter";
 import { categoryImageFor } from "@/lib/category-images";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
 
 export const dynamic = "force-dynamic";
 
-type CategoryRow = { id: string; name: string; slug: string };
+type CategoryRow = { id: string; name: string; slug: string; count: number };
 type ProductRow = {
   id: string;
   name: string;
@@ -19,14 +19,14 @@ type ProductRow = {
   categoryId: string;
   categoryName: string;
   categorySlug: string;
+  brandName: string | null;
   r2Key: string | null;
 };
-
 
 const getCategory = cache(async (slug: string) => {
   const [category] = (await sql()`
     SELECT id, name, slug FROM categories WHERE slug = ${slug} LIMIT 1
-  `) as CategoryRow[];
+  `) as { id: string; name: string; slug: string }[];
   return category ?? null;
 });
 
@@ -58,20 +58,32 @@ export default async function CategoryPage({
     notFound();
   }
 
+  // Traer todas las categorías con el conteo real de productos para la barra lateral
   const allCategories = (await sql()`
-    SELECT id, name, slug FROM categories ORDER BY position ASC
+    SELECT c.id, c.name, c.slug, count(p.id)::int as count
+    FROM categories c
+    LEFT JOIN products p ON p."categoryId" = c.id AND p.active = true
+    GROUP BY c.id, c.name, c.slug, c.position
+    ORDER BY c.position ASC
   `) as CategoryRow[];
 
-  // Traer ÚNICAMENTE los productos que corresponden a esta categoría
+  // Total de productos activos en la empresa para "Todas las categorías"
+  const [totalRow] = (await sql()`
+    SELECT count(id)::int as total FROM products WHERE active = true
+  `) as { total: number }[];
+
+  // Traer ÚNICAMENTE los productos que pertenecen a ESTA categoría
   const categoryProductsRaw = (await sql()`
     SELECT
       p.id, p.name, p.slug,
       p."categoryId",
       c.name as "categoryName",
       c.slug as "categorySlug",
+      b.name as "brandName",
       m."r2Key" as "r2Key"
     FROM products p
     JOIN categories c ON c.id = p."categoryId"
+    LEFT JOIN brands b ON b.id = p."brandId"
     LEFT JOIN media m ON m.id = p."mediaId"
     WHERE p.active = true AND p."categoryId" = ${category.id}
     ORDER BY p.position ASC
@@ -79,6 +91,7 @@ export default async function CategoryPage({
 
   const categoryProducts = categoryProductsRaw.map((p) => ({
     ...p,
+    brandName: p.brandName ?? undefined,
     imageUrl: p.r2Key ? publicUrlFor(p.r2Key) : null,
   }));
 
@@ -87,7 +100,10 @@ export default async function CategoryPage({
   return (
     <div>
       {/* ══ HERO BANNER CATEGORÍA ══ */}
-      <div className="relative overflow-hidden py-16 sm:py-20" style={{ background: "linear-gradient(135deg, #1a0000 0%, #6b0000 50%, #e4231b 100%)" }}>
+      <div
+        className="relative overflow-hidden py-16 sm:py-20"
+        style={{ background: "linear-gradient(135deg, #1a0000 0%, #6b0000 50%, #e4231b 100%)" }}
+      >
         <Image
           src={bgImg}
           alt=""
@@ -114,40 +130,16 @@ export default async function CategoryPage({
           <p className="mx-auto mt-2 max-w-md text-sm text-white/80">
             {categoryProducts.length} producto{categoryProducts.length !== 1 ? "s" : ""} disponible{categoryProducts.length !== 1 ? "s" : ""} para distribución inmediata
           </p>
-
-          {/* Menú del Hero: La navegación principal entre categorías */}
-          <div className="mt-8 flex flex-wrap justify-center gap-2">
-            <Link
-              href="/catalogo"
-              className="rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white hover:text-brand-red hover:border-white"
-            >
-              Todos
-            </Link>
-            {allCategories.map((c) => {
-              const isCurrent = c.slug === category.slug;
-              return (
-                <Link
-                  key={c.id}
-                  href={`/catalogo/${c.slug}`}
-                  className={`rounded-full px-4 py-1.5 text-xs font-bold backdrop-blur-sm transition ${
-                    isCurrent
-                      ? "bg-white text-brand-red shadow-lg scale-105 ring-2 ring-white/50"
-                      : "border border-white/30 bg-white/10 text-white/90 hover:bg-white hover:text-brand-red hover:border-white"
-                  }`}
-                >
-                  {c.name}
-                </Link>
-              );
-            })}
-          </div>
         </div>
       </div>
 
-      {/* ══ CONTENIDO: PRODUCTOS DE ESTA CATEGORÍA CONECTADOS DIRECTAMENTE ══ */}
+      {/* ══ CONTENIDO: Catálogo con barra lateral unificada y SOLO los productos de esta categoría ══ */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
-        <CategoryProductGrid
+        <CatalogFilter
           products={categoryProducts}
-          categoryName={category.name}
+          categories={allCategories}
+          currentCategorySlug={category.slug}
+          totalProductCount={totalRow?.total ?? 0}
         />
       </div>
     </div>

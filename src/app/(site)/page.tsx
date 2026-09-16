@@ -1,6 +1,8 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 
+import { BrandWall, type BrandItem } from "@/components/site/BrandWall";
+import { CategoryCarousel } from "@/components/site/CategoryCarousel";
 import { categoryImageFor } from "@/lib/category-images";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
@@ -34,6 +36,15 @@ export default async function HomePage() {
   const categories = (await sql()`
     SELECT id, name, slug FROM categories ORDER BY position ASC
   `) as CategoryRow[];
+
+  const brands = (await sql()`
+    SELECT b.id, b.name, b.slug, count(p.id)::int as count
+    FROM brands b
+    JOIN products p ON p."brandId" = b.id
+    WHERE p.active = true
+    GROUP BY b.id, b.name, b.slug
+    ORDER BY count(p.id) DESC, b.name ASC
+  `) as BrandItem[];
 
   const [heroImage] = (await sql()`
     SELECT m."r2Key" as "r2Key"
@@ -195,37 +206,13 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* CATEGORIAS */}
+      {/* CATEGORIAS — Carrusel Interactivo */}
       {categories.length > 0 && (
-        <section className="py-16">
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="mb-10 text-center">
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Explora</span>
-              <h2 className="section-title centered mt-2 text-3xl font-black text-neutral-900 sm:text-4xl">Nuestras Categorías</h2>
-            </div>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:gap-4">
-              {categories.map((c) => (
-                <Link key={c.id} href={`/catalogo/${c.slug}`} className="group relative overflow-hidden rounded-2xl border border-neutral-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                  <div className="relative h-28 overflow-hidden bg-neutral-100">
-                    <Image
-                      src={categoryImageFor(c.slug)}
-                      alt={c.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      sizes="(max-width: 640px) 50vw, 25vw"
-                    />
-                    <div className="absolute inset-0 bg-brand-red/30 opacity-0 transition-opacity group-hover:opacity-100" />
-                  </div>
-                  <div className="px-4 py-3">
-                    <p className="text-sm font-bold text-neutral-800 group-hover:text-brand-red" style={{ fontFamily: "var(--font-display)" }}>{c.name}</p>
-                    <p className="mt-0.5 text-xs text-neutral-400 group-hover:text-brand-red/60">Ver productos</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+        <CategoryCarousel categories={categories} />
       )}
+
+      {/* ══ NUESTRAS MARCAS ALIADAS (MURO) ══ */}
+      <BrandWall brands={brands} />
 
       {/* FABRICA */}
       <section className="relative h-72 overflow-hidden sm:h-96">
