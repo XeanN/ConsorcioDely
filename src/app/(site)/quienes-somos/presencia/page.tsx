@@ -4,7 +4,7 @@ import Link from "next/link";
 import { sql } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Presencia Nacional - Consorcio Dely" };
+export const metadata: Metadata = { title: "Nuestra Tienda - Consorcio Dely" };
 
 type Row = { email: string|null; address: string|null; legalName: string|null; ruc: string|null };
 
@@ -17,20 +17,20 @@ export default async function PresenciaPage() {
         <Image src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=1200&q=80" alt="" fill className="object-cover opacity-25" sizes="100vw" />
         <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-white">
           <p className="text-xs font-bold uppercase tracking-widest text-white/60">Quiénes somos</p>
-          <h1 className="mt-2 text-4xl font-black uppercase sm:text-5xl" style={{ fontFamily: "var(--font-display)" }}>Presencia Nacional</h1>
-          <p className="mt-2 text-sm text-white/70">Distribuimos en todo el Perú</p>
+          <h1 className="mt-2 text-4xl font-black uppercase sm:text-5xl" style={{ fontFamily: "var(--font-display)" }}>Nuestra Tienda</h1>
+          <p className="mt-2 text-sm text-white/70">Te esperamos en Lima</p>
         </div>
       </div>
 
       <div className="mx-auto max-w-5xl px-6 py-16">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Cobertura</span>
-            <h2 className="section-title mt-2 text-2xl font-black text-neutral-900 sm:text-3xl">Llegamos a donde estás</h2>
-            <p className="mt-5 leading-relaxed text-neutral-600">Nuestra red logística cubre todas las regiones del Perú. Desde Lima hasta el interior del país, garantizamos entregas completas, a tiempo y en perfectas condiciones para tu negocio.</p>
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Visítanos</span>
+            <h2 className="section-title mt-2 text-2xl font-black text-neutral-900 sm:text-3xl">Atención directa y personalizada</h2>
+            <p className="mt-5 leading-relaxed text-neutral-600">Puedes acercarte a nuestra tienda en Lima, o coordinar tu pedido por WhatsApp y llamada telefónica. Te atendemos con la misma calidad y compromiso de siempre.</p>
 
             <div className="mt-8 grid grid-cols-2 gap-4">
-              {[{ n:"25+", t:"Regiones" }, { n:"24h", t:"Entrega Lima" }, { n:"72h", t:"Provincias" }, { n:"100%", t:"Pedidos completos" }].map(s => (
+              {[{ n:"Tienda física", t:"Atención en Lima" }, { n:"WhatsApp", t:"Pedidos y consultas" }, { n:"Llamada", t:"Atención telefónica" }, { n:"100%", t:"Compromiso con la calidad" }].map(s => (
                 <div key={s.t} className="rounded-xl border border-neutral-100 bg-white p-4 text-center shadow-sm">
                   <p className="text-2xl font-black text-brand-red" style={{ fontFamily: "var(--font-display)" }}>{s.n}</p>
                   <p className="mt-0.5 text-xs text-neutral-500">{s.t}</p>
@@ -49,11 +49,11 @@ export default async function PresenciaPage() {
           </div>
 
           <div className="relative h-80 overflow-hidden rounded-2xl lg:h-auto lg:min-h-[480px]">
-            <Image src="https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=900&q=80" alt="Distribución nacional" fill className="object-cover object-center" sizes="(max-width:1024px) 100vw, 50vw" />
+            <Image src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=900&q=80" alt="Tienda Consorcio Dely" fill className="object-cover object-center" sizes="(max-width:1024px) 100vw, 50vw" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6">
-              <p className="font-black text-white" style={{ fontFamily: "var(--font-display)" }}>Flota propia de distribución</p>
-              <p className="text-sm text-white/70">Garantizamos la cadena de frío y seguridad en cada entrega</p>
+              <p className="font-black text-white" style={{ fontFamily: "var(--font-display)" }}>Atención en tienda</p>
+              <p className="text-sm text-white/70">Productos frescos y de calidad, listos para ti</p>
             </div>
           </div>
         </div>

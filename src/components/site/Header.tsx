@@ -68,7 +68,7 @@ const NAV = [
           { href: "/quienes-somos", label: "Conócenos" },
           { href: "/quienes-somos/historia", label: "Nuestra Historia" },
           { href: "/quienes-somos/proposito", label: "Nuestro Propósito" },
-          { href: "/quienes-somos/presencia", label: "Presencia Nacional" },
+          { href: "/quienes-somos/presencia", label: "Nuestra Tienda" },
           { href: "/quienes-somos/equipo", label: "Nuestro Equipo" },
         ],
       },

@@ -203,8 +203,8 @@ export default async function ProductPage({
                   Garantía de calidad
                 </div>
                 <div className="rounded-xl bg-neutral-50 p-2.5">
-                  <span className="block text-brand-red font-black">Nacional</span>
-                  Envío a provincias
+                  <span className="block text-brand-red font-black">WhatsApp</span>
+                  Consulta y pedido
                 </div>
                 <div className="rounded-xl bg-neutral-50 p-2.5">
                   <span className="block text-brand-red font-black">Mayorista</span>

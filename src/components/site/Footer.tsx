@@ -50,7 +50,7 @@ export async function Footer() {
                 Consorcio Dely
               </p>
               <p className="mt-3 text-sm leading-relaxed text-neutral-400">
-                Fabricamos, envasamos y distribuimos abarrotes a nivel nacional.
+                Fabricamos y envasamos abarrotes de calidad.
                 Tu aliado estratégico para hacer crecer tu negocio.
               </p>
               {hasSocial && (

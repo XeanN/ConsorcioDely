@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Quiénes somos",
-  description: "Empresa peruana dedicada a la fabricación, envasado y comercialización de abarrotes a nivel nacional.",
+  description: "Empresa peruana dedicada a la fabricación, envasado y comercialización de abarrotes.",
   alternates: { canonical: "/quienes-somos" },
 };
 
@@ -59,7 +59,7 @@ export default async function AboutPage() {
             Quiénes Somos
           </h1>
           <p className="mt-3 max-w-lg text-sm text-white/80 sm:text-base">
-            Más de 20 años creciendo junto al Perú — fabricando, envasando y distribuyendo calidad.
+            Más de 20 años creciendo junto al Perú — fabricando y envasando calidad.
           </p>
         </div>
       </section>
@@ -88,7 +88,7 @@ export default async function AboutPage() {
               </h2>
               <div className="mt-5 space-y-4 text-sm leading-relaxed text-neutral-600">
                 <p>
-                  {quienesSomos ?? "Consorcio Dely S.A.C. es una empresa peruana dedicada a la fabricación, envasado y comercialización de abarrotes a nivel nacional. A diferencia de un simple revendedor, elaboramos y envasamos directamente nuestras propias líneas de aceite, conservas, mermeladas y más."}
+                  {quienesSomos ?? "Consorcio Dely S.A.C. es una empresa peruana dedicada a la fabricación, envasado y comercialización de abarrotes. A diferencia de un simple revendedor, elaboramos y envasamos directamente nuestras propias líneas de aceite, conservas, mermeladas y más."}
                 </p>
                 <p>
                   Complementamos nuestro catálogo con marcas aliadas como P&G, Alicorp, Nestlé, Gloria y Molitalia. Trabajamos con mayoristas, bodegueros y minoristas, siempre bajo un mismo principio: crecemos junto a cada cliente que confía en nosotros.
@@ -100,7 +100,7 @@ export default async function AboutPage() {
                   { year: "2004", text: "Fundación de Consorcio Dely en Lima" },
                   { year: "2010", text: "Expansión a regiones del interior del país" },
                   { year: "2018", text: "Lanzamiento de líneas propias de aceites y mermeladas" },
-                  { year: "2024", text: "Más de 1,000 clientes a nivel nacional" },
+                  { year: "2024", text: "Más de 1,000 clientes atendidos" },
                 ].map((t) => (
                   <div key={t.year} className="relative">
                     <span className="absolute -left-7 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-red">
@@ -126,7 +126,7 @@ export default async function AboutPage() {
                 Por qué hacemos lo que hacemos
               </h2>
               <p className="mt-5 leading-relaxed text-neutral-400">
-                {responsabilidadSocial ?? "Creemos que el crecimiento de cada bodeguero, mayorista y minorista del Perú es también nuestro crecimiento. Por eso fabricamos productos de calidad accesibles, distribuimos con responsabilidad y construimos relaciones de largo plazo."}
+                {responsabilidadSocial ?? "Creemos que el crecimiento de cada bodeguero, mayorista y minorista del Perú es también nuestro crecimiento. Por eso fabricamos productos de calidad accesibles, trabajamos con responsabilidad y construimos relaciones de largo plazo."}
               </p>
 
               {/* Values */}
@@ -168,17 +168,17 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* PRESENCIA NACIONAL */}
+      {/* NUESTRA TIENDA */}
       <section className="overflow-hidden">
         <div className="grid lg:grid-cols-2">
           <div className="flex items-center bg-white px-8 py-14 lg:px-16">
             <div className="max-w-lg">
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Presencia Nacional</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Nuestra Tienda</span>
               <h2 className="section-title mt-2 text-3xl font-black text-neutral-900 sm:text-4xl">
-                Llegamos a todo el Perú
+                Ven a visitarnos
               </h2>
               <p className="mt-5 leading-relaxed text-neutral-500">
-                Distribuimos a nivel nacional a mayoristas, bodegueros y minoristas desde nuestra sede en Lima. Nuestra red logística garantiza entregas completas y a tiempo en todas las regiones.
+                Te atendemos de manera directa en nuestra tienda en Lima, y también puedes coordinar tu compra por WhatsApp o llamada.
               </p>
 
               {settings && (
@@ -227,13 +227,13 @@ export default async function AboutPage() {
           </div>
 
           <div className="relative h-72 lg:h-auto lg:min-h-[500px]">
-            <Image src={IMGS.map} alt="Presencia nacional" fill className="object-cover object-center" sizes="(max-width:1024px) 100vw, 50vw" />
+            <Image src={IMGS.map} alt="Tienda Consorcio Dely" fill className="object-cover object-center" sizes="(max-width:1024px) 100vw, 50vw" />
             <div className="absolute inset-0 bg-brand-red/20" />
             {/* Stats overlay */}
             <div className="absolute bottom-6 right-6 grid grid-cols-2 gap-3">
               {[
-                { n: "25+", t: "Regiones" },
-                { n: "24h", t: "Lima" },
+                { n: "Tienda física", t: "Lima" },
+                { n: "WhatsApp", t: "Pedidos" },
               ].map((s) => (
                 <div key={s.t} className="rounded-xl bg-white/90 px-4 py-3 text-center backdrop-blur-sm shadow">
                   <p className="text-xl font-black text-brand-red" style={{ fontFamily: "var(--font-display)" }}>{s.n}</p>
@@ -254,7 +254,7 @@ export default async function AboutPage() {
               <Image src={IMGS.team} alt="Equipo Dely" fill className="object-cover object-top" sizes="(max-width:1024px) 100vw, 50vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
-                <p className="text-2xl font-black text-white" style={{ fontFamily: "var(--font-display)" }}>200+ colaboradores</p>
+                <p className="text-2xl font-black text-white" style={{ fontFamily: "var(--font-display)" }}>Nuestros colaboradores</p>
                 <p className="text-sm text-white/75">comprometidos con tu éxito</p>
               </div>
             </div>
@@ -265,12 +265,11 @@ export default async function AboutPage() {
                 Personas que hacen la diferencia
               </h2>
               <p className="mt-5 leading-relaxed text-neutral-500">
-                Detrás de cada producto hay más de 200 personas apasionadas. Desde el área de producción hasta la distribución, cada colaborador es parte esencial de Consorcio Dely.
+                Detrás de cada producto hay personas apasionadas. Desde el área de producción hasta la atención al cliente, cada colaborador es parte esencial de Consorcio Dely.
               </p>
 
               <div className="mt-8 grid grid-cols-2 gap-4">
                 {[
-                  { n: "200+", t: "Colaboradores" },
                   { n: "20+", t: "Años de experiencia" },
                   { n: "5", t: "Áreas de trabajo" },
                   { n: "100%", t: "Comprometidos" },

@@ -41,7 +41,7 @@ export async function generateMetadata({
 
   return {
     title: `${category.name} — Catálogo Consorcio Dely`,
-    description: `Productos de la categoría ${category.name} en Consorcio Dely. Fabricación y distribución a nivel nacional.`,
+    description: `Productos de la categoría ${category.name} en Consorcio Dely. Fabricación y venta directa.`,
     alternates: { canonical: `/catalogo/${category.slug}` },
   };
 }
@@ -128,7 +128,7 @@ export default async function CategoryPage({
             {category.name}
           </h1>
           <p className="mx-auto mt-2 max-w-md text-sm text-white/80">
-            {categoryProducts.length} producto{categoryProducts.length !== 1 ? "s" : ""} disponible{categoryProducts.length !== 1 ? "s" : ""} para distribución inmediata
+            {categoryProducts.length} producto{categoryProducts.length !== 1 ? "s" : ""} disponible{categoryProducts.length !== 1 ? "s" : ""} en tienda
           </p>
         </div>
       </div>

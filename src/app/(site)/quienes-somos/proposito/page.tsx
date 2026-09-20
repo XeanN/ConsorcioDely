@@ -31,7 +31,7 @@ export default async function PropositoPage() {
             <p className="mt-5 whitespace-pre-line leading-relaxed text-neutral-600">{texto}</p>
           </div>
           <div className="space-y-4">
-            {[{ t:"Calidad", d:"Estándares internacionales en cada producto que fabricamos y distribuimos.", ico:"M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" }, { t:"Compromiso", d:"Con nuestros clientes, colaboradores y el Perú.", ico:"M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" }, { t:"Crecimiento", d:"Juntos llegamos más lejos. Tu éxito es nuestro éxito.", ico:"M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" }].map(v => (
+            {[{ t:"Calidad", d:"Estándares internacionales en cada producto que fabricamos.", ico:"M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" }, { t:"Compromiso", d:"Con nuestros clientes, colaboradores y el Perú.", ico:"M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" }, { t:"Crecimiento", d:"Juntos llegamos más lejos. Tu éxito es nuestro éxito.", ico:"M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" }].map(v => (
               <div key={v.t} className="rounded-xl border border-neutral-100 p-4">
                 <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-lg bg-brand-red-ultra">
                   <svg className="h-5 w-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={v.ico} /></svg>
@@ -58,7 +58,7 @@ export default async function PropositoPage() {
 
         <div className="mt-10 flex flex-wrap gap-3">
           <Link href="/quienes-somos/historia" className="btn-outline">Nuestra Historia</Link>
-          <Link href="/quienes-somos/presencia" className="btn-primary">Presencia Nacional</Link>
+          <Link href="/quienes-somos/presencia" className="btn-primary">Nuestra Tienda</Link>
         </div>
       </div>
     </div>

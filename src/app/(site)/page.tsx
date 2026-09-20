@@ -24,7 +24,7 @@ const IMGS = {
   mosaic4:  "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&q=80",
   mosaic5:  "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&q=80",
   team:     "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80",
-  delivery: "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=900&q=80",
+  store: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=900&q=80",
 };
 
 export default async function HomePage() {
@@ -80,7 +80,7 @@ export default async function HomePage() {
             {heroTitle}
           </h1>
           <p className="animate-fade-up delay-200 mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/85 sm:text-xl">
-            Fabricamos, envasamos y distribuimos abarrotes a nivel nacional.
+            Fabricamos y envasamos abarrotes de calidad.
             Tu socio para <strong className="text-white">hacer crecer tu negocio</strong>.
           </p>
           <div className="animate-fade-up delay-300 mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -136,14 +136,14 @@ export default async function HomePage() {
                 Más que productos, somos tu aliado
               </h2>
               <p className="mt-5 leading-relaxed text-neutral-500">
-                Somos una empresa peruana con más de 20 años fabricando, envasando y distribuyendo
-                abarrotes de alta calidad a nivel nacional. Desde aceites y conservas hasta mermeladas
+                Somos una empresa peruana con más de 20 años fabricando y envasando
+                abarrotes de alta calidad. Desde aceites y conservas hasta mermeladas
                 y productos de primera necesidad, cubrimos todo lo que tu negocio necesita.
               </p>
               <ul className="mt-6 space-y-3">
                 {[
                   "Producción propia con estándares de calidad",
-                  "Red de distribución en todo el Perú",
+                  "Atención directa por WhatsApp, llamada y tienda física",
                   "Comprobantes tributarios garantizados",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3 text-sm text-neutral-600">
@@ -231,15 +231,15 @@ export default async function HomePage() {
         <div className="grid lg:grid-cols-2">
           <div className="flex items-center bg-brand-dark px-8 py-14 lg:px-16">
             <div className="max-w-lg">
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-red-light">Distribución</span>
-              <h2 className="section-title mt-2 text-3xl font-black text-white sm:text-4xl">Llegamos a todo el Perú</h2>
-              <p className="mt-5 leading-relaxed text-neutral-400">Nuestra red de distribución cubre todas las regiones del Perú. Desde Lima hasta el interior del país, garantizamos que tus pedidos lleguen completos, a tiempo y en perfectas condiciones.</p>
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-red-light">Atención directa</span>
+              <h2 className="section-title mt-2 text-3xl font-black text-white sm:text-4xl">Te atendemos personalmente</h2>
+              <p className="mt-5 leading-relaxed text-neutral-400">Atendemos de manera directa en nuestra tienda, y también puedes coordinar tu compra por WhatsApp o llamada.</p>
               <div className="mt-6 grid grid-cols-2 gap-4">
                 {[
-                  { n: "24h",  t: "Entrega en Lima" },
-                  { n: "72h",  t: "Entrega en provincias" },
+                  { n: "Tienda física", t: "Atención directa" },
+                  { n: "WhatsApp", t: "Pedidos y consultas" },
+                  { n: "Llamada", t: "Atención telefónica" },
                   { n: "100%", t: "Pedidos completos" },
-                  { n: "5 estrellas", t: "Calificación clientes" },
                 ].map((s) => (
                   <div key={s.t} className="rounded-xl border border-neutral-700 p-4">
                     <p className="text-2xl font-black text-brand-red-light" style={{ fontFamily: "var(--font-display)" }}>{s.n}</p>
@@ -251,7 +251,7 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="relative h-72 lg:h-auto lg:min-h-[520px]">
-            <Image src={IMGS.delivery} alt="Distribución Consorcio Dely" fill className="object-cover object-center" sizes="(max-width: 1024px) 100vw, 50vw" />
+            <Image src={IMGS.store} alt="Tienda Consorcio Dely" fill className="object-cover object-center" sizes="(max-width: 1024px) 100vw, 50vw" />
             <div className="absolute inset-0 bg-gradient-to-r from-neutral-900/40 to-transparent" />
           </div>
         </div>
@@ -275,7 +275,7 @@ export default async function HomePage() {
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Nuestro equipo</span>
               <h2 className="section-title mt-2 text-3xl font-black text-neutral-900 sm:text-4xl">Personas comprometidas con tu éxito</h2>
-              <p className="mt-5 leading-relaxed text-neutral-500">Detrás de cada producto hay un equipo apasionado que trabaja cada día para asegurar la mejor calidad. Nuestros más de 200 colaboradores son la columna vertebral de Consorcio Dely.</p>
+              <p className="mt-5 leading-relaxed text-neutral-500">Detrás de cada producto hay un equipo apasionado que trabaja cada día para asegurar la mejor calidad. Nuestros colaboradores son la columna vertebral de Consorcio Dely.</p>
               <div className="mt-8 flex items-center gap-4">
                 <div className="flex -space-x-2">
                   {[IMGS.mosaic1, IMGS.mosaic2, IMGS.mosaic3].map((src, i) => (
@@ -285,7 +285,7 @@ export default async function HomePage() {
                   ))}
                 </div>
                 <p className="text-sm text-neutral-500">
-                  <strong className="text-neutral-900">200+</strong> colaboradores en todo el Perú
+                  Nuestros colaboradores
                 </p>
               </div>
               <Link href="/quienes-somos" className="btn-outline mt-8">Conoce al equipo</Link>

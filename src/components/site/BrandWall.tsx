@@ -135,7 +135,7 @@ export function BrandWall({ brands }: { brands: BrandItem[] }) {
             Nuestras Marcas Aliadas
           </h2>
           <p className="mt-3 text-sm text-neutral-500 max-w-xl mx-auto">
-            Distribuimos y elaboramos las marcas más reconocidas del mercado peruano.
+            Elaboramos y comercializamos las marcas más reconocidas del mercado peruano.
           </p>
         </div>
       </div>

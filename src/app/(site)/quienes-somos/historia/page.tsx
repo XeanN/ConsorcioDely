@@ -10,7 +10,7 @@ type Row = { key: string; value: string };
 
 export default async function HistoriaPage() {
   const rows = (await sql()`SELECT key, value FROM content_blocks WHERE key = 'quienes_somos' LIMIT 1`) as Row[];
-  const texto = rows[0]?.value ?? "Consorcio Dely S.A.C. es una empresa peruana dedicada a la fabricación, envasado y comercialización de abarrotes a nivel nacional desde el 2004.";
+  const texto = rows[0]?.value ?? "Consorcio Dely S.A.C. es una empresa peruana dedicada a la fabricación, envasado y comercialización de abarrotes desde el 2004.";
 
   return (
     <div>
@@ -37,7 +37,7 @@ export default async function HistoriaPage() {
               <Image src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80" alt="Productos Dely" fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" />
             </div>
             <div className="border-l-2 border-brand-red pl-6 space-y-6">
-              {[{ y:"2004", t:"Fundación de Consorcio Dely en Lima" }, { y:"2010", t:"Expansión a regiones del interior del país" }, { y:"2018", t:"Lanzamiento de líneas propias de aceites y mermeladas" }, { y:"2024", t:"Más de 1,000 clientes a nivel nacional" }].map(e => (
+              {[{ y:"2004", t:"Fundación de Consorcio Dely en Lima" }, { y:"2018", t:"Lanzamiento de líneas propias de aceites y mermeladas" }, { y:"2024", t:"Más de 1,000 clientes atendidos" }].map(e => (
                 <div key={e.y} className="relative">
                   <span className="absolute -left-7 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-red"><span className="h-1.5 w-1.5 rounded-full bg-white" /></span>
                   <p className="text-xs font-black text-brand-red">{e.y}</p>
@@ -50,7 +50,7 @@ export default async function HistoriaPage() {
 
         <div className="mt-12 flex flex-wrap gap-3">
           <Link href="/quienes-somos/proposito" className="btn-primary">Nuestro Propósito</Link>
-          <Link href="/quienes-somos/presencia" className="btn-outline">Presencia Nacional</Link>
+          <Link href="/quienes-somos/presencia" className="btn-outline">Nuestra Tienda</Link>
         </div>
       </div>
     </div>

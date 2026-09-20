@@ -48,7 +48,7 @@ export default async function ContactPage() {
         <div className="relative mx-auto max-w-6xl px-6 text-center text-white">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest backdrop-blur-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-red-light animate-ping" />
-            Atención a nivel nacional
+            Atención directa y personalizada
           </span>
           <h1 className="mt-4 text-4xl font-black uppercase tracking-tight sm:text-5xl md:text-6xl" style={{ fontFamily: "var(--font-display)", textShadow: "0 4px 20px rgba(0,0,0,0.5)" }}>
             Contáctanos
@@ -157,7 +157,7 @@ export default async function ContactPage() {
                     </p>
                     <div className="mt-3 flex flex-wrap gap-2 text-[11px] font-bold text-neutral-600">
                       <span className="rounded-md bg-neutral-100 px-2.5 py-1">RUC: {settings?.ruc || "20601228492"}</span>
-                      <span className="rounded-md bg-neutral-100 px-2.5 py-1">Lima y Provincias</span>
+                      <span className="rounded-md bg-neutral-100 px-2.5 py-1">Comprobantes válidos SUNAT</span>
                     </div>
                   </div>
                 </div>
@@ -233,8 +233,8 @@ export default async function ContactPage() {
                 a: "Puedes contactar a una asesora comercial directamente por WhatsApp o mediante nuestro formulario. Indícanos las cantidades y productos que requieres y te emitiremos una cotización con escala de precios mayoristas.",
               },
               {
-                q: "¿Realizan envíos a provincias de todo el Perú?",
-                a: "Sí, despachamos diariamente a agencias de transporte reconocidas (Marvisur, Shalom, Molina, etc.) para llegar a todas las regiones del país en un plazo promedio de 48 a 72 horas.",
+                q: "¿Puedo recoger mi pedido directamente en tienda?",
+                a: "Sí, puedes visitarnos en nuestra tienda en Lima para recoger y verificar tu pedido, o coordinarlo antes por WhatsApp o llamada telefónica.",
               },
               {
                 q: "¿Cuáles son los métodos de pago aceptados?",
