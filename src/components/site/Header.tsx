@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 
-const INVOICE_URL = "http://209.45.53.224:9090/Delyconsorcio";
+const INVOICE_URL = "http://38.19.229.250:9090/Delyconsorcio";
 
 const NAV = [
   {
