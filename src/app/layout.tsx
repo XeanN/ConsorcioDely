@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 
@@ -17,7 +18,7 @@ const inter = Inter({
 const siteUrl = process.env.SITE_URL ?? "https://consorciodely-web.angel-xp-pb.workers.dev";
 const title = "Consorcio Dely — Crecemos Juntos";
 const description =
-  "Fabricamos, envasamos y distribuimos abarrotes a nivel nacional: aceites, conservas, mermeladas y más.";
+  "Fabricamos y envasamos abarrotes de calidad: aceites, conservas, mermeladas y más. Atención directa en tienda, por WhatsApp y llamada.";
 
 export const metadata: Metadata = {
   // Resuelve URLs relativas (canonical, OG images) contra el dominio real
@@ -42,6 +43,12 @@ export const metadata: Metadata = {
     description,
     images: ["/dely.pe.png"],
   },
+  // Código de verificación de Google Search Console (Configuración ->
+  // Verificación de la propiedad -> etiqueta HTML). No es secreto, se
+  // declara en wrangler.jsonc ("vars" -> GOOGLE_SITE_VERIFICATION).
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -51,6 +58,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${montserrat.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
+      {/* Google Analytics 4 — no se activa hasta que GA_MEASUREMENT_ID
+          tenga un valor real en wrangler.jsonc ("vars"). */}
+      {process.env.GA_MEASUREMENT_ID && (
+        <GoogleAnalytics gaId={process.env.GA_MEASUREMENT_ID} />
+      )}
     </html>
   );
 }
