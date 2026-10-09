@@ -32,8 +32,12 @@ export default async function HomePage() {
     SELECT value FROM content_blocks WHERE key = 'hero_title' LIMIT 1
   `) as ContentBlockRow[];
 
+  // Solo categorías con al menos un producto activo (mismo criterio que /catalogo).
   const categories = (await sql()`
-    SELECT id, name, slug FROM categories ORDER BY position ASC
+    SELECT c.id, c.name, c.slug
+    FROM categories c
+    WHERE EXISTS (SELECT 1 FROM products p WHERE p."categoryId" = c.id AND p.active = true)
+    ORDER BY c.position ASC
   `) as CategoryRow[];
 
   const brands = (await sql()`
@@ -171,7 +175,7 @@ export default async function HomePage() {
             <p className="mt-3 text-neutral-500">Desde aceites y conservas hasta mermeladas — fabricado con los más altos estándares</p>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:gap-4">
-            <div className="group relative col-span-2 row-span-2 overflow-hidden rounded-2xl sm:col-span-1 sm:row-span-2">
+            <Link href="/catalogo/vegetal" className="group relative col-span-2 row-span-2 overflow-hidden rounded-2xl sm:col-span-1 sm:row-span-2">
               <div className="relative h-72 sm:h-full sm:min-h-[420px]">
                 <Image src={IMGS.mosaic1} alt="Aceites Dely" fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 640px) 100vw, 33vw" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -180,14 +184,14 @@ export default async function HomePage() {
                   <p className="mt-2 font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>Aceites Vegetales</p>
                 </div>
               </div>
-            </div>
+            </Link>
             {[
-              { src: IMGS.mosaic2, label: "Conservas",  tag: "Conservas" },
-              { src: IMGS.mosaic3, label: "Mermeladas", tag: "Mermeladas" },
-              { src: IMGS.mosaic4, label: "Abarrotes",  tag: "Abarrotes" },
-              { src: IMGS.mosaic5, label: "Lácteos",    tag: "Lácteos" },
+              { src: IMGS.mosaic2, label: "Conserva de Atún", tag: "Conservas", href: "/catalogo/conserva-de-atun" },
+              { src: IMGS.mosaic3, label: "Mermeladas",       tag: "Mermeladas", href: "/catalogo/mermelada" },
+              { src: IMGS.mosaic4, label: "Panetón",          tag: "Panetón", href: "/catalogo/paneton" },
+              { src: IMGS.mosaic5, label: "Detergentes",      tag: "Limpieza", href: "/catalogo/detergente" },
             ].map((item) => (
-              <div key={item.label} className="group relative overflow-hidden rounded-2xl">
+              <Link key={item.label} href={item.href} className="group relative overflow-hidden rounded-2xl">
                 <div className="relative h-48 sm:h-52">
                   <Image src={item.src} alt={item.label} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 640px) 50vw, 25vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
@@ -196,7 +200,7 @@ export default async function HomePage() {
                     <p className="mt-1 text-xs font-semibold text-white">{item.label}</p>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           <div className="mt-8 text-center">
