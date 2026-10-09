@@ -10,8 +10,12 @@ type ProductRow = { slug: string; updatedAt: Date };
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.SITE_URL ?? "https://consorciodely-web.angel-xp-pb.workers.dev";
 
+  // Solo categorías con al menos un producto activo (mismo criterio que el
+  // catálogo público) -- evita mandarle a Google páginas vacías para indexar.
   const categories = (await sql()`
-    SELECT slug, "updatedAt" FROM categories
+    SELECT c.slug, c."updatedAt"
+    FROM categories c
+    WHERE EXISTS (SELECT 1 FROM products p WHERE p."categoryId" = c.id AND p.active = true)
   `) as CategoryRow[];
 
   const products = (await sql()`

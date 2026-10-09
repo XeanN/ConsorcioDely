@@ -18,42 +18,22 @@ const NAV = [
     label: "Catálogo",
     children: [
       {
-        group: "Abarrotes y Despensa",
+        group: "Alimentos y Despensa",
         links: [
           { href: "/catalogo", label: "Ver todo el catálogo" },
           { href: "/catalogo/vegetal", label: "Aceite Vegetal" },
-          { href: "/catalogo/conserva-de-pescado", label: "Conserva de Pescado" },
-          { href: "/catalogo/conserva-de-atun", label: "Conserva de Atún" },
-          { href: "/catalogo/fideos", label: "Fideos" },
-          { href: "/catalogo/harina", label: "Harinas" },
-          { href: "/catalogo/salsas", label: "Salsas y Aderezos" },
-          { href: "/catalogo/azucar-rubia", label: "Azúcar Rubia" },
-        ],
-      },
-      {
-        group: "Desayunos y Dulces",
-        links: [
+          { href: "/catalogo/pae", label: "PAE" },
           { href: "/catalogo/mermelada", label: "Mermeladas" },
-          { href: "/catalogo/avena-cereal", label: "Avena y Cereales" },
-          { href: "/catalogo/chocolates", label: "Chocolates" },
-          { href: "/catalogo/chocolate-de-taza", label: "Chocolate de Taza" },
-          { href: "/catalogo/cafe", label: "Café" },
-          { href: "/catalogo/galletas", label: "Galletas" },
-          { href: "/catalogo/paneton", label: "Panetón" },
-          { href: "/catalogo/leche-evaporada", label: "Leche Evaporada" },
+          { href: "/catalogo/avena", label: "Avena" },
         ],
       },
       {
-        group: "Limpieza y Cuidado",
+        group: "Más productos",
         links: [
+          { href: "/catalogo/paneton", label: "Panetón" },
+          { href: "/catalogo/chocolate-de-taza", label: "Chocolate de Taza" },
+          { href: "/catalogo/conserva-de-atun", label: "Conserva de Atún" },
           { href: "/catalogo/detergente", label: "Detergentes" },
-          { href: "/catalogo/lava-vajilla", label: "Lava Vajilla" },
-          { href: "/catalogo/jabon-de-ropa", label: "Jabón de Ropa" },
-          { href: "/catalogo/lejia", label: "Lejías" },
-          { href: "/catalogo/suavizante", label: "Suavizantes" },
-          { href: "/catalogo/aromatizante", label: "Aromatizantes" },
-          { href: "/catalogo/pilas", label: "Pilas y Baterías" },
-          { href: "/catalogo/toallas-higienicas", label: "Toallas Higiénicas" },
         ],
       },
     ],
@@ -190,7 +170,7 @@ export function Header() {
                                 Catálogo Consorcio Dely
                               </p>
                               <p className="text-xs text-neutral-400">
-                                Más de 40 categorías y productos de primera necesidad
+                                Aceites, conservas, mermeladas y más — directo de fábrica
                               </p>
                             </div>
                             <Link

@@ -58,11 +58,12 @@ export default async function CategoryPage({
     notFound();
   }
 
-  // Traer todas las categorías con el conteo real de productos para la barra lateral
+  // Solo categorías con al menos un producto activo para la barra lateral
+  // (mismo criterio que /catalogo — evita links a páginas vacías).
   const allCategories = (await sql()`
     SELECT c.id, c.name, c.slug, count(p.id)::int as count
     FROM categories c
-    LEFT JOIN products p ON p."categoryId" = c.id AND p.active = true
+    JOIN products p ON p."categoryId" = c.id AND p.active = true
     GROUP BY c.id, c.name, c.slug, c.position
     ORDER BY c.position ASC
   `) as CategoryRow[];
@@ -94,6 +95,11 @@ export default async function CategoryPage({
     brandName: p.brandName ?? undefined,
     imageUrl: p.r2Key ? publicUrlFor(p.r2Key) : null,
   }));
+
+  // Categoría sin productos activos todavía -> no indexar/mostrar página vacía.
+  if (categoryProducts.length === 0) {
+    notFound();
+  }
 
   const bgImg = categoryImageFor(category.slug);
 

@@ -26,10 +26,13 @@ type ProductRow = {
 };
 
 export default async function CatalogPage() {
+  // Solo categorías con al menos un producto activo — evita links/pills a
+  // páginas vacías mientras el catálogo todavía no tiene todas las fotos y
+  // datos reales de los demás rubros cargados.
   const categories = (await sql()`
     SELECT c.id, c.name, c.slug, count(p.id)::int as count
     FROM categories c
-    LEFT JOIN products p ON p."categoryId" = c.id AND p.active = true
+    JOIN products p ON p."categoryId" = c.id AND p.active = true
     GROUP BY c.id, c.name, c.slug, c.position
     ORDER BY c.position ASC
   `) as (CategoryRow & { count: number })[];
@@ -68,7 +71,7 @@ export default async function CatalogPage() {
         <div className="relative mx-auto max-w-6xl px-6 text-center text-white">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest backdrop-blur-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-white" />
-            Más de 500 productos
+            {mapped.length} productos
           </span>
           <h1
             className="mt-4 text-4xl font-black uppercase tracking-tight sm:text-5xl md:text-6xl"
