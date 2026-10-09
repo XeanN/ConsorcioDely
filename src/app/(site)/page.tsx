@@ -40,13 +40,15 @@ export default async function HomePage() {
     ORDER BY c.position ASC
   `) as CategoryRow[];
 
+  // Todas las marcas (no solo las que tienen producto activo hoy) -- el
+  // muro de marcas es una vitrina de alianzas, no un filtro de catálogo;
+  // se va recortando aparte más adelante según lo defina el cliente.
   const brands = (await sql()`
-    SELECT b.id, b.name, b.slug, count(p.id)::int as count
+    SELECT b.id, b.name, b.slug, count(p.id) FILTER (WHERE p.active = true)::int as count
     FROM brands b
-    JOIN products p ON p."brandId" = b.id
-    WHERE p.active = true
+    LEFT JOIN products p ON p."brandId" = b.id
     GROUP BY b.id, b.name, b.slug
-    ORDER BY count(p.id) DESC, b.name ASC
+    ORDER BY count(p.id) FILTER (WHERE p.active = true) DESC, b.name ASC
   `) as BrandItem[];
 
   const [heroImage] = (await sql()`
