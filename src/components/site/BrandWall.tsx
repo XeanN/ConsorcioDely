@@ -49,12 +49,12 @@ const FALLBACK_COLORS = [
 
 /* Imágenes de referencia por tipo de producto — dan contexto visual a cada tile */
 const BRAND_IMAGES: Record<string, string> = {
-  lenysol: "https://images.unsplash.com/photo-1585421514738-01798e348b17?w=300&q=70",
-  delytun: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=300&q=70",
-  "delytun-premium": "https://images.unsplash.com/photo-1534483509719-3feaee7c30da?w=300&q=70",
-  "dely-cusco": "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=300&q=70",
+  lenysol: "/images/products/aceite-vegetal-lenysol-botella-amarilla-5-l.png",
+  delytun: "/images/products/conserva-delytun-filete-de-atun-170-g.png",
+  "delytun-premium": "/images/products/conserva-de-atun-delytun-premium-filete-de-atun-140-g.png",
+  "dely-cusco": "/images/products/chocolate-de-taza-dely-cusco-80-g.png",
   delyavena: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?w=300&q=70",
-  delys: "https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=300&q=70",
+  delys: "/images/products/conserva-de-atun-delys-filete-de-atun-170-g.png",
   primor: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=300&q=70",
   molitalia: "https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=300&q=70",
   "don-vittorio": "https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=300&q=70",
@@ -71,7 +71,7 @@ const BRAND_IMAGES: Record<string, string> = {
   "blanca-flor": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&q=70",
   nicolini: "https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=300&q=70",
   "san-jorge": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300&q=70",
-  lavazza: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=300&q=70",
+  lavazza: "/images/products/detergente-lavazza-limon-1-kg.png",
   marsella: "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=300&q=70",
   trome: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=300&q=70",
   umsha: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=300&q=70",

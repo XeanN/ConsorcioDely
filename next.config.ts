@@ -23,6 +23,20 @@ const nextConfig: NextConfig = {
   outputFileTracingExcludes: {
     "*": ["node_modules/sharp/**", "node_modules/@img/**"],
   },
+  async redirects() {
+    return [
+      {
+        source: "/producto/aceite-vegetal-lenysol-1-l",
+        destination: "/producto/pae-lenysol-1-l",
+        permanent: false,
+      },
+      {
+        source: "/producto/aceite-vegetal-lenysol-200-ml",
+        destination: "/producto/pae-lenysol-200-ml",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
