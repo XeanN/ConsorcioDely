@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState, Suspense } from "react";
 
+import { getSecondaryImage, PRODUCT_GALLERIES } from "@/lib/product-gallery";
+
 type Product = {
   id: string;
   name: string;
@@ -273,6 +275,9 @@ export function CatalogFilter(props: {
 }
 
 function ProductCardItem({ product }: { product: Product }) {
+  const secondaryImg = getSecondaryImage(product.slug);
+  const galleryCount = PRODUCT_GALLERIES[product.slug]?.length ?? 1;
+
   return (
     <Link
       href={`/producto/${product.slug}`}
@@ -282,13 +287,28 @@ function ProductCardItem({ product }: { product: Product }) {
         <span className="absolute left-2.5 top-2.5 z-10 rounded-full bg-emerald-500 px-2 py-0.5 text-[9px] font-bold tracking-wide text-white shadow">
           PERUANO
         </span>
+        {galleryCount > 1 && (
+          <span className="absolute right-2.5 top-2.5 z-10 rounded-full bg-black/60 px-2 py-0.5 text-[9px] font-bold text-white shadow backdrop-blur-sm">
+            {galleryCount} fotos
+          </span>
+        )}
         <img
           src={product.imageUrl || PLACEHOLDER}
           alt={product.name}
           loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className={`h-full w-full object-cover transition-all duration-500 ${
+            secondaryImg ? "group-hover:opacity-0" : "group-hover:scale-110"
+          }`}
         />
-        <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/50 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        {secondaryImg && (
+          <img
+            src={secondaryImg}
+            alt={`${product.name} — vista alternativa`}
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105"
+          />
+        )}
+        <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/50 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none">
           <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-neutral-900 shadow">
             Ver detalle →
           </span>

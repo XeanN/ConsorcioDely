@@ -16,15 +16,15 @@ type SiteSettingRow = { address: string | null };
 
 const IMGS = {
   hero:     "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80",
-  split1:   "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=80",
+  split1:   "/images/products/conservas-piramide-display.png",
   factory:  "https://images.unsplash.com/photo-1553413077-190dd305871c?w=1600&q=80",
-  mosaic1:  "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600&q=80",
-  mosaic2:  "https://images.unsplash.com/photo-1602253057119-44d745d9b860?w=600&q=80",
-  mosaic3:  "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=600&q=80",
-  mosaic4:  "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&q=80",
-  mosaic5:  "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&q=80",
+  mosaic1:  "/images/categories/vegetal.png",
+  mosaic2:  "/images/categories/conserva-de-pescado.png",
+  mosaic3:  "/images/categories/mermelada.png",
+  mosaic4:  "/images/products/paneton-lenysol-bolsa-mono-800-g.png",
+  mosaic5:  "/images/categories/detergente.png",
   team:     "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80",
-  store: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=900&q=80",
+  store:    "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=900&q=80",
 };
 
 export default async function HomePage() {
@@ -66,7 +66,7 @@ export default async function HomePage() {
 
   const quoteLink = await getRandomQuoteLink(buildQuoteMessage());
   const heroTitle = hero?.value ?? "Crecemos Juntos";
-  const heroBg = heroImage ? publicUrlFor(heroImage.r2Key) : IMGS.hero;
+  const heroBg = IMGS.hero;
 
   return (
     <div>

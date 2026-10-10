@@ -15,7 +15,8 @@
     "seed:taxonomy": "tsx scripts/seed-catalog-taxonomy.ts",
     "seed:products": "tsx scripts/seed-catalog-products.ts",
     "seed:catalog-batch2": "tsx scripts/seed-catalog-batch2.ts",
-    "seed:content": "tsx scripts/seed-site-content.ts"
+    "seed:content": "tsx scripts/seed-site-content.ts",
+    "seed:images": "tsx scripts/seed-product-images.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

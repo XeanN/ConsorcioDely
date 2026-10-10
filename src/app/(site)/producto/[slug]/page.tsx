@@ -1,10 +1,12 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
+import { ProductGallery } from "@/components/site/ProductGallery";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
+import { getProductImages } from "@/lib/product-gallery";
 import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
@@ -14,6 +16,7 @@ type NutritionRow = { label: string; value: string; per100g?: string; dailyValue
 type ProductDetail = {
   id: string;
   name: string;
+  slug: string;
   description: string | null;
   categoryId: string;
   categoryName: string;
@@ -47,7 +50,7 @@ const PLACEHOLDER_IMG = "https://images.unsplash.com/photo-1542838132-92c5330049
 
 const getProduct = cache(async (slug: string) => {
   const [product] = (await sql()`
-    SELECT p.id, p.name, p.description, p."categoryId", c.name as "categoryName", c.slug as "categorySlug", b.name as "brandName", m."r2Key" as "r2Key",
+    SELECT p.id, p.name, p.slug, p.description, p."categoryId", c.name as "categoryName", c.slug as "categorySlug", b.name as "brandName", m."r2Key" as "r2Key",
       p.sku, p."packSize",
       p."nutritionServingSize", p."nutritionServingsPerContainer", p."nutritionFacts"
     FROM products p
@@ -122,12 +125,14 @@ export default async function ProductPage({
       ? publicUrlFor(variants.find((v) => v.r2Key)!.r2Key!)
       : PLACEHOLDER_IMG;
 
+  const productImages = getProductImages(product.slug, mainImageUrl);
+
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
     description: product.description ?? undefined,
-    image: product.r2Key ? publicUrlFor(product.r2Key) : undefined,
+    image: productImages.length > 0 ? productImages : (product.r2Key ? [publicUrlFor(product.r2Key)] : undefined),
     brand: { "@type": "Brand", name: product.brandName },
     category: product.categoryName,
   };
@@ -177,40 +182,9 @@ export default async function ProductPage({
         <div className="overflow-hidden rounded-3xl border border-neutral-200/80 bg-white p-6 shadow-sm sm:p-10">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
             
-            {/* Columna Izquierda: Imagen */}
-            <div className="lg:col-span-6 space-y-4">
-              <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-neutral-100 bg-neutral-50">
-                <div className="absolute left-4 top-4 z-10 flex flex-col gap-1.5">
-                  <span className="rounded-full bg-emerald-500 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-md">
-                    Producto Peruano
-                  </span>
-                  <span className="rounded-full bg-brand-red px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-md">
-                    Calidad Dely
-                  </span>
-                </div>
-
-                <img
-                  src={mainImageUrl}
-                  alt={product.name}
-                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-              </div>
-
-              {/* Beneficios al pie de foto */}
-              <div className="grid grid-cols-3 gap-2 text-center text-[11px] font-semibold text-neutral-600">
-                <div className="rounded-xl bg-neutral-50 p-2.5">
-                  <span className="block text-brand-red font-black">100%</span>
-                  Garantía de calidad
-                </div>
-                <div className="rounded-xl bg-neutral-50 p-2.5">
-                  <span className="block text-brand-red font-black">WhatsApp</span>
-                  Consulta y pedido
-                </div>
-                <div className="rounded-xl bg-neutral-50 p-2.5">
-                  <span className="block text-brand-red font-black">Mayorista</span>
-                  Precios por volumen
-                </div>
-              </div>
+            {/* Columna Izquierda: Galería de imágenes interactiva */}
+            <div className="lg:col-span-6">
+              <ProductGallery images={productImages} productName={product.name} />
             </div>
 
             {/* Columna Derecha: Información */}
