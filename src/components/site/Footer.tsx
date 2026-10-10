@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { sql } from "@/lib/db";
@@ -154,15 +155,21 @@ export async function Footer() {
                   </li>
                 ))}
                 {settings?.complaintsBookUrl && (
-                  <li>
+                  <li className="pt-1">
                     <a
                       href={settings.complaintsBookUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="group inline-flex items-center gap-1.5 transition-colors hover:text-brand-red-light"
+                      aria-label="Libro de Reclamaciones"
+                      className="inline-block overflow-hidden rounded-lg bg-white p-1 shadow-sm transition-transform hover:scale-105"
                     >
-                      <span className="h-px w-3 bg-brand-red opacity-0 transition-all group-hover:opacity-100" />
-                      Libro de Reclamaciones
+                      <Image
+                        src="/libro-reclamaciones.png"
+                        alt="Libro de Reclamaciones"
+                        width={100}
+                        height={77}
+                        className="h-17.5 w-auto"
+                      />
                     </a>
                   </li>
                 )}
