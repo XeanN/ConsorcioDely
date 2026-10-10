@@ -13,12 +13,13 @@ type SiteSettingRow = {
   twitterUrl: string | null;
   tiktokUrl: string | null;
   youtubeUrl: string | null;
+  complaintsBookUrl: string | null;
 };
 
 export async function Footer() {
   const [settings] = (await sql()`
     SELECT "legalName", ruc, "fiscalAddress", phone, email,
-      "facebookUrl", "instagramUrl", "twitterUrl", "tiktokUrl", "youtubeUrl"
+      "facebookUrl", "instagramUrl", "twitterUrl", "tiktokUrl", "youtubeUrl", "complaintsBookUrl"
     FROM site_settings WHERE id = 1 LIMIT 1
   `) as SiteSettingRow[];
 
@@ -152,6 +153,19 @@ export async function Footer() {
                     </Link>
                   </li>
                 ))}
+                {settings?.complaintsBookUrl && (
+                  <li>
+                    <a
+                      href={settings.complaintsBookUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group inline-flex items-center gap-1.5 transition-colors hover:text-brand-red-light"
+                    >
+                      <span className="h-px w-3 bg-brand-red opacity-0 transition-all group-hover:opacity-100" />
+                      Libro de Reclamaciones
+                    </a>
+                  </li>
+                )}
               </ul>
             </div>
 
@@ -206,7 +220,7 @@ export async function Footer() {
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4 text-xs text-neutral-500">
             <p>&copy; {currentYear} Consorcio Dely — Todos los derechos reservados.</p>
             <p>
-              Hecho con ❤️ en Perú
+              Aliiatech - Hecho con ❤️ en Perú
             </p>
           </div>
         </div>
