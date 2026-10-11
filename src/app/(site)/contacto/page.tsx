@@ -2,8 +2,9 @@
 import Image from "next/image";
 
 import { ContactForm } from "@/components/site/ContactForm";
+import { WhatsAppCta } from "@/components/site/WhatsAppCta";
 import { sql } from "@/lib/db";
-import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
+import { buildQuoteMessage, getActiveQuotePhones } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +28,7 @@ export default async function ContactPage() {
     SELECT phone, "contactPhone", email, address, "legalName", ruc FROM site_settings WHERE id = 1 LIMIT 1
   `) as SiteSettingRow[];
 
-  const quoteLink = await getRandomQuoteLink(buildQuoteMessage());
+  const quotePhones = await getActiveQuotePhones();
 
   return (
     <div>
@@ -101,10 +102,14 @@ export default async function ContactPage() {
                   </div>
                   <h3 className="mt-3 text-sm font-bold text-neutral-800">WhatsApp Ventas</h3>
                   <p className="mt-1 text-xs text-neutral-500">Respuesta promedio: &lt; 5 min</p>
-                  {quoteLink ? (
-                    <a href={quoteLink} target="_blank" rel="noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm font-black text-brand-green hover:underline">
+                  {quotePhones.length > 0 ? (
+                    <WhatsAppCta
+                      phones={quotePhones}
+                      message={buildQuoteMessage()}
+                      className="mt-2 inline-flex items-center gap-1 text-sm font-black text-brand-green hover:underline"
+                    >
                       Iniciar chat directo →
-                    </a>
+                    </WhatsAppCta>
                   ) : (
                     <p className="mt-2 text-sm font-black text-neutral-900">970 835 166</p>
                   )}

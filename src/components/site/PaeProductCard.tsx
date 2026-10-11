@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
+import { WhatsAppCta } from "@/components/site/WhatsAppCta";
 
 export type PaeProductData = {
   id: string;
@@ -18,7 +18,7 @@ export type PaeProductData = {
   nutritionFacts: { label: string; value: string; dailyValue?: string }[];
 };
 
-export function PaeProductCard({ product }: { product: PaeProductData }) {
+export function PaeProductCard({ product, phones }: { product: PaeProductData; phones: string[] }) {
   const [activeTab, setActiveTab] = useState<"front" | "back" | "table">("front");
   const [hovered, setHovered] = useState(false);
 
@@ -198,14 +198,14 @@ export function PaeProductCard({ product }: { product: PaeProductData }) {
           >
             Ver Ficha Completa
           </Link>
-          <a
-            href={`https://wa.me/51932598762?text=${encodeURIComponent(quoteMessage)}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppCta
+            phones={phones}
+            message={quoteMessage}
+            fallbackHref={`https://wa.me/51932598762?text=${encodeURIComponent(quoteMessage)}`}
             className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-700 hover:shadow-md"
           >
             <span>💬</span> Cotizar PAE
-          </a>
+          </WhatsAppCta>
         </div>
       </div>
     </div>

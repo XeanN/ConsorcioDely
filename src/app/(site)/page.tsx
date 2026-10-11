@@ -3,9 +3,10 @@ import Link from "next/link";
 
 import { BrandWall, type BrandItem } from "@/components/site/BrandWall";
 import { CategoryCarousel } from "@/components/site/CategoryCarousel";
+import { WhatsAppCta } from "@/components/site/WhatsAppCta";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
-import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
+import { buildQuoteMessage, getActiveQuotePhones } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -64,7 +65,7 @@ export default async function HomePage() {
     SELECT address FROM site_settings WHERE id = 1 LIMIT 1
   `) as SiteSettingRow[];
 
-  const quoteLink = await getRandomQuoteLink(buildQuoteMessage());
+  const quotePhones = await getActiveQuotePhones();
   const heroTitle = hero?.value ?? "Crecemos Juntos";
   const heroBg = IMGS.hero;
 
@@ -316,11 +317,16 @@ export default async function HomePage() {
               <p className="mb-1 text-sm font-bold uppercase tracking-widest text-white/70" style={{ fontFamily: "var(--font-display)" }}>Tienda online</p>
               <h3 className="text-2xl font-black text-white">Cotiza ahora por WhatsApp</h3>
               <p className="mt-3 text-sm leading-relaxed text-white/80">Recibe una cotización personalizada al instante. Nuestro equipo te atiende en minutos.</p>
-              {quoteLink ? (
-                <a href={quoteLink} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-3 rounded-full bg-brand-green px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl" style={{ fontFamily: "var(--font-display)" }}>
+              {quotePhones.length > 0 ? (
+                <WhatsAppCta
+                  phones={quotePhones}
+                  message={buildQuoteMessage()}
+                  className="mt-6 inline-flex items-center gap-3 rounded-full bg-brand-green px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
                   <svg viewBox="0 0 32 32" className="h-5 w-5 fill-white"><path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.36.696 4.56 1.89 6.406L4 29l7.79-1.85A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Z" /></svg>
                   Cotizar por WhatsApp
-                </a>
+                </WhatsAppCta>
               ) : (
                 <p className="mt-4 text-sm text-white/70">Consulta nuestro catálogo completo en línea.</p>
               )}

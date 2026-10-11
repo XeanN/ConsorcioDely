@@ -4,10 +4,11 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 
 import { ProductGallery } from "@/components/site/ProductGallery";
+import { WhatsAppCta } from "@/components/site/WhatsAppCta";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
 import { getProductImages } from "@/lib/product-gallery";
-import { buildQuoteMessage, getRandomQuoteLink } from "@/lib/whatsapp";
+import { buildQuoteMessage, getActiveQuotePhones } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -117,7 +118,7 @@ export default async function ProductPage({
     LIMIT 4
   `) as RelatedProduct[];
 
-  const quoteLink = await getRandomQuoteLink(buildQuoteMessage(product.name));
+  const quotePhones = await getActiveQuotePhones();
 
   const mainImageUrl = product.r2Key
     ? publicUrlFor(product.r2Key)
@@ -303,20 +304,17 @@ export default async function ProductPage({
 
               {/* Botones de acción */}
               <div className="mt-8 pt-6 border-t border-neutral-100 flex flex-col gap-3 sm:flex-row">
-                {quoteLink && (
-                  <a
-                    href={quoteLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2.5 rounded-full bg-brand-green px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-green/20 transition-all hover:brightness-95 hover:shadow-xl active:scale-[0.98]"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    <svg viewBox="0 0 32 32" className="h-5 w-5 fill-white">
-                      <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.36.696 4.56 1.89 6.406L4 29l7.79-1.85A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Z" />
-                    </svg>
-                    Cotizar por WhatsApp
-                  </a>
-                )}
+                <WhatsAppCta
+                  phones={quotePhones}
+                  message={buildQuoteMessage(product.name)}
+                  className="flex-1 flex items-center justify-center gap-2.5 rounded-full bg-brand-green px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-green/20 transition-all hover:brightness-95 hover:shadow-xl active:scale-[0.98]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  <svg viewBox="0 0 32 32" className="h-5 w-5 fill-white">
+                    <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.36.696 4.56 1.89 6.406L4 29l7.79-1.85A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Z" />
+                  </svg>
+                  Cotizar por WhatsApp
+                </WhatsAppCta>
                 <Link
                   href="/contacto"
                   className="inline-flex items-center justify-center rounded-full border border-neutral-300 px-6 py-3.5 text-sm font-bold text-neutral-700 transition hover:border-brand-red hover:text-brand-red hover:bg-white"
