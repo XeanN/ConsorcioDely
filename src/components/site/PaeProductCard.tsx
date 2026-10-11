@@ -18,7 +18,7 @@ export type PaeProductData = {
   nutritionFacts: { label: string; value: string; dailyValue?: string }[];
 };
 
-export function PaeProductCard({ product, phones }: { product: PaeProductData; phones: string[] }) {
+export function PaeProductCard({ product, phones = [] }: { product: PaeProductData; phones?: string[] }) {
   const [activeTab, setActiveTab] = useState<"front" | "back" | "table">("front");
   const [hovered, setHovered] = useState(false);
 
