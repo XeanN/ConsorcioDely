@@ -54,14 +54,24 @@ export default async function HomePage() {
     "sello-de-oro",
     "trome",
   ];
-  const brands = (await sql()`
+  const realPhotoBrands = (await sql()`
     SELECT b.id, b.name, b.slug, count(p.id) FILTER (WHERE p.active = true)::int as count
     FROM brands b
     LEFT JOIN products p ON p."brandId" = b.id
     WHERE b.slug = ANY(${REAL_PHOTO_BRAND_SLUGS})
     GROUP BY b.id, b.name, b.slug
-    ORDER BY count(p.id) FILTER (WHERE p.active = true) DESC, b.name ASC
   `) as BrandItem[];
+
+  // "Mermelada Lenysol" y "Trome Jabón" son la misma marca que Lenysol y
+  // Trome en la base (un solo registro, varias líneas de producto), pero
+  // Nicolás mandó una foto real dedicada para cada una -- el cliente pidió
+  // las 9 fotos como 9 tiles separados, no 7. Se agregan a mano porque no
+  // son una fila de "brands" propia.
+  const brands: BrandItem[] = [
+    ...realPhotoBrands,
+    { id: "extra-mermelada-lenysol", name: "Mermelada Lenysol", slug: "mermelada-lenysol", count: 0 },
+    { id: "extra-trome-jabon", name: "Trome Jabón", slug: "trome-jabon", count: 0 },
+  ].sort((a, b) => a.name.localeCompare(b.name));
 
   const [heroImage] = (await sql()`
     SELECT m."r2Key" as "r2Key"
