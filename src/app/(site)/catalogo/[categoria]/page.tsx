@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { cache } from "react";
 
 import { CatalogFilter } from "@/components/site/CatalogFilter";
@@ -36,6 +36,11 @@ export async function generateMetadata({
   params: Promise<{ categoria: string }>;
 }): Promise<Metadata> {
   const { categoria } = await params;
+  if (categoria === "pae") {
+    return {
+      title: "Programa de Alimentación Escolar (PAE) — Consorcio Dely",
+    };
+  }
   const category = await getCategory(categoria);
   if (!category) return {};
 
@@ -52,6 +57,9 @@ export default async function CategoryPage({
   params: Promise<{ categoria: string }>;
 }) {
   const { categoria } = await params;
+  if (categoria === "pae") {
+    redirect("/pae");
+  }
   const category = await getCategory(categoria);
 
   if (!category) {

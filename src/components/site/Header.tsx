@@ -22,7 +22,6 @@ const NAV = [
         links: [
           { href: "/catalogo", label: "Ver todo el catálogo" },
           { href: "/catalogo/vegetal", label: "Aceite Vegetal" },
-          { href: "/catalogo/pae", label: "PAE" },
           { href: "/catalogo/mermelada", label: "Mermeladas" },
           { href: "/catalogo/avena", label: "Avena" },
         ],
@@ -30,13 +29,26 @@ const NAV = [
       {
         group: "Más productos",
         links: [
+          { href: "/catalogo/fideos", label: "Fideos" },
           { href: "/catalogo/paneton", label: "Panetón" },
           { href: "/catalogo/chocolate-de-taza", label: "Chocolate de Taza" },
           { href: "/catalogo/conserva-de-atun", label: "Conserva de Atún" },
           { href: "/catalogo/detergente", label: "Detergentes" },
         ],
       },
+      {
+        group: "Compras Estatales",
+        links: [
+          { href: "/pae", label: "Portal Escolar (PAE)" },
+        ],
+      },
     ],
+  },
+  {
+    href: "/pae",
+    label: "Programa PAE",
+    badge: "Estado",
+    children: null,
   },
   {
     href: "/quienes-somos",
@@ -106,16 +118,34 @@ export function Header() {
                   : pathname.startsWith(item.href);
 
             if (!item.children) {
+              const isPae = item.href === "/pae";
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`relative px-3.5 py-2 text-sm font-medium transition-colors ${
-                    isActive ? "text-brand-red font-bold" : "text-neutral-600 hover:text-neutral-900"
+                  className={`relative flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition-colors ${
+                    isPae
+                      ? isActive
+                        ? "text-emerald-700 font-bold"
+                        : "text-emerald-800 hover:text-emerald-950 font-semibold"
+                      : isActive
+                        ? "text-brand-red font-bold"
+                        : "text-neutral-600 hover:text-neutral-900"
                   }`}
                 >
-                  {item.label}
-                  {isActive && <span className="absolute bottom-0 left-3.5 right-3.5 h-0.5 rounded-full bg-brand-red" />}
+                  <span>{item.label}</span>
+                  {item.badge && (
+                    <span className="rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-1.5 py-0.5 border border-emerald-200">
+                      {item.badge}
+                    </span>
+                  )}
+                  {isActive && (
+                    <span
+                      className={`absolute bottom-0 left-3 right-3 h-0.5 rounded-full ${
+                        isPae ? "bg-emerald-600" : "bg-brand-red"
+                      }`}
+                    />
+                  )}
                 </Link>
               );
             }
@@ -302,13 +332,20 @@ export function Header() {
               <div key={item.href}>
                 <Link
                   href={item.href}
-                  className={`block rounded-lg px-3 py-2.5 text-sm font-medium ${
+                  className={`flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium ${
                     pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))
-                      ? "bg-brand-red-ultra text-brand-red font-bold"
+                      ? item.href === "/pae"
+                        ? "bg-emerald-50 text-emerald-800 font-bold"
+                        : "bg-brand-red-ultra text-brand-red font-bold"
                       : "text-neutral-700 hover:bg-neutral-50"
                   }`}
                 >
-                  {item.label}
+                  <span>{item.label}</span>
+                  {item.badge && (
+                    <span className="rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 border border-emerald-200">
+                      {item.badge}
+                    </span>
+                  )}
                 </Link>
 
                 {item.children && (
