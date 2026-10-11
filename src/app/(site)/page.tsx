@@ -41,13 +41,24 @@ export default async function HomePage() {
     ORDER BY c.position ASC
   `) as CategoryRow[];
 
-  // Todas las marcas (no solo las que tienen producto activo hoy) -- el
-  // muro de marcas es una vitrina de alianzas, no un filtro de catálogo;
-  // se va recortando aparte más adelante según lo defina el cliente.
+  // Muro de marcas: por ahora solo las que ya tienen foto real (no el
+  // placeholder de stock generico) -- las demas quedan en la base sin
+  // tocar, listas para sumarse apenas tengan su foto real. Ver
+  // BRAND_IMAGES en BrandWall.tsx para la lista de fotos reales.
+  const REAL_PHOTO_BRAND_SLUGS = [
+    "lenysol",
+    "delytun",
+    "lavazza",
+    "lavax",
+    "oro-del-cusco",
+    "sello-de-oro",
+    "trome",
+  ];
   const brands = (await sql()`
     SELECT b.id, b.name, b.slug, count(p.id) FILTER (WHERE p.active = true)::int as count
     FROM brands b
     LEFT JOIN products p ON p."brandId" = b.id
+    WHERE b.slug = ANY(${REAL_PHOTO_BRAND_SLUGS})
     GROUP BY b.id, b.name, b.slug
     ORDER BY count(p.id) FILTER (WHERE p.active = true) DESC, b.name ASC
   `) as BrandItem[];
