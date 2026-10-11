@@ -121,26 +121,37 @@ function CatalogFilterContent({
 
             {/* Lista de cada categoría individual como Link real */}
             {categories.map((c) => {
+              const isPae = c.slug === "pae";
+              const href = isPae ? "/pae" : `/catalogo/${c.slug}`;
               const isSelected = currentCategorySlug === c.slug;
               const count = countByCategory[c.id] ?? c.count ?? 0;
 
               return (
                 <Link
                   key={c.id}
-                  href={`/catalogo/${c.slug}`}
+                  href={href}
                   className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-xs transition-all duration-200 ${
                     isSelected
                       ? "bg-brand-red text-white font-bold shadow-md shadow-brand-red/20 scale-[1.02]"
-                      : "text-neutral-600 hover:bg-neutral-50 hover:text-brand-red font-medium"
+                      : isPae
+                        ? "bg-emerald-50 text-emerald-800 hover:bg-emerald-100 hover:text-emerald-900 font-bold border border-emerald-200"
+                        : "text-neutral-600 hover:bg-neutral-50 hover:text-brand-red font-medium"
                   }`}
                 >
-                  <span className="truncate">{c.name}</span>
+                  <span className="truncate flex items-center gap-1.5">
+                    {isPae && <span>🎒</span>}
+                    <span>{c.name}</span>
+                  </span>
                   <span
                     className={`ml-2 shrink-0 text-[10px] font-bold rounded-full px-2 py-0.5 ${
-                      isSelected ? "bg-white/25 text-white" : "bg-neutral-100 text-neutral-500"
+                      isSelected
+                        ? "bg-white/25 text-white"
+                        : isPae
+                          ? "bg-emerald-200 text-emerald-900"
+                          : "bg-neutral-100 text-neutral-500"
                     }`}
                   >
-                    {count}
+                    {isPae ? "Portal" : count}
                   </span>
                 </Link>
               );
@@ -151,6 +162,36 @@ function CatalogFilterContent({
 
       {/* ══ ZONA PRINCIPAL DE PRODUCTOS Y BUSCADOR ══ */}
       <div>
+        {/* Banner informativo de PAE */}
+        <div className="mb-6 overflow-hidden rounded-2xl border-2 border-emerald-200 bg-gradient-to-r from-emerald-50 via-teal-50 to-white p-4 sm:p-5 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-start sm:items-center gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-xl text-white shadow-sm">
+                🎒
+              </span>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                    Sector Público
+                  </span>
+                  <span className="text-xs font-bold text-neutral-800">
+                    Programa de Alimentación Escolar (PAE)
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-neutral-600">
+                  ¿Representas a un comité de compra o proveedor del Estado? Conoce la línea certificada para escolares.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/pae"
+              className="shrink-0 rounded-xl bg-emerald-600 px-4 py-2 text-center text-xs font-bold text-white shadow-sm transition hover:bg-emerald-700 hover:shadow-md"
+            >
+              Ingresar al Portal PAE →
+            </Link>
+          </div>
+        </div>
+
         {/* Selector de categoría (mobile) + Barra de búsqueda */}
         <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center w-full max-w-xl">
@@ -191,14 +232,18 @@ function CatalogFilterContent({
               value={currentCategorySlug ?? ""}
               onChange={(e) => {
                 const slug = e.target.value;
-                router.push(slug ? `/catalogo/${slug}` : "/catalogo");
+                if (slug === "pae") {
+                  router.push("/pae");
+                } else {
+                  router.push(slug ? `/catalogo/${slug}` : "/catalogo");
+                }
               }}
               className="w-full max-w-xs rounded-2xl border border-neutral-200 bg-white px-3.5 py-2.5 text-sm text-neutral-800 outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-red/20 shadow-sm lg:hidden font-medium"
             >
               <option value="">Todas las categorías ({totalCount})</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.slug}>
-                  {c.name} ({countByCategory[c.id] ?? c.count ?? 0})
+                  {c.slug === "pae" ? "🎒 PAE (Portal Escolar)" : `${c.name} (${countByCategory[c.id] ?? c.count ?? 0})`}
                 </option>
               ))}
             </select>

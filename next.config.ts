@@ -35,6 +35,11 @@ const nextConfig: NextConfig = {
         destination: "/producto/pae-lenysol-200-ml",
         permanent: false,
       },
+      {
+        source: "/catalogo/pae",
+        destination: "/pae",
+        permanent: false,
+      },
     ];
   },
 };
