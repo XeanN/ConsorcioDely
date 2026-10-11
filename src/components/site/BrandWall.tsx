@@ -156,8 +156,9 @@ export function BrandWall({ brands }: { brands: BrandItem[] }) {
         </div>
       </div>
 
-      {/* ══ MURO FULL-WIDTH CON SCROLL REVEAL ══ */}
-      <div ref={ref} className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-9 lg:grid-cols-11">
+      {/* ══ MURO CENTRADO CON SCROLL REVEAL ══ */}
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <div ref={ref} className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-px overflow-hidden rounded-2xl">
         {brands.map((b, i) => {
           const color = colorFor(b.slug, i);
           const img = imageFor(b.slug, i);
@@ -215,6 +216,7 @@ export function BrandWall({ brands }: { brands: BrandItem[] }) {
             </Link>
           );
         })}
+        </div>
       </div>
 
       {/* CSS para el efecto hover exagerado */}
