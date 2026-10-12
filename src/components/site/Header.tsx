@@ -32,7 +32,7 @@ const NAV = [
           { href: "/catalogo/fideos", label: "Fideos" },
           { href: "/catalogo/paneton", label: "Panetón" },
           { href: "/catalogo/chocolate-de-taza", label: "Chocolate de Taza" },
-          { href: "/catalogo/conserva-de-atun", label: "Conserva de Atún" },
+          { href: "/catalogo/conserva-de-pescado", label: "Conserva de Pescado" },
           { href: "/catalogo/detergente", label: "Detergentes" },
         ],
       },

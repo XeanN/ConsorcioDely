@@ -210,7 +210,7 @@ export default async function HomePage() {
               </div>
             </Link>
             {[
-              { src: IMGS.mosaic2, label: "Conserva de Atún", tag: "Conservas", href: "/catalogo/conserva-de-atun" },
+              { src: IMGS.mosaic2, label: "Conserva de Pescado", tag: "Conservas", href: "/catalogo/conserva-de-pescado" },
               { src: IMGS.mosaic3, label: "Mermeladas",       tag: "Mermeladas", href: "/catalogo/mermelada" },
               { src: IMGS.mosaic4, label: "Panetón",          tag: "Panetón", href: "/catalogo/paneton" },
               { src: IMGS.mosaic5, label: "Detergentes",      tag: "Limpieza", href: "/catalogo/detergente" },
