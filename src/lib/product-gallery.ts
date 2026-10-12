@@ -22,11 +22,12 @@ export const PRODUCT_GALLERIES: Record<string, string[]> = {
   // Conservas Lenysol y Delytun
   "anchoveta-lenysol-en-salsa-de-tomate": [
     "/images/products/anchoveta-lenysol-en-salsa-de-tomate.png",
-    //"/images/products/conservas-piramide-display.png",
+    "/images/products/anchoveta-lenysol-en-salsa-de-tomate-2.png",
+    "/images/products/anchoveta-lenysol-en-salsa-de-tomate-3.png",
   ],
   "grated-de-sardinas-lenysol": [
     "/images/products/grated-de-sardinas-lenysol.png",
-    //"/images/products/conservas-piramide-display.png",
+    "/images/products/grated-de-sardinas-lenysol-2.png",
   ],
   "conserva-delytun-filete-de-atun-170-g": [
     "/images/products/conserva-delytun-filete-de-atun-170-g-1.png",
@@ -44,12 +45,13 @@ export const PRODUCT_GALLERIES: Record<string, string[]> = {
   ],
   "conserva-de-atun-delytun-premium-filete-de-atun-140-g": [
     "/images/products/conserva-de-atun-delytun-premium-filete-de-atun-140-g.png",
-    //"/images/products/conservas-piramide-display.png",
+    "/images/products/conserva-de-atun-delytun-premium-filete-de-atun-140-g-2.png",
+    "/images/products/conserva-de-atun-delytun-premium-filete-de-atun-140-g-3.png",
   ],
   "conserva-de-atun-delys-filete-de-atun-170-g": [
     "/images/products/conserva-de-atun-delys-filete-de-atun-170-g.png",
-    //"/images/products/conserva-de-pescado-delys-filete.png",
-    //"/images/products/conservas-piramide-display.png",
+    "/images/products/conserva-de-atun-delys-filete-de-atun-170-g-2.png",
+    "/images/products/conserva-de-atun-delys-filete-de-atun-170-g-3.png",
   ],
   "conserva-de-pescado-delys-filete": [
     "/images/products/conserva-de-pescado-delys-filete.png",
@@ -58,8 +60,7 @@ export const PRODUCT_GALLERIES: Record<string, string[]> = {
   ],
   "conserva-de-atun-lenysol": [
     "/images/products/conserva-de-atun-lenysol.png",
-    //"/images/products/conserva-de-pescado-lenysol.png",
-    //"/images/products/conservas-piramide-display.png",
+    "/images/products/conserva-de-atun-lenysol-2.png",
   ],
   "conserva-de-pescado-lenysol": [
     "/images/products/conserva-de-pescado-lenysol.png",
