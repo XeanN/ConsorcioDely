@@ -29,9 +29,9 @@ export const PRODUCT_GALLERIES: Record<string, string[]> = {
     //"/images/products/conservas-piramide-display.png",
   ],
   "conserva-delytun-filete-de-atun-170-g": [
+    "/images/products/conserva-delytun-filete-de-atun-170-g-1.png",
     "/images/products/conserva-delytun-filete-de-atun-170-g.png",
-    //"/images/products/conserva-de-pescado-delytun.png",
-    //"/images/products/conservas-piramide-display.png",
+    "/images/products/conserva-delytun-filete-de-atun-170-g-3.png",
   ],
   "conserva-de-pescado-delytun": [
     "/images/products/conserva-de-pescado-delytun.png",
