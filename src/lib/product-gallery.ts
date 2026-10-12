@@ -40,7 +40,7 @@ export const PRODUCT_GALLERIES: Record<string, string[]> = {
   ],
   "conserva-delytun-filete-de-bonito-170-g": [
     "/images/products/conserva-delytun-filete-de-bonito-170-g.png",
-    //"/images/products/conservas-piramide-display.png",
+    "/images/products/conserva-delytun-filete-de-bonito-170-g-2.png",
   ],
   "conserva-de-atun-delytun-premium-filete-de-atun-140-g": [
     "/images/products/conserva-de-atun-delytun-premium-filete-de-atun-140-g.png",
