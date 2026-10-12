@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { PaeProductCard, type PaeProductData } from "@/components/site/PaeProductCard";
 import { WhatsAppCta } from "@/components/site/WhatsAppCta";
-import { getActiveQuotePhones } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -83,10 +82,12 @@ const STATE_CERTIFICATIONS = [
 
 const PAE_QUOTE_MESSAGE =
   "Hola, me comunico desde un comité de compra / proveedor del Estado interesado en la línea PAE de Consorcio Dely para el Programa de Alimentación Escolar.";
-const PAE_FALLBACK_HREF = "https://wa.me/51932598762";
+// Línea PAE: atención dedicada con la asesora Lilianny, no el pool
+// general de ventas -- a diferencia del resto del sitio, acá NO rota.
+const PAE_QUOTE_PHONES = ["970835166"];
 
 export default async function PaePortalPage() {
-  const quotePhones = await getActiveQuotePhones();
+  const quotePhones = PAE_QUOTE_PHONES;
 
   return (
     <div className="min-h-screen bg-neutral-50/40 text-neutral-800">
@@ -192,7 +193,6 @@ export default async function PaePortalPage() {
               <WhatsAppCta
                 phones={quotePhones}
                 message={PAE_QUOTE_MESSAGE}
-                fallbackHref={PAE_FALLBACK_HREF}
                 className="flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md transition hover:bg-white/20"
               >
                 <span>💬</span> Atención a Proveedores del Estado
@@ -353,7 +353,6 @@ export default async function PaePortalPage() {
             <WhatsAppCta
               phones={quotePhones}
               message={PAE_QUOTE_MESSAGE}
-              fallbackHref={PAE_FALLBACK_HREF}
               className="inline-flex items-center gap-2 rounded-full bg-emerald-400 px-8 py-3.5 text-sm font-bold uppercase tracking-wider text-neutral-900 shadow-lg transition hover:bg-emerald-300 hover:scale-105"
             >
               <span>💬</span> Contactar Vía WhatsApp

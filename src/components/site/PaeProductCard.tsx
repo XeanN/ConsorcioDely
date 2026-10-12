@@ -201,7 +201,7 @@ export function PaeProductCard({ product, phones = [] }: { product: PaeProductDa
           <WhatsAppCta
             phones={phones}
             message={quoteMessage}
-            fallbackHref={`https://wa.me/51932598762?text=${encodeURIComponent(quoteMessage)}`}
+            fallbackHref={`https://wa.me/51970835166?text=${encodeURIComponent(quoteMessage)}`}
             className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-700 hover:shadow-md"
           >
             <span>💬</span> Cotizar PAE
