@@ -39,7 +39,7 @@ const PAE_PRODUCTS: PaeProductData[] = [
     servingsPerBottle: "66 aprox.",
     description:
       "Formulado y envasado especialmente para cocinas, comedores escolares y preparación centralizada de raciones del programa de alimentación escolar. Aporte de ácidos grasos esenciales y 100% libre de grasas trans.",
-    frontImage: "/images/products/aceite-vegetal-lenysol-1-l.png",
+    frontImage: "/images/products/pae-lenysol-1-l-frente.png",
     backImage: "/images/products/pae-lenysol-1-l-reverso.png",
     nutritionFacts: PAE_NUTRITION_FACTS,
   },
@@ -52,7 +52,7 @@ const PAE_PRODUCTS: PaeProductData[] = [
     servingsPerBottle: "13 aprox.",
     description:
       "Presentación individual hermética diseñada para canastas escolares, kits de preparación familiar y distribución en instituciones educativas rurales y urbanas. Máxima durabilidad e inocuidad garantizada.",
-    frontImage: "/images/products/aceite-vegetal-lenysol-200-ml.png",
+    frontImage: "/images/products/pae-lenysol-200-ml-frente.png",
     backImage: "/images/products/pae-lenysol-200-ml-reverso.png",
     nutritionFacts: PAE_NUTRITION_FACTS,
   },

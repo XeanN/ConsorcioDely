@@ -152,11 +152,12 @@ export const PRODUCT_GALLERIES: Record<string, string[]> = {
     "/images/products/aceite-vegetal-lenysol-450-ml.png",
   ],
   "pae-lenysol-1-l": [
-    "/images/products/aceite-vegetal-lenysol-1-l.png",
+    "/images/products/pae-lenysol-1-l-frente.png",
+    "/images/products/pae-lenysol-1-l-etiqueta.png",
     "/images/products/pae-lenysol-1-l-reverso.png",
   ],
   "pae-lenysol-200-ml": [
-    "/images/products/aceite-vegetal-lenysol-200-ml.png",
+    "/images/products/pae-lenysol-200-ml-frente.png",
     "/images/products/pae-lenysol-200-ml-reverso.png",
   ],
 
