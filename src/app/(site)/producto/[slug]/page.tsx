@@ -8,7 +8,7 @@ import { WhatsAppCta } from "@/components/site/WhatsAppCta";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
 import { getProductImages } from "@/lib/product-gallery";
-import { buildQuoteMessage, getActiveQuotePhones } from "@/lib/whatsapp";
+import { buildQuoteMessage, getActiveQuotePhones, PAE_QUOTE_PHONES } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -118,7 +118,10 @@ export default async function ProductPage({
     LIMIT 4
   `) as RelatedProduct[];
 
-  const quotePhones = await getActiveQuotePhones();
+  // Productos de la categoría PAE usan la línea dedicada (asesora
+  // Lilianny), no el pool general de ventas que rota entre ejecutivas.
+  const quotePhones =
+    product.categorySlug === "pae" ? PAE_QUOTE_PHONES : await getActiveQuotePhones();
 
   const mainImageUrl = product.r2Key
     ? publicUrlFor(product.r2Key)

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PaeProductCard, type PaeProductData } from "@/components/site/PaeProductCard";
 import { WhatsAppCta } from "@/components/site/WhatsAppCta";
+import { PAE_QUOTE_PHONES } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -82,9 +83,6 @@ const STATE_CERTIFICATIONS = [
 
 const PAE_QUOTE_MESSAGE =
   "Hola, me comunico desde un comité de compra / proveedor del Estado interesado en la línea PAE de Consorcio Dely para el Programa de Alimentación Escolar.";
-// Línea PAE: atención dedicada con la asesora Lilianny, no el pool
-// general de ventas -- a diferencia del resto del sitio, acá NO rota.
-const PAE_QUOTE_PHONES = ["970835166"];
 
 export default async function PaePortalPage() {
   const quotePhones = PAE_QUOTE_PHONES;
