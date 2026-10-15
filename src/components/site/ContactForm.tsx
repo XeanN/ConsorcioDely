@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 export function ContactForm({
-  phone,
+  phones,
   email,
 }: {
-  phone: string | null;
+  phones: string[];
   email: string | null;
 }) {
   const [name, setName] = useState("");
@@ -17,7 +17,9 @@ export function ContactForm({
 
   const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
-    const cleanPhone = phone?.replace(/[^0-9]/g, "") || "970835166";
+    // Cotización = venta, reparte al azar entre el pool de ventas (no el
+    // contacto fijo de atención al cliente/reclamos).
+    const cleanPhone = phones.length > 0 ? phones[Math.floor(Math.random() * phones.length)] : "982562716";
     const text = `Hola Consorcio Dely, mi nombre es ${name || "un cliente"}${business ? ` de ${business}` : ""}${city ? ` (${city})` : ""}. Estoy interesado en: ${productInterest}.${message ? ` Mensaje: ${message}` : ""}`;
     const url = `https://wa.me/51${cleanPhone}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");

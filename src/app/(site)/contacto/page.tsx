@@ -79,19 +79,6 @@ export default async function ContactPage() {
 
               {/* Cards de contacto */}
               <div className="grid gap-3.5 sm:grid-cols-2">
-                {/* Teléfono */}
-                <div className="rounded-2xl border border-neutral-100 bg-white p-5 shadow-sm transition hover:border-brand-red/30 hover:shadow-md">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-red-ultra text-brand-red">
-                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                  </div>
-                  <h3 className="mt-3 text-sm font-bold text-neutral-800">Central Telefónica</h3>
-                  <p className="mt-1 text-xs text-neutral-500">Lunes a Sábado: 8am - 6pm</p>
-                  <p className="mt-2 text-sm font-black text-neutral-900">
-                    {settings?.phone || "970 835 166"}
-                  </p>
-                </div>
 
                 {/* WhatsApp */}
                 <div className="rounded-2xl border border-neutral-100 bg-white p-5 shadow-sm transition hover:border-brand-green/30 hover:shadow-md">
@@ -195,7 +182,7 @@ export default async function ContactPage() {
             {/* Columna derecha: Formulario interactivo */}
             <div className="lg:col-span-6">
               <ContactForm
-                phone={settings?.phone ?? null}
+                phones={quotePhones}
                 email={settings?.email ?? null}
               />
             </div>
