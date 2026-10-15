@@ -115,6 +115,29 @@ export default async function ContactPage() {
                   )}
                 </div>
 
+                {/* Atención al Cliente / Reclamos (no ventas) */}
+                <div className="rounded-2xl border border-neutral-100 bg-white p-5 shadow-sm transition hover:border-amber-400/40 hover:shadow-md">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636M12 8v4m0 4h.01" />
+                    </svg>
+                  </div>
+                  <h3 className="mt-3 text-sm font-bold text-neutral-800">Atención al Cliente</h3>
+                  <p className="mt-1 text-xs text-neutral-500">Reclamos y consultas postventa (no ventas)</p>
+                  {settings?.contactPhone ? (
+                    <a
+                      href={`https://wa.me/51${settings.contactPhone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("Hola, quisiera hacer una consulta o reclamo sobre un pedido de Consorcio Dely.")}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-2 inline-flex items-center gap-1 text-sm font-black text-neutral-900 hover:text-amber-700"
+                    >
+                      {settings.contactPhone}
+                    </a>
+                  ) : (
+                    <p className="mt-2 text-sm font-black text-neutral-900">—</p>
+                  )}
+                </div>
+
                 {/* Correo */}
                 <div className="rounded-2xl border border-neutral-100 bg-white p-5 shadow-sm transition hover:border-brand-red/30 hover:shadow-md">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
@@ -138,7 +161,7 @@ export default async function ContactPage() {
                     </svg>
                   </div>
                   <h3 className="mt-3 text-sm font-bold text-neutral-800">Sede Central</h3>
-                  <p className="mt-1 text-xs text-neutral-500">Despachos a todo el país</p>
+                  <p className="mt-1 text-xs text-neutral-500">Venta directa en tienda</p>
                   <p className="mt-2 text-xs font-semibold text-neutral-700 leading-tight">
                     {settings?.address || "Av. La Cultura Nro. 701, Santa Anita, Lima"}
                   </p>
