@@ -31,7 +31,7 @@ const TEAM_MEMBERS = [
     title: "Equipo de Oficina",
     tag: "Operaciones & Soporte",
     src: "/images/equipo/oficina.png",
-    description: "Coordinación administrativa, compras y logística de distribución nacional.",
+    description: "Coordinación administrativa, compras y logística interna de la planta.",
   },
   {
     title: "Área de Envasadora",
