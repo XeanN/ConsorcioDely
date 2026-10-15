@@ -22,12 +22,12 @@ type SiteSettingRow = {
 
 const IMGS = {
   hero:    "/images/categories/vegetal.png",
-  factory: "https://images.unsplash.com/photo-1553413077-190dd305871c?w=800&q=80",
-  team:    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
-  map:     "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=800&q=80",
-  values1: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80",
-  values2: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=500&q=80",
-  values3: "/images/categories/mermelada.png",
+  factory: "/images/equipo/envasadora-planta.png",
+  team:    "/images/equipo/oficina.png",
+  map:     "/images/tienda/tienda-a41.png",
+  values1: "/images/equipo/administrador.png",
+  values2: "/images/equipo/marketing-comercial.png",
+  values3: "/images/tienda/tienda-san-francisco.png",
 };
 
 export default async function AboutPage() {

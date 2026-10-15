@@ -18,14 +18,14 @@ type SiteSettingRow = { address: string | null };
 const IMGS = {
   hero:     "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80",
   split1:   "/images/products/conservas-piramide-display.png",
-  factory:  "https://images.unsplash.com/photo-1553413077-190dd305871c?w=1600&q=80",
+  factory:  "/images/equipo/envasadora-planta.png",
   mosaic1:  "/images/categories/vegetal.png",
   mosaic2:  "/images/categories/conserva-de-pescado.png",
   mosaic3:  "/images/categories/mermelada.png",
   mosaic4:  "/images/products/paneton-lenysol-bolsa-mono-800-g.png",
   mosaic5:  "/images/categories/detergente.png",
-  team:     "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80",
-  store:    "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=900&q=80",
+  team:     "/images/equipo/oficina.png",
+  store:    "/images/tienda/tienda-a41.png",
 };
 
 export default async function HomePage() {
@@ -294,10 +294,10 @@ export default async function HomePage() {
                 <Image src={IMGS.team} alt="Equipo Dely" fill className="object-cover object-top" sizes="(max-width: 1024px) 100vw, 50vw" />
               </div>
               <div className="relative h-36 overflow-hidden rounded-xl">
-                <Image src={IMGS.mosaic3} alt="Productos" fill className="object-cover" sizes="25vw" />
+                <Image src="/images/equipo/area-envasadora.png" alt="Planta y Envasado" fill className="object-cover" sizes="25vw" />
               </div>
               <div className="relative h-36 overflow-hidden rounded-xl">
-                <Image src={IMGS.mosaic4} alt="Calidad" fill className="object-cover" sizes="25vw" />
+                <Image src="/images/equipo/marketing-comercial.png" alt="Marketing y Comercial" fill className="object-cover" sizes="25vw" />
               </div>
             </div>
             <div>
@@ -306,7 +306,7 @@ export default async function HomePage() {
               <p className="mt-5 leading-relaxed text-neutral-500">Detrás de cada producto hay un equipo apasionado que trabaja cada día para asegurar la mejor calidad. Nuestros colaboradores son la columna vertebral de Consorcio Dely.</p>
               <div className="mt-8 flex items-center gap-4">
                 <div className="flex -space-x-2">
-                  {[IMGS.mosaic1, IMGS.mosaic2, IMGS.mosaic3].map((src, i) => (
+                  {["/images/equipo/administrador.png", "/images/equipo/contabilidad.png", "/images/equipo/marketing-comercial.png"].map((src, i) => (
                     <div key={i} className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-white shadow">
                       <Image src={src} alt="Colaborador" fill className="object-cover" sizes="40px" />
                     </div>

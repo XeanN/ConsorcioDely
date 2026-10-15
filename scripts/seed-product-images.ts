@@ -166,25 +166,25 @@ const PRODUCT_IMAGE_MAP: { slug: string; image: string; alt: string }[] = [
     slug: "detergente-lavazza-limon-140-g",
     image: "/images/products/detergente-lavazza-limon-140-g.png",
     alt: "Detergente Lavazza Limón 140 g",
-  },
+  }, 
   {
     slug: "detergente-lavazza-limon-13-5-kg",
-    image: "/images/products/detergente-lavazza-limon-1-kg.png",
+    image: "/images/products/detergente-lavazza-limon-13.5-Kg.jpeg",
     alt: "Detergente Lavazza Limón 13.5 Kg",
   },
   {
     slug: "detergente-lavazza-floral-1-kg",
-    image: "/images/products/detergente-lavazza-floral-1-kg.png",
+    image: "/images/products/detergente-lavazza-floral-1-Kg.jpeg",
     alt: "Detergente Lavazza Floral Quitamanchas 1 Kg",
   },
   {
     slug: "detergente-lavazza-floral-140-g",
-    image: "/images/products/detergente-lavazza-floral-1-kg.png",
+    image: "/images/products/detergente-lavazza-floral-140-g.png",
     alt: "Detergente Lavazza Floral 140 g",
   },
   {
     slug: "detergente-lavazza-floral-13-5-kg",
-    image: "/images/products/detergente-lavazza-floral-1-kg.png",
+    image: "/images/products/detergente-lavazza-floral-13.5-Kg.jpeg",
     alt: "Detergente Lavazza Floral 13.5 Kg",
   },
 

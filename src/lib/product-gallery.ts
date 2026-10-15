@@ -164,15 +164,27 @@ export const PRODUCT_GALLERIES: Record<string, string[]> = {
   // Detergentes Lavazza
   "detergente-lavazza-limon-1-kg": [
     "/images/products/detergente-lavazza-limon-1-kg.png",
-    //"/images/products/detergente-lavazza-limon-140-g.png",
+    
   ],
   "detergente-lavazza-limon-140-g": [
     "/images/products/detergente-lavazza-limon-140-g.png",
-    //"/images/products/detergente-lavazza-limon-1-kg.png",
+    
+  ],
+  "detergente-lavazza-limon-13-5-kg": [
+    "/images/products/detergente-lavazza-limon-13.5-Kg.jpeg",
+    
   ],
   "detergente-lavazza-floral-1-kg": [
-    "/images/products/detergente-lavazza-floral-1-kg.png",
-    //"/images/products/detergente-lavazza-limon-1-kg.png",
+    "/images/products/detergente-lavazza-floral-1-Kg.jpeg",
+    
+  ],
+  "detergente-lavazza-floral-140-g": [
+    "/images/products/detergente-lavazza-floral-140-g.png",
+    
+  ],
+  "detergente-lavazza-floral-13-5-kg": [
+    "/images/products/detergente-lavazza-floral-13.5-Kg.jpeg",
+    
   ],
 };
 
