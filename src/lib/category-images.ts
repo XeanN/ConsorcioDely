@@ -14,7 +14,7 @@ export const CATEGORY_IMAGES: Record<string, string> = {
   paneton: "/images/categories/paneton.png",
   "chocolate-de-taza": "/images/categories/chocolate-de-taza.png",
   chocolates: "/images/categories/chocolates.png",
-  detergente: "/images/categories/detergente.png",
+  detergente: "/images/categories/detergente-lavazza.jpg",
   fideos: "/images/categories/fideos.png",
   harina: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=1200&q=80",
   cafe: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=1200&q=80",
