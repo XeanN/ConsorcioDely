@@ -71,12 +71,6 @@ export default async function HomePage() {
     ...realPhotoBrands,
     { id: "extra-mermelada-lenysol", name: "Mermelada Lenysol", slug: "mermelada-lenysol", count: 0 },
     { id: "extra-trome-jabon", name: "Trome Jabón", slug: "trome-jabon", count: 0 },
-    { id: "extra-lavazza-limon-140g", name: "Lavazza Limón 140 g", slug: "lavazza-limon-140g", count: 0 },
-    { id: "extra-lavazza-limon-1kg", name: "Lavazza Limón 1 Kg", slug: "lavazza-limon-1kg", count: 0 },
-    { id: "extra-lavazza-limon-13-5kg", name: "Lavazza Limón 13.5 Kg", slug: "lavazza-limon-13-5kg", count: 0 },
-    { id: "extra-lavazza-floral-140g", name: "Lavazza Floral 140 g", slug: "lavazza-floral-140g", count: 0 },
-    { id: "extra-lavazza-floral-1kg", name: "Lavazza Floral 1 Kg", slug: "lavazza-floral-1kg", count: 0 },
-    { id: "extra-lavazza-floral-13-5kg", name: "Lavazza Floral 13.5 Kg", slug: "lavazza-floral-13-5kg", count: 0 },
   ].sort((a, b) => a.name.localeCompare(b.name));
 
   const [heroImage] = (await sql()`
