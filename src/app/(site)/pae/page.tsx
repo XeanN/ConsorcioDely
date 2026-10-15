@@ -156,7 +156,7 @@ export default async function PaePortalPage() {
             {/* Subtítulo */}
             <p className="mt-5 text-base leading-relaxed text-emerald-100 sm:text-lg">
               Desarrollamos y producimos alimentos e insumos bajo los más rigurosos estándares de inocuidad y
-              cumplimiento de fichas técnicas para compras del Estado (PAE / Qali Warma). Calidad certificada
+              cumplimiento de fichas técnicas para compras del Estado (Programa de Alimentación Escolar). Calidad certificada
               que impulsa el bienestar, crecimiento y rendimiento escolar de millones de estudiantes.
             </p>
 
