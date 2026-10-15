@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState, Suspense } from "react";
 
 import { getSecondaryImage, PRODUCT_GALLERIES } from "@/lib/product-gallery";
+import { isProductOutOfStock } from "@/lib/stock";
 
 type Product = {
   id: string;
@@ -322,6 +323,7 @@ export function CatalogFilter(props: {
 function ProductCardItem({ product }: { product: Product }) {
   const secondaryImg = getSecondaryImage(product.slug);
   const galleryCount = PRODUCT_GALLERIES[product.slug]?.length ?? 1;
+  const isOutOfStock = isProductOutOfStock(product.slug);
 
   return (
     <Link
@@ -332,18 +334,40 @@ function ProductCardItem({ product }: { product: Product }) {
         <span className="absolute left-2.5 top-2.5 z-10 rounded-full bg-emerald-500 px-2 py-0.5 text-[9px] font-bold tracking-wide text-white shadow">
           PERUANO
         </span>
-        {galleryCount > 1 && (
+
+        {/* Sticker superior derecho */}
+        {isOutOfStock ? (
+          <span className="absolute right-2.5 top-2.5 z-20 inline-flex items-center gap-1 rounded-full bg-red-600 px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-white shadow-md ring-2 ring-white">
+            <span className="h-1.5 w-1.5 rounded-full bg-white animate-ping" />
+            Agotado
+          </span>
+        ) : galleryCount > 1 ? (
           <span className="absolute right-2.5 top-2.5 z-10 rounded-full bg-black/60 px-2 py-0.5 text-[9px] font-bold text-white shadow backdrop-blur-sm">
             {galleryCount} fotos
           </span>
+        ) : null}
+
+        {/* Sticker central sobre la imagen para productos agotados */}
+        {isOutOfStock && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/15 pointer-events-none">
+            <div className="transform -rotate-12 rounded-xl bg-red-600/95 px-3.5 py-1.5 shadow-2xl ring-2 ring-white backdrop-blur-[1px] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+              <span className="text-xs sm:text-sm font-black uppercase tracking-widest text-white drop-shadow flex items-center gap-1.5">
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                ¡Agotado!
+              </span>
+            </div>
+          </div>
         )}
+
         <img
           src={product.imageUrl || PLACEHOLDER}
           alt={product.name}
           loading="lazy"
           className={`h-full w-full object-cover transition-all duration-500 ${
-            secondaryImg ? "group-hover:opacity-0" : "group-hover:scale-110"
-          }`}
+            isOutOfStock ? "opacity-85 grayscale-[15%]" : ""
+          } ${secondaryImg ? "group-hover:opacity-0" : "group-hover:scale-110"}`}
         />
         {secondaryImg && (
           <img
@@ -355,7 +379,7 @@ function ProductCardItem({ product }: { product: Product }) {
         )}
         <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/50 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none">
           <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-neutral-900 shadow">
-            Ver detalle →
+            {isOutOfStock ? "Consultar llegada →" : "Ver detalle →"}
           </span>
         </div>
       </div>
@@ -368,6 +392,11 @@ function ProductCardItem({ product }: { product: Product }) {
           {product.brandName && (
             <span className="inline-block rounded-full bg-neutral-100 px-1.5 py-0.5 text-[9px] font-bold text-neutral-500 truncate max-w-[90px]">
               {product.brandName}
+            </span>
+          )}
+          {isOutOfStock && (
+            <span className="inline-block rounded-full bg-red-100 px-2 py-0.5 text-[9px] font-bold text-red-700">
+              Sin stock
             </span>
           )}
         </div>

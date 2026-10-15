@@ -8,6 +8,7 @@ import { WhatsAppCta } from "@/components/site/WhatsAppCta";
 import { sql } from "@/lib/db";
 import { publicUrlFor } from "@/lib/media";
 import { getProductImages } from "@/lib/product-gallery";
+import { isProductOutOfStock } from "@/lib/stock";
 import { buildQuoteMessage, getActiveQuotePhones, PAE_QUOTE_PHONES } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
@@ -123,6 +124,8 @@ export default async function ProductPage({
   const quotePhones =
     product.categorySlug === "pae" ? PAE_QUOTE_PHONES : await getActiveQuotePhones();
 
+  const isOutOfStock = isProductOutOfStock(slug) || isProductOutOfStock(product.name);
+
   const mainImageUrl = product.r2Key
     ? publicUrlFor(product.r2Key)
     : variants.find((v) => v.r2Key)?.r2Key
@@ -202,12 +205,33 @@ export default async function ProductPage({
                 <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-bold text-neutral-600">
                   Marca: {product.brandName}
                 </span>
+                {isOutOfStock && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700 border border-red-200 shadow-sm">
+                    <span className="h-2 w-2 rounded-full bg-red-600 animate-ping" />
+                    Temporalmente Agotado
+                  </span>
+                )}
               </div>
 
               {/* Título */}
               <h1 className="mt-3 text-2xl font-black text-neutral-900 sm:text-3xl lg:text-4xl" style={{ fontFamily: "var(--font-display)" }}>
                 {product.name}
               </h1>
+
+              {/* Aviso si está agotado */}
+              {isOutOfStock && (
+                <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50/90 p-4 text-xs text-amber-900 flex items-start gap-3">
+                  <svg className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <p className="font-bold text-amber-950">Producto temporalmente fuera de stock</p>
+                    <p className="mt-0.5 text-amber-800 leading-relaxed">
+                      Actualmente estamos renovando inventario para este producto. Puedes escribirnos por WhatsApp para consultar la fecha estimada de llegada o solicitar alternativas disponibles.
+                    </p>
+                  </div>
+                </div>
+              )}
 
               {/* Descripción */}
               <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-neutral-600">
@@ -309,14 +333,18 @@ export default async function ProductPage({
               <div className="mt-8 pt-6 border-t border-neutral-100 flex flex-col gap-3 sm:flex-row">
                 <WhatsAppCta
                   phones={quotePhones}
-                  message={buildQuoteMessage(product.name)}
+                  message={
+                    isOutOfStock
+                      ? `Hola, me gustaría consultar la disponibilidad o próxima llegada de ${product.name} en Consorcio Dely.`
+                      : buildQuoteMessage(product.name)
+                  }
                   className="flex-1 flex items-center justify-center gap-2.5 rounded-full bg-brand-green px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-green/20 transition-all hover:brightness-95 hover:shadow-xl active:scale-[0.98]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   <svg viewBox="0 0 32 32" className="h-5 w-5 fill-white">
                     <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.36.696 4.56 1.89 6.406L4 29l7.79-1.85A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Z" />
                   </svg>
-                  Cotizar por WhatsApp
+                  {isOutOfStock ? "Consultar llegada por WhatsApp" : "Cotizar por WhatsApp"}
                 </WhatsAppCta>
                 <Link
                   href="/contacto"
