@@ -13,6 +13,8 @@ const TIENDAS = [
     title: "Tienda A - 41",
     tag: "Sede Mayorista & Distribución",
     src: "/images/tienda/tienda-a41.png",
+    teamSrc: "/images/tienda/equipo-tienda-a41.png",
+    teamLabel: "Equipo de Tienda A - 41",
     description:
       "Punto de abastecimiento con stock completo de aceites Lenysol, conservas Delytun y abarrotes de primera necesidad con precios competitivos por mayor y menor.",
     highlights: ["Venta por mayor y menor", "Variedad completa de marcas aliadas", "Atención rápida y stock garantizado"],
@@ -21,9 +23,38 @@ const TIENDAS = [
     title: "Tienda San Francisco",
     tag: "Sede Comercial & Despacho",
     src: "/images/tienda/tienda-san-francisco.png",
+    teamSrc: "/images/tienda/equipo-tienda-san-francisco.png",
+    teamLabel: "Equipo de Tienda San Francisco",
     description:
       "Atención personalizada directa y coordinación de despachos locales. Ideal para comerciantes, bodegas, restaurantes e instituciones.",
     highlights: ["Despacho ágil en Lima", "Atención y asesoría comercial", "Punto de recojo de pedidos coordinados"],
+  },
+];
+
+const STORE_STAFF = [
+  {
+    name: "Anita y Clara",
+    role: "Asesoras de Ventas y Atención",
+    src: "/images/tienda/anita-y-clara.png",
+    description: "Atención cálida, asesoramiento sobre productos y cotizaciones directas en tienda.",
+  },
+  {
+    name: "Gianmarco y Jairo",
+    role: "Despacho, Almacén y Logística",
+    src: "/images/tienda/gianmarco-y-jairo.png",
+    description: "Verificación de pedidos, control de carga pesada y entrega segura a vehículos y clientes.",
+  },
+  {
+    name: "Ventas y Caja San Francisco",
+    role: "Mostrador Comercial",
+    src: "/images/tienda/ventas-tienda-san-francisco.png",
+    description: "Facturación electrónica inmediata, cobro ágil y despacho directo en mostrador.",
+  },
+  {
+    name: "Almacén Central de Tiendas",
+    role: "Capacidad Mayorista",
+    src: "/images/almacen/almacen-1.png",
+    description: "Racks con stock permanente de aceites, conservas y abarrotes listos para entrega.",
   },
 ];
 
@@ -163,39 +194,55 @@ export default async function PresenciaPage() {
                 key={tienda.title}
                 className="group overflow-hidden rounded-3xl border border-neutral-200/80 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-brand-red/30 flex flex-col"
               >
-                {/* Imagen de la fachada */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-100">
-                  <Image
-                    src={tienda.src}
-                    alt={tienda.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute top-4 left-4">
-                    <span className="rounded-full bg-brand-red px-3 py-1 text-xs font-bold text-white shadow">
-                      {tienda.tag}
+                {/* Doble imagen: Fachada y Equipo de Tienda */}
+                <div className="grid grid-cols-2 aspect-[16/10] w-full overflow-hidden bg-neutral-100">
+                  <div className="relative h-full w-full overflow-hidden border-r border-white/20">
+                    <Image
+                      src={tienda.src}
+                      alt={`${tienda.title} - Fachada`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <span className="absolute bottom-2.5 left-2.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                      Fachada
                     </span>
                   </div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-2xl font-black text-white" style={{ fontFamily: "var(--font-display)" }}>
-                      {tienda.title}
-                    </h3>
+                  <div className="relative h-full w-full overflow-hidden">
+                    <Image
+                      src={tienda.teamSrc}
+                      alt={tienda.teamLabel}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <span className="absolute bottom-2.5 left-2.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                      {tienda.teamLabel}
+                    </span>
                   </div>
                 </div>
 
-                {/* Contenido de la tienda */}
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <p className="text-sm leading-relaxed text-neutral-600">
+                    <div className="flex items-center gap-2">
+                      <span className="rounded-full bg-brand-red px-3 py-1 text-xs font-bold text-white shadow">
+                        {tienda.tag}
+                      </span>
+                    </div>
+                    <h3 className="mt-3 text-2xl font-black text-neutral-900" style={{ fontFamily: "var(--font-display)" }}>
+                      {tienda.title}
+                    </h3>
+
+                    <p className="mt-3 text-sm leading-relaxed text-neutral-600">
                       {tienda.description}
                     </p>
 
                     <div className="mt-5 space-y-2">
                       {tienda.highlights.map((h) => (
                         <div key={h} className="flex items-center gap-2 text-xs font-medium text-neutral-700">
-                          <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brand-green/20 text-brand-green">
+                          <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brand-green/20 text-brand-green font-bold">
                             ✓
                           </span>
                           <span>{h}</span>
@@ -213,8 +260,56 @@ export default async function PresenciaPage() {
                       href="/contacto"
                       className="text-xs font-bold text-brand-red hover:underline inline-flex items-center gap-1"
                     >
-                      Consultar llegada →
+                      Coordinar visita / pedido →
                     </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ══ EQUIPO DE ATENCIÓN EN TIENDA, VENDEDORAS Y ALMACÉN ══ */}
+        <div className="mt-20">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Atención Personalizada</span>
+            <h2 className="mt-2 text-3xl font-black text-neutral-900 sm:text-4xl" style={{ fontFamily: "var(--font-display)" }}>
+              Nuestras Vendedoras y Equipo de Tienda
+            </h2>
+            <p className="mt-3 text-sm text-neutral-500">
+              Conoce al equipo que te recibe con amabilidad, gestiona tus pedidos mayoristas y despacha tu mercadería de manera inmediata.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {STORE_STAFF.map((staff) => (
+              <div
+                key={staff.name}
+                className="group flex flex-col overflow-hidden rounded-2xl border border-neutral-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-brand-red/30"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+                  <Image
+                    src={staff.src}
+                    alt={staff.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute top-2.5 left-2.5">
+                    <span className="rounded-full bg-black/60 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-white backdrop-blur-sm">
+                      {staff.role}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-base font-black text-neutral-900" style={{ fontFamily: "var(--font-display)" }}>
+                      {staff.name}
+                    </h3>
+                    <p className="mt-1.5 text-xs leading-relaxed text-neutral-500">
+                      {staff.description}
+                    </p>
                   </div>
                 </div>
               </div>

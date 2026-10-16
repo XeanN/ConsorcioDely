@@ -57,6 +57,24 @@ const TEAM_MEMBERS = [
     src: "/images/equipo/envasadora-linea-3.png",
     description: "Estándares rigurosos de inocuidad y preparación de pedidos a gran escala.",
   },
+  {
+    title: "Graciela — Asesora de Ventas",
+    tag: "Atención & Ventas",
+    src: "/images/equipo/graciela-ventas.png",
+    description: "Atención personalizada a comerciantes y bodegueros, cotizaciones ágiles y seguimiento de pedidos.",
+  },
+  {
+    title: "Gabriela — Asesora Comercial",
+    tag: "Fuerza de Ventas",
+    src: "/images/equipo/gabriela-ventas.png",
+    description: "Asesoramiento especializado en compras por mayor, volumen y despacho oportuno para negocios.",
+  },
+  {
+    title: "Anita — Asesora en Tienda",
+    tag: "Atención & Mostrador",
+    src: "/images/equipo/anita-ventas.png",
+    description: "Orientación en punto de venta, despacho directo de abarrotes y atención cercana a cada cliente.",
+  },
 ];
 
 export default async function EquipoPage() {
@@ -95,7 +113,7 @@ export default async function EquipoPage() {
               Personas que hacen la diferencia
             </h2>
             <p className="mt-5 leading-relaxed text-neutral-600">
-              Detrás de cada producto hay personas apasionadas. Desde la administración y marketing comercial hasta las líneas de envasado en planta, cada colaborador es parte esencial de nuestra cadena de valor.
+              Detrás de cada producto hay personas apasionadas. Desde la administración y marketing comercial hasta las líneas de envasado en planta y nuestro equipo de asesoras de ventas y mostrador, cada colaborador es parte esencial de nuestra cadena de valor.
             </p>
             <p className="mt-4 leading-relaxed text-neutral-600">
               Fomentamos un ambiente de trabajo inclusivo, seguro y de constante superación donde cada miembro del equipo crece profesionalmente mientras aporta al desarrollo y abastecimiento del Perú.
@@ -104,8 +122,8 @@ export default async function EquipoPage() {
             <div className="mt-8 grid grid-cols-3 gap-3 sm:gap-4">
               {[
                 { n: "20+", t: "Años de trayectoria" },
-                { n: "8", t: "Áreas clave" },
-                { n: "100%", t: "Comprometidos" },
+                { n: "11+", t: "Áreas y colaboradores clave" },
+                { n: "100%", t: "Compromiso humano" },
               ].map((st) => (
                 <div key={st.t} className="rounded-2xl border border-neutral-100 bg-neutral-50/70 p-4 text-center">
                   <p className="text-2xl font-black text-brand-red sm:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
