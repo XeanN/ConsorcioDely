@@ -21,13 +21,16 @@ type SiteSettingRow = {
 };
 
 const IMGS = {
-  hero:    "/images/categories/vegetal.png",
-  factory: "/images/equipo/envasadora-planta.png",
-  team:    "/images/equipo/oficina.png",
-  map:     "/images/tienda/tienda-a41.png",
-  values1: "/images/equipo/administrador.png",
-  values2: "/images/equipo/marketing-comercial.png",
-  values3: "/images/tienda/tienda-san-francisco.png",
+  hero:      "/images/categories/vegetal.png",
+  factory:   "/images/equipo/envasadora-planta.png",
+  team:      "/images/equipo/oficina.png",
+  map:       "/images/tienda/tienda-a41.png",
+  values1:   "/images/equipo/administrador.png",
+  values2:   "/images/equipo/marketing-comercial.png",
+  values3:   "/images/tienda/tienda-san-francisco.png",
+  storeTeam: "/images/tienda/anita-y-clara.png",
+  warehouse: "/images/almacen/almacen-1.png",
+  plant:     "/images/equipo/area-envasadora.png",
 };
 
 export default async function AboutPage() {
@@ -249,13 +252,29 @@ export default async function AboutPage() {
       <section className="py-20" style={{ background: "var(--neutral-50)" }}>
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            {/* Image collage */}
-            <div className="relative h-96 overflow-hidden rounded-2xl">
-              <Image src={IMGS.team} alt="Equipo Dely" fill className="object-cover object-top" sizes="(max-width:1024px) 100vw, 50vw" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <p className="text-2xl font-black text-white" style={{ fontFamily: "var(--font-display)" }}>Nuestros colaboradores</p>
-                <p className="text-sm text-white/75">comprometidos con tu éxito</p>
+            {/* Grid de fotos reales del equipo, vendedoras y operaciones */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="relative col-span-2 h-52 overflow-hidden rounded-2xl shadow-sm border border-neutral-200 sm:h-60">
+                <Image src={IMGS.team} alt="Equipo Dely en Oficina" fill className="object-cover object-top" sizes="(max-width:1024px) 100vw, 50vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-4 right-4">
+                  <p className="text-sm font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>Administración & Operaciones</p>
+                  <p className="text-xs text-white/80">Comprometidos con el desarrollo del país</p>
+                </div>
+              </div>
+              <div className="relative h-40 overflow-hidden rounded-2xl shadow-sm border border-neutral-200">
+                <Image src={IMGS.storeTeam} alt="Vendedoras en Tienda" fill className="object-cover" sizes="25vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <span className="absolute bottom-2 left-3 text-[11px] font-bold text-white">
+                  Vendedoras en Tienda
+                </span>
+              </div>
+              <div className="relative h-40 overflow-hidden rounded-2xl shadow-sm border border-neutral-200">
+                <Image src={IMGS.warehouse} alt="Almacén Central Mayorista" fill className="object-cover" sizes="25vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <span className="absolute bottom-2 left-3 text-[11px] font-bold text-white">
+                  Almacén Mayorista
+                </span>
               </div>
             </div>
 
@@ -271,14 +290,24 @@ export default async function AboutPage() {
               <div className="mt-8 grid grid-cols-2 gap-4">
                 {[
                   { n: "20+", t: "Años de experiencia" },
-                  { n: "5", t: "Áreas de trabajo" },
+                  { n: "11+", t: "Áreas y colaboradores clave" },
                   { n: "100%", t: "Comprometidos" },
+                  { n: "2", t: "Sedes en Lima" },
                 ].map((s) => (
                   <div key={s.t} className="rounded-xl bg-white p-4 shadow-sm">
                     <p className="text-2xl font-black text-brand-red" style={{ fontFamily: "var(--font-display)" }}>{s.n}</p>
                     <p className="mt-0.5 text-xs text-neutral-500">{s.t}</p>
                   </div>
                 ))}
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link href="/quienes-somos/equipo" className="btn-primary text-xs">
+                  Conoce a todo el equipo →
+                </Link>
+                <Link href="/quienes-somos/presencia" className="btn-outline text-xs">
+                  Ver tiendas y vendedoras →
+                </Link>
               </div>
 
               {/* Work with us */}
