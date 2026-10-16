@@ -60,22 +60,22 @@ const PAE_PRODUCTS: PaeProductData[] = [
 
 const VULNERABLE_POPULATIONS = [
   {
-    title: "Comunidades Andinas y Rurales",
-    badge: "Sierra & Zonas Altoandinas",
-    src: "https://images.unsplash.com/photo-1519074598089-6436475c7f8f?w=800&q=80",
-    desc: "Atención prioritaria a estudiantes en quintiles 1 y 2 de pobreza, caseríos alejados y escuelas multigrado donde el desayuno escolar asegura la permanencia en las aulas.",
+    title: "Escuelas Rurales y Altoandinas",
+    badge: "Sierra & Zonas Andinas",
+    src: "/images/pae/escuela-inicial-sacsamarca.jpg",
+    desc: "Atención a centros educativos en quintiles 1 y 2 de pobreza, caseríos andinos y escuelas multigrado donde el desayuno escolar garantiza la asistencia y energía diaria.",
   },
   {
-    title: "Instituciones Educativas Públicas",
+    title: "Aulas Rurales y Comunidades Nativas",
     badge: "Costa, Sierra y Selva",
-    src: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&q=80",
-    desc: "Soporte directo a los Comités de Alimentación Escolar (CAE) integrados por docentes y padres que preparan diariamente raciones con inocuidad y amor.",
+    src: "/images/pae/escuela-comunidad-nativa-santa-clara.jpg",
+    desc: "Soporte directo a escuelas públicas y comités de alimentación escolar (CAE) integrados por docentes y madres de familia en las zonas más apartadas de la Amazonía y los Andes.",
   },
   {
-    title: "Ollas Comunes y Comedores",
+    title: "Escuelas en Zonas Vulnerables",
     badge: "Sectores Vulnerables",
-    src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80",
-    desc: "Suministro confiable para programas de complementación alimentaria, zonas urbano-marginales y contingencias sociales en coordinación con entidades del Estado.",
+    src: "/images/pae/colegio-abandonado-bigote.jpg",
+    desc: "Llegamos a caseríos y colegios con infraestructura precaria o en abandono, donde la ración escolar y el aceite vegetal representan la principal fuente de energía diaria de los niños.",
   },
 ];
 
