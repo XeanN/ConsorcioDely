@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { StoreHeroSlider } from "@/components/site/StoreHeroSlider";
 import { sql } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -21,8 +22,7 @@ type SiteSettingRow = {
 };
 
 const IMGS = {
-  hero:      "/images/categories/vegetal.png",
-  factory:   "/images/equipo/envasadora-planta.png",
+    factory:   "/images/equipo/envasadora-planta.png",
   team:      "/images/equipo/oficina.png",
   map:       "/images/tienda/tienda-a41.png",
   values1:   "/images/equipo/administrador.png",
@@ -49,23 +49,8 @@ export default async function AboutPage() {
   return (
     <div>
 
-      {/* HERO BANNER */}
-      <section className="relative h-72 overflow-hidden sm:h-96">
-        <Image src={IMGS.hero} alt="Consorcio Dely" fill className="object-cover object-center" sizes="100vw" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg,rgba(0,0,0,.8) 0%,rgba(180,20,14,.5) 50%,rgba(0,0,0,.3) 100%)" }} />
-        <div className="relative flex h-full flex-col items-start justify-center px-8 text-white sm:px-16">
-          <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest backdrop-blur-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-red-light" />
-            Empresa peruana
-          </span>
-          <h1 className="text-4xl font-black uppercase tracking-tight sm:text-6xl" style={{ fontFamily: "var(--font-display)", textShadow: "0 4px 24px rgba(0,0,0,0.4)" }}>
-            Quiénes Somos
-          </h1>
-          <p className="mt-3 max-w-lg text-sm text-white/80 sm:text-base">
-            Más de 20 años creciendo junto al Perú — fabricando y envasando calidad.
-          </p>
-        </div>
-      </section>
+      {/* HERO BANNER CON ROTACIÓN AUTOMÁTICA DE FACHADAS DE TIENDAS */}
+      <StoreHeroSlider />
 
       {/* TABS anchors for header dropdown */}
       <div id="proposito" />
