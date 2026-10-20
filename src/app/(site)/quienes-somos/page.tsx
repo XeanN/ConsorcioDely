@@ -22,15 +22,17 @@ type SiteSettingRow = {
 };
 
 const IMGS = {
-    factory:   "/images/equipo/envasadora-planta.png",
-  team:      "/images/equipo/oficina.png",
-  map:       "/images/tienda/tienda-a41.png",
-  values1:   "/images/equipo/administrador.png",
-  values2:   "/images/equipo/marketing-comercial.png",
-  values3:   "/images/tienda/tienda-san-francisco.png",
-  storeTeam: "/images/tienda/anita-y-clara.png",
-  warehouse: "/images/almacen/almacen-1.png",
-  plant:     "/images/equipo/area-envasadora.png",
+  factory:            "/images/equipo/envasadora-planta.png",
+  team:               "/images/equipo/oficina.png",
+  map:                "/images/tienda/tienda-a41.png",
+  values1:            "/images/tienda/anita-y-clara.png",
+  values2:            "/images/tienda/tienda-san-francisco.png",
+  values3:            "/images/tienda/equipo-tienda-a41.png",
+  storeTeam:          "/images/tienda/anita-y-clara.png",
+  warehouse:          "/images/almacen/almacen-1.png",
+  plant:              "/images/equipo/area-envasadora.png",
+  tiendaA41:          "/images/tienda/tienda-a41.png",
+  tiendaSanFrancisco: "/images/tienda/tienda-san-francisco.png",
 };
 
 export default async function AboutPage() {
@@ -48,7 +50,6 @@ export default async function AboutPage() {
 
   return (
     <div>
-
       {/* HERO BANNER CON ROTACIÓN AUTOMÁTICA DE FACHADAS DE TIENDAS */}
       <StoreHeroSlider />
 
@@ -58,16 +59,76 @@ export default async function AboutPage() {
       <div id="equipo" />
 
       {/* NUESTRA HISTORIA – split */}
-      <section className="overflow-hidden">
+      <section className="overflow-hidden bg-neutral-900">
         <div className="grid lg:grid-cols-2">
-          <div className="relative h-72 lg:h-auto lg:min-h-[500px]">
-            <Image src={IMGS.factory} alt="Planta Dely" fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
-            <div className="absolute bottom-6 left-6 rounded-2xl bg-white/90 px-5 py-3 shadow-lg backdrop-blur-sm">
-              <p className="text-xs font-bold uppercase tracking-wider text-brand-red">Fundada en</p>
-              <p className="text-2xl font-black text-neutral-900" style={{ fontFamily: "var(--font-display)" }}>2004</p>
+          {/* Columna visual: Fachada de Tienda A-41 + Vendedoras + Planta */}
+          <div className="relative flex flex-col justify-center gap-3 p-4 sm:p-6 lg:p-10">
+            {/* Foto Principal: Fachada de la Tienda Mayorista A-41 */}
+            <div className="group relative h-64 sm:h-72 w-full overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+              <Image
+                src={IMGS.tiendaA41}
+                alt="Tienda Mayorista A-41 - Consorcio Dely"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width:1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                <div>
+                  <span className="inline-block rounded-full bg-brand-red px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
+                    Sede Comercial Mayorista
+                  </span>
+                  <p className="mt-1.5 text-base sm:text-lg font-bold text-white">
+                    Tienda A-41 — Centro de Distribución
+                  </p>
+                  <p className="text-xs text-white/70">Donde nació nuestra cercanía con los comerciantes</p>
+                </div>
+                <div className="rounded-xl bg-white/95 px-3 py-2 text-center shadow-lg backdrop-blur-sm shrink-0 ml-3">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-brand-red">Desde</p>
+                  <p className="text-xl font-black leading-none text-neutral-900" style={{ fontFamily: "var(--font-display)" }}>
+                    2004
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Fila secundaria: Nuestras Vendedoras y la Planta de Envasado */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="group relative h-40 sm:h-48 overflow-hidden rounded-xl border border-white/10 shadow-lg">
+                <Image
+                  src="/images/tienda/anita-y-clara.png"
+                  alt="Vendedoras de Tienda - Anita y Clara"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-2.5 left-3 right-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-brand-red-light">Atención en Tienda</span>
+                  <p className="text-xs sm:text-sm font-bold text-white">Nuestras Vendedoras</p>
+                  <p className="text-[10px] text-white/70">Atención personalizada y asesoría</p>
+                </div>
+              </div>
+
+              <div className="group relative h-40 sm:h-48 overflow-hidden rounded-xl border border-white/10 shadow-lg">
+                <Image
+                  src={IMGS.factory}
+                  alt="Planta de Producción y Envasado Dely"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-2.5 left-3 right-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-brand-red-light">Fabricación Propia</span>
+                  <p className="text-xs sm:text-sm font-bold text-white">Planta de Envasado</p>
+                  <p className="text-[10px] text-white/70">Aceites y conservas de calidad</p>
+                </div>
+              </div>
             </div>
           </div>
+
+          {/* Columna de texto */}
           <div className="flex items-center bg-white px-8 py-14 lg:px-16">
             <div className="max-w-lg">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Nuestra Historia</span>
@@ -85,10 +146,10 @@ export default async function AboutPage() {
               {/* Timeline */}
               <div className="mt-8 space-y-4 border-l-2 border-neutral-100 pl-6">
                 {[
-                  { year: "2004", text: "Fundación de Consorcio Dely en Lima" },
+                  { year: "2004", text: "Fundación de Consorcio Dely y apertura de primera tienda mayorista en Lima" },
                   { year: "2010", text: "Expansión a regiones del interior del país" },
                   { year: "2018", text: "Lanzamiento de líneas propias de aceites y mermeladas" },
-                  { year: "2024", text: "Más de 1,000 clientes atendidos" },
+                  { year: "2024", text: "Más de 1,000 clientes atendidos en nuestras sedes comerciales" },
                 ].map((t) => (
                   <div key={t.year} className="relative">
                     <span className="absolute -left-7 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-red">
@@ -98,6 +159,11 @@ export default async function AboutPage() {
                     <p className="text-sm text-neutral-600">{t.text}</p>
                   </div>
                 ))}
+              </div>
+              <div className="mt-8">
+                <Link href="/quienes-somos/historia" className="btn-primary text-xs">
+                  Conoce más de nuestra historia →
+                </Link>
               </div>
             </div>
           </div>
@@ -120,9 +186,9 @@ export default async function AboutPage() {
               {/* Values */}
               <div className="mt-8 grid gap-4 sm:grid-cols-3">
                 {[
-                  { icon: "star", title: "Calidad", desc: "Estándares internacionales en cada producto" },
-                  { icon: "heart", title: "Compromiso", desc: "Con nuestros clientes y el Perú" },
-                  { icon: "grow", title: "Crecimiento", desc: "Juntos llegamos más lejos" },
+                  { icon: "star", title: "Calidad", desc: "Estándares en planta y tienda" },
+                  { icon: "heart", title: "Compromiso", desc: "Atención cercana de nuestro equipo" },
+                  { icon: "grow", title: "Crecimiento", desc: "Junto a bodegueros y mayoristas" },
                 ].map((v) => (
                   <div key={v.title} className="rounded-xl border border-neutral-800 p-4 text-center">
                     <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg" style={{ background: "rgba(228,35,27,0.15)" }}>
@@ -137,19 +203,62 @@ export default async function AboutPage() {
                   </div>
                 ))}
               </div>
+
+              <div className="mt-8">
+                <Link href="/quienes-somos/proposito" className="btn-primary text-xs">
+                  Descubre nuestro propósito a detalle →
+                </Link>
+              </div>
             </div>
 
-            {/* Image collage */}
+            {/* Image collage con fotos de vendedoras y tiendas */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="relative col-span-2 h-48 overflow-hidden rounded-2xl">
-                <Image src={IMGS.values1} alt="Calidad" fill className="object-cover" sizes="50vw" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+              <div className="group relative col-span-2 h-52 sm:h-56 overflow-hidden rounded-2xl border border-neutral-800">
+                <Image
+                  src={IMGS.values1}
+                  alt="Vendedoras de Tienda Anita y Clara"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width:1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                <div className="absolute bottom-3 left-4 right-4">
+                  <span className="inline-block rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
+                    Compromiso Directo
+                  </span>
+                  <p className="text-sm sm:text-base font-bold text-white">Nuestras Vendedoras en Mostrador</p>
+                  <p className="text-xs text-white/70">Atención cordial, asesoría y cercanía con cada cliente</p>
+                </div>
               </div>
-              <div className="relative h-32 overflow-hidden rounded-xl">
-                <Image src={IMGS.values2} alt="Compromiso" fill className="object-cover" sizes="25vw" />
+
+              <div className="group relative h-36 sm:h-40 overflow-hidden rounded-xl border border-neutral-800">
+                <Image
+                  src={IMGS.values2}
+                  alt="Tienda San Francisco"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-2 left-3 right-2">
+                  <p className="text-xs font-bold text-white">Tienda San Francisco</p>
+                  <p className="text-[10px] text-white/70">Crecimiento comercial</p>
+                </div>
               </div>
-              <div className="relative h-32 overflow-hidden rounded-xl">
-                <Image src={IMGS.values3} alt="Crecimiento" fill className="object-cover" sizes="25vw" />
+
+              <div className="group relative h-36 sm:h-40 overflow-hidden rounded-xl border border-neutral-800">
+                <Image
+                  src={IMGS.values3}
+                  alt="Equipo Tienda A41"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-2 left-3 right-2">
+                  <p className="text-xs font-bold text-white">Equipo Tienda A-41</p>
+                  <p className="text-[10px] text-white/70">Calidad y vocación de servicio</p>
+                </div>
               </div>
             </div>
           </div>
@@ -166,7 +275,7 @@ export default async function AboutPage() {
                 Ven a visitarnos
               </h2>
               <p className="mt-5 leading-relaxed text-neutral-500">
-                Te atendemos de manera directa en nuestra tienda en Lima, y también puedes coordinar tu compra por WhatsApp o llamada.
+                Te atendemos de manera directa en nuestras tiendas en Lima, y también puedes coordinar tu compra por WhatsApp o llamada.
               </p>
 
               {settings && (
@@ -208,9 +317,14 @@ export default async function AboutPage() {
                 </div>
               )}
 
-              <Link href="/contacto" className="btn-primary mt-8">
-                Contactar ahora
-              </Link>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/contacto" className="btn-primary">
+                  Contactar ahora
+                </Link>
+                <Link href="/quienes-somos/presencia" className="btn-outline">
+                  Conocer tiendas físicas →
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -220,8 +334,8 @@ export default async function AboutPage() {
             {/* Stats overlay */}
             <div className="absolute bottom-6 right-6 grid grid-cols-2 gap-3">
               {[
-                { n: "Tienda física", t: "Lima" },
-                { n: "WhatsApp", t: "Pedidos" },
+                { n: "2 Tiendas", t: "Sedes en Lima" },
+                { n: "WhatsApp", t: "Pedidos y Envíos" },
               ].map((s) => (
                 <div key={s.t} className="rounded-xl bg-white/90 px-4 py-3 text-center backdrop-blur-sm shadow">
                   <p className="text-xl font-black text-brand-red" style={{ fontFamily: "var(--font-display)" }}>{s.n}</p>
@@ -317,7 +431,6 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }
