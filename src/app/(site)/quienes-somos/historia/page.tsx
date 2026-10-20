@@ -48,7 +48,7 @@ export default async function HistoriaPage() {
           <div className="lg:col-span-7">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Desde 2004</span>
             <h2 className="section-title mt-2 text-2xl font-black text-neutral-900 sm:text-4xl">
-              De nuestra primera tienda al abastecimiento de todo el país
+              De nuestra primera tienda al abastecimiento mayorista de Lima
             </h2>
             <div className="mt-5 space-y-4 text-base leading-relaxed text-neutral-600">
               <p className="whitespace-pre-line">{texto}</p>
