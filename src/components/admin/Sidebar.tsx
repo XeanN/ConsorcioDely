@@ -7,6 +7,7 @@ const links = [
   { href: "/admin/productos", label: "Productos" },
   { href: "/admin/ejecutivas", label: "Ejecutivas" },
   { href: "/admin/redes-sociales", label: "Redes sociales" },
+  { href: "/admin/hero", label: "Hero (inicio)" },
 ];
 
 export function Sidebar() {

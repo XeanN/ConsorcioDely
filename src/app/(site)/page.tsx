@@ -3,20 +3,19 @@ import Link from "next/link";
 
 import { BrandWall, type BrandItem } from "@/components/site/BrandWall";
 import { CategoryCarousel } from "@/components/site/CategoryCarousel";
+import { HomeHeroSlider } from "@/components/site/HomeHeroSlider";
 import { WhatsAppCta } from "@/components/site/WhatsAppCta";
 import { sql } from "@/lib/db";
-import { publicUrlFor } from "@/lib/media";
+import { getHeroSlides } from "@/lib/hero-slides";
 import { buildQuoteMessage, getActiveQuotePhones } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
 type ContentBlockRow = { value: string };
 type CategoryRow = { id: string; name: string; slug: string };
-type HeroImageRow = { r2Key: string };
 type SiteSettingRow = { address: string | null };
 
 const IMGS = {
-  hero:     "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80",
   split1:   "/images/products/conservas-piramide-display.png",
   factory:  "/images/equipo/envasadora-planta.png",
   mosaic1:  "/images/categories/vegetal.png",
@@ -73,38 +72,25 @@ export default async function HomePage() {
     { id: "extra-trome-jabon", name: "Trome Jabón", slug: "trome-jabon", count: 0 },
   ].sort((a, b) => a.name.localeCompare(b.name));
 
-  const [heroImage] = (await sql()`
-    SELECT m."r2Key" as "r2Key"
-    FROM products p
-    JOIN media m ON m.id = p."mediaId"
-    WHERE p.active = true
-    ORDER BY p.position ASC
-    LIMIT 1
-  `) as HeroImageRow[];
-
   const [settings] = (await sql()`
     SELECT address FROM site_settings WHERE id = 1 LIMIT 1
   `) as SiteSettingRow[];
 
   const quotePhones = await getActiveQuotePhones();
   const heroTitle = hero?.value ?? "Crecemos Juntos";
-  const heroBg = IMGS.hero;
+  const heroSlides = await getHeroSlides();
 
   return (
     <div>
 
       {/* HERO */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-        <Image src={heroBg} alt="Consorcio Dely" fill priority className="object-cover object-center" sizes="100vw" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.15) 30%,rgba(0,0,0,.65) 80%,rgba(0,0,0,.8) 100%)" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg,rgba(180,20,14,.5) 0%,transparent 70%)" }} />
-        <div aria-hidden className="absolute left-0 top-1/2 -translate-y-1/2 h-96 w-96 rounded-full opacity-30" style={{ background: "var(--brand-red)", filter: "blur(120px)" }} />
-        <div className="relative z-10 mx-auto max-w-5xl px-6 pb-24 pt-8 text-center">
+      <HomeHeroSlider slides={heroSlides}>
+        <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pb-24 pt-8 text-center">
           <span className="animate-fade-in inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-5 py-1.5 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-md">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-red-light" />
             Aliados estratégicos para tu negocio
           </span>
-          <h1 className="animate-fade-up delay-100 mt-6 text-6xl font-black uppercase leading-none tracking-tight text-white sm:text-7xl md:text-8xl" style={{ fontFamily: "var(--font-display)", textShadow: "0 4px 32px rgba(0,0,0,0.5)" }}>
+          <h1 className="animate-fade-up delay-100 mt-6 text-5xl font-black uppercase leading-none tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl" style={{ fontFamily: "var(--font-display)", textShadow: "0 4px 32px rgba(0,0,0,0.5)" }}>
             {heroTitle}
           </h1>
           <p className="animate-fade-up delay-200 mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/85 sm:text-xl">
@@ -126,7 +112,7 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </HomeHeroSlider>
 
       {/* STATS */}
       <section style={{ background: "var(--brand-red)" }}>
