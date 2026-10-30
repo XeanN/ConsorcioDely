@@ -7,7 +7,7 @@ venta que reciben cotizaciones por WhatsApp; el resto del contenido del sitio
 (textos, categorías, marcas, datos legales) se administra internamente por
 código.
 
-**Sitio en producción:** https://consorciodely-web.angel-xp-pb.workers.dev
+**Sitio en producción:** https://www.dely.pe
 
 ## Stack
 
